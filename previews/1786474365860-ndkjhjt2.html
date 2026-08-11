@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boston Proper – Hero Shoppable Strip Mockup (CRO-142)</title>
+<style>
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Arial, Helvetica, sans-serif; background: #f4f4f0; color: #1a1a1a; }
+
+/* ── Simulated Page Shell ── */
+.bp-page-shell { max-width: 1280px; margin: 0 auto; }
+
+/* ── Announcement Bar ── */
+.bp-announcement-bar {
+  background: #1a1a1a;
+  color: #fefffa;
+  text-align: center;
+  padding: 10px 16px;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ── Hero Placeholder ── */
+.bp-hero {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  background: linear-gradient(135deg, #2c2c2c 0%, #4a3f3a 40%, #6b4f47 70%, #d4735e 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.bp-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(26,26,26,0.38);
+}
+.bp-hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #fefffa;
+}
+.bp-hero-content h1 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(32px, 5vw, 58px);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+}
+.bp-hero-content p {
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  opacity: 0.85;
+}
+.bp-hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.bp-hero-cta {
+  display: inline-block;
+  padding: 13px 28px;
+  border: 1.5px solid #fefffa;
+  color: #fefffa;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+  background: transparent;
+}
+.bp-hero-cta:hover { background: #fefffa; color: #1a1a1a; }
+.bp-hero-slide-dots {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 3;
+}
+.bp-hero-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(254,255,250,0.5);
+  cursor: pointer;
+}
+.bp-hero-dot.active { background: #fefffa; }
+
+/* ══════════════════════════════════════════
+   CRO-142 VARIANT: Shop The Look Strip
+══════════════════════════════════════════ */
+.cro142-strip-wrapper {
+  width: 100%;
+  background: rgba(254,255,250,0.97);
+  border-top: 2.5px solid #d4735e;
+  border-bottom: 1px solid #e8e0db;
+  padding: 20px 0 24px;
+  animation: cro142FadeIn 0.6s ease both;
+}
+@keyframes cro142FadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.cro142-strip-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.cro142-strip-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.cro142-strip-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #1a1a1a;
+  letter-spacing: 0.04em;
+  position: relative;
+  padding-bottom: 6px;
+}
+.cro142-strip-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 40px; height: 2px;
+  background: #d4735e;
+}
+.cro142-strip-nav { display: flex; gap: 8px; }
+.cro142-nav-btn {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid #d4735e;
+  background: #fff;
+  color: #d4735e;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s, color 0.18s;
+  line-height: 1;
+}
+.cro142-nav-btn:hover { background: #d4735e; color: #fff; }
+.cro142-nav-btn:disabled { opacity: 0.35; cursor: default; }
+
+/* Scroll container */
+.cro142-scroll-track {
+  overflow-x: auto;
+  overflow-y: visible;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 4px;
+}
+.cro142-scroll-track::-webkit-scrollbar { display: none; }
+.cro142-tiles-row {
+  display: flex;
+  gap: 14px;
+  width: max-content;
+}
+
+/* Individual tile */
+.cro142-tile {
+  width: 210px;
+  flex-shrink: 0;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(26,26,26,0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s;
+}
+.cro142-tile:hover { box-shadow: 0 6px 22px rgba(26,26,26,0.14); }
+
+/* Image area */
+.cro142-tile-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  overflow: hidden;
+  background: #ede8e4;
+}
+.cro142-tile-img-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+.cro142-tile:hover .cro142-tile-img-wrap img { transform: scale(1.04); }
+
+/* Hover overlay – Quick Add */
+.cro142-tile-hover-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(26,26,26,0.42);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.22s;
+}
+.cro142-tile:hover .cro142-tile-hover-overlay { opacity: 1; }
+.cro142-quick-add-btn {
+  background: #fefffa;
+  color: #1a1a1a;
+  border: none;
+  padding: 10px 18px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: Arial, Helvetica, sans-serif;
+  transition: background 0.18s;
+}
+.cro142-quick-add-btn:hover { background: #fff; }
+
+/* NEW badge */
+.cro142-badge-new {
+  position: absolute;
+  top: 10px; left: 10px;
+  background: #d4735e;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 20px;
+  z-index: 2;
+}
+
+/* Tile body */
+.cro142-tile-body {
+  padding: 12px 12px 14px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.cro142-tile-name {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 13px;
+  color: #1a1a1a;
+  line-height: 1.4;
+  margin-bottom: 5px;
+  flex: 1;
+}
+.cro142-tile-price {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  color: #1a1a1a;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+.cro142-tile-cta {
+  display: block;
+  width: 100%;
+  padding: 9px 0;
+  background: #d4735e;
+  color: #fff;
+  border: none;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  cursor: pointer;
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius: 2px;
+  transition: background 0.18s;
+  text-decoration: none;
+}
+.cro142-tile-cta:hover { background: #bf6350; }
+
+/* ── Below-strip page content placeholder ── */
+.bp-below-hero {
+  max-width: 1280px;
+  margin: 40px auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+.bp-category-card {
+  background: #e8e0db;
+  border-radius: 4px;
+  height: 180px;
+  display: flex;
+  align-items: flex-end;
+  padding: 14px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 15px;
+  color: #1a1a1a;
+  cursor: pointer;
+}
+
+/* ── Mobile ── */
+@media (max-width: 767px) {
+  .bp-hero { height: 360px; }
+  .cro142-strip-nav { display: none; }
+  .cro142-tile { width: 165px; }
+  .cro142-tile-img-wrap { height: 200px; }
+  .cro142-tile-hover-overlay { display: none; }
+  .cro142-strip-title { font-size: 15px; }
+  .cro142-strip-inner { padding: 0 14px; }
+  .bp-below-hero { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- Announcement Bar -->
+<div class="bp-announcement-bar">
+  Enjoy 20% Off $150+, Plus Free Shipping &nbsp;|&nbsp; CODE: <strong>NEWMOOD</strong>
+</div>
+
+<!-- Hero (simulated) -->
+<div class="bp-hero">
+  <div class="bp-hero-overlay"></div>
+  <div class="bp-hero-content">
+    <p>Defy All Expectations</p>
+    <h1>Your Best Era Yet</h1>
+    <div class="bp-hero-ctas">
+      <a class="bp-hero-cta" href="#">Shop New Arrivals</a>
+      <a class="bp-hero-cta" href="#">Shop Jackets</a>
+    </div>
+  </div>
+  <div class="bp-hero-slide-dots">
+    <div class="bp-hero-dot active"></div>
+    <div class="bp-hero-dot"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     CRO-142 VARIANT INJECTION START
+═══════════════════════════════════════ -->
+<div class="cro142-strip-wrapper" id="cro142ShopTheLookStrip">
+  <div class="cro142-strip-inner">
+    <div class="cro142-strip-header">
+      <h2 class="cro142-strip-title">Shop The Look</h2>
+      <div class="cro142-strip-nav">
+        <button class="cro142-nav-btn" id="cro142PrevBtn" aria-label="Scroll left" disabled>&#8592;</button>
+        <button class="cro142-nav-btn" id="cro142NextBtn" aria-label="Scroll right">&#8594;</button>
+      </div>
+    </div>
+    <div class="cro142-scroll-track" id="cro142ScrollTrack">
+      <div class="cro142-tiles-row" id="cro142TilesRow">
+        <!-- Tiles injected by JS -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- CRO-142 VARIANT INJECTION END -->
+
+<!-- Simulated below-hero page content -->
+<div class="bp-below-hero">
+  <div class="bp-category-card">Dresses</div>
+  <div class="bp-category-card">Jackets</div>
+  <div class="bp-category-card">Tops</div>
+  <div class="bp-category-card">Athleisure</div>
+  <div class="bp-category-card">New Arrivals</div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  /* ─────────────────────────────────────────────
+     CRO-142 | Hero Shoppable Strip
+     Strategy: clone product cards from existing
+     on-page DOM sections into a new strip below
+     the hero. Falls back to static demo data
+     when running in standalone mockup mode.
+  ───────────────────────────────────────────── */
+
+  var STRIP_ID       = 'cro142ShopTheLookStrip';
+  var TRACK_ID       = 'cro142ScrollTrack';
+  var ROW_ID         = 'cro142TilesRow';
+  var PREV_ID        = 'cro142PrevBtn';
+  var NEXT_ID        = 'cro142NextBtn';
+  var SCROLL_AMOUNT  = 240; // px per arrow click
+  var MAX_TILES      = 8;
+
+  /* ── 1. Selectors targeting existing Boston Proper DOM ── */
+  var LIVE_SELECTORS = [
+    /* 'One Look. Every Plan.' product cards */
+    '.shoppable-looks .product-card',
+    '.one-look .product-card',
+    /* 'Pre-Styled Looks' cards */
+    '.pre-styled-looks .product-card',
+    /* Generic Shopify product card patterns */
+    '.product-card',
+    '.grid-product',
+    '[data-product-card]',
+    '.product-item'
+  ];
+
+  /* ── 2. Extract data from a live product card node ── */
+  function extractFromCard(card) {
+    var imgEl    = card.querySelector('img');
+    var nameEl   = card.querySelector('.product-card__title, .grid-product__title, .product-title, h3, h4, .product-name');
+    var priceEl  = card.querySelector('.product-card__price, .grid-product__price, .price, .product-price, [class*="price"]');
+    var linkEl   = card.querySelector('a[href*="/products/"]') || card.closest('a[href*="/products/"]');
+    var ctaEl    = card.querySelector('button, .btn, [class*="add"]');
+
+    var img   = imgEl   ? (imgEl.dataset.src || imgEl.dataset.lazySrc || imgEl.src || '') : '';
+    var name  = nameEl  ? nameEl.textContent.trim() : '';
+    var price = priceEl ? priceEl.textContent.trim() : '';
+    var url   = linkEl  ? linkEl.href : '#';
+    var cta   = ctaEl   ? ctaEl.textContent.trim() : 'Add to Bag';
+
+    if (!name || !img) return null;
+    return { img: img, name: name, price: price, url: url, cta: cta || 'Add to Bag' };
+  }
+
+  /* ── 3. Gather products from live page DOM ── */
+  function gatherLiveProducts() {
+    var seen    = new Set();
+    var results = [];
+
+    for (var s = 0; s < LIVE_SELECTORS.length; s++) {
+      var cards = document.querySelectorAll(LIVE_SELECTORS[s]);
+      for (var c = 0; c < cards.length; c++) {
+        if (results.length >= MAX_TILES) break;
+        var data = extractFromCard(cards[c]);
+        if (data && data.name && !seen.has(data.name)) {
+          seen.add(data.name);
+          results.push(data);
+        }
+      }
+      if (results.length >= MAX_TILES) break;
+    }
+    return results;
+  }
+
+  /* ── 4. Static fallback data (mockup / standalone mode) ── */
+  var FALLBACK_PRODUCTS = [
+    {
+      img: 'https://placehold.co/420x520/e8d5cc/1a1a1a?text=Look+1',
+      name: 'Printed Wrap Midi Dress',
+      price: '$129.00',
+      url: '#',
+      cta: 'Choose Options'
+    },
+    {
+      img: 'https://placehold.co/420x520/d4c4bc/1a1a1a?text=Look+2',
+      name: 'Tailored Ponte Blazer',
+      price: '$149.00',
+      url: '#',
+      cta: 'Add to Bag'
+    },
+    {
+      img: 'https://placehold.co/420x520/c8b8b0/1a1a1a?text=Look+3',
+      name: 'Slim-Leg Pull-On Pant',
+      price: '$89.00',
+      url: '#',
+      cta: 'Add to Bag'
+    },
+    {
+      img: 'https://placehold.co/420x520/e0cfc8/1a1a1a?text=Look+4',
+      name: 'Ruched Sleeve Knit Top',
+      price: '$79.00',
+      url: '#',
+      cta: 'Add to Bag'
+    },
+    {
+      img: 'https://placehold.co/420x520/d8c8c0/1a1a1a?text=Look+5',
+      name: 'Animal Print Wrap Blouse',
+      price: '$95.00',
+      url: '#',
+      cta: 'Choose Options'
+    },
+    {
+      img: 'https://placehold.co/420x520/ccc0b8/1a1a1a?text=Look+6',
+      name: 'Stretch Denim Straight Jean',
+      price: '$109.00',
+      url: '#',
+      cta: 'Add to Bag'
+    },
+    {
+      img: 'https://placehold.co/420x520/e4d4cc/1a1a1a?text=Look+7',
+      name: 'Faux-Suede Moto Jacket',
+      price: '$169.00',
+      url: '#',
+      cta: 'Add to Bag'
+    },
+    {
+      img: 'https://placehold.co/420x520/d0c0b8/1a1a1a?text=Look+8',
+      name: 'Pleated Chiffon Midi Skirt',
+      price: '$99.00',
+      url: '#',
+      cta: 'Choose Options'
+    }
+  ];
+
+  /* ── 5. Build a tile element ── */
+  function buildTile(product, index) {
+    var tile = document.createElement('div');
+    tile.className = 'cro142-tile';
+    tile.setAttribute('data-cro142-tile', index);
+
+    var imgWrap = document.createElement('div');
+    imgWrap.className = 'cro142-tile-img-wrap';
+
+    /* NEW badge on first two tiles */
+    if (index < 2) {
+      var badge = document.createElement('span');
+      badge.className = 'cro142-badge-new';
+      badge.textContent = 'NEW';
+      imgWrap.appendChild(badge);
+    }
+
+    var img = document.createElement('img');
+    img.src = product.img;
+    img.alt = product.name;
+    img.loading = 'lazy';
+    imgWrap.appendChild(img);
+
+    /* Hover overlay (desktop) */
+    var overlay = document.createElement('div');
+    overlay.className = 'cro142-tile-hover-overlay';
+    var qaBtn = document.createElement('button');
+    qaBtn.className = 'cro142-quick-add-btn';
+    qaBtn.textContent = 'Quick Add';
+    qaBtn.setAttribute('aria-label', 'Quick Add ' + product.name);
+    qaBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      /* In production this would trigger Shopify ATC; in mockup just log */
+      console.log('[CRO-142] Quick Add clicked:', product.name);
+      qaBtn.textContent = 'Added!';
+      setTimeout(function() { qaBtn.textContent = 'Quick Add'; }, 1800);
+    });
+    overlay.appendChild(qaBtn);
+    imgWrap.appendChild(overlay);
+
+    tile.appendChild(imgWrap);
+
+    var body = document.createElement('div');
+    body.className = 'cro142-tile-body';
+
+    var nameEl = document.createElement('p');
+    nameEl.className = 'cro142-tile-name';
+    nameEl.textContent = product.name;
+    body.appendChild(nameEl);
+
+    if (product.price) {
+      var priceEl = document.createElement('p');
+      priceEl.className = 'cro142-tile-price';
+      priceEl.textContent = product.price;
+      body.appendChild(priceEl);
+    }
+
+    var cta = document.createElement('a');
+    cta.className = 'cro142-tile-cta';
+    cta.href = product.url || '#';
+    cta.textContent = product.cta || 'Add to Bag';
+    cta.setAttribute('aria-label', (product.cta || 'Add to Bag') + ' – ' + product.name);
+    body.appendChild(cta);
+
+    tile.appendChild(body);
+    return tile;
+  }
+
+  /* ── 6. Populate the strip ── */
+  function populateStrip(products) {
+    var row = document.getElementById(ROW_ID);
+    if (!row) return;
+    row.innerHTML = '';
+    products.forEach(function(p, i) {
+      row.appendChild(buildTile(p, i));
+    });
+  }
+
+  /* ── 7. Arrow navigation ── */
+  function initNavArrows() {
+    var track   = document.getElementById(TRACK_ID);
+    var prevBtn = document.getElementById(PREV_ID);
+    var nextBtn = document.getElementById(NEXT_ID);
+    if (!track || !prevBtn || !nextBtn) return;
+
+    function updateButtons() {
+      prevBtn.disabled = track.scrollLeft <= 4;
+      nextBtn.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+    }
+
+    prevBtn.addEventListener('click', function() {
+      track.scrollBy({ left: -SCROLL_AMOUNT, behavior: 'smooth' });
+    });
+    nextBtn.addEventListener('click', function() {
+      track.scrollBy({ left: SCROLL_AMOUNT, behavior: 'smooth' });
+    });
+    track.addEventListener('scroll', updateButtons, { passive: true });
+    updateButtons();
+  }
+
+  /* ── 8. Analytics stub ── */
+  function trackImpression() {
+    try {
+      if (window.dataLayer) {
+        window.dataLayer.push({
+          event: 'cro142_strip_impression',
+          experiment: 'CRO-142',
+          variant: 'hero_shoppable_strip'
+        });
+      }
+    } catch(e) {}
+  }
+
+  /* ── 9. Init ── */
+  function init() {
+    var liveProducts = gatherLiveProducts();
+    var products = liveProducts.length >= 3 ? liveProducts : FALLBACK_PRODUCTS;
+    populateStrip(products);
+    initNavArrows();
+    trackImpression();
+    console.log('[CRO-142] Hero shoppable strip initialised with', products.length, 'tiles (' + (liveProducts.length >= 3 ? 'live DOM' : 'fallback') + ')');
+  }
+
+  /* Run after DOM ready */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+})();
+</script>
+</body>
+</html>
