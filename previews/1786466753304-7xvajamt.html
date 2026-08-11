@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRO-142 | Boston Proper | Hero Shoppable Strip Mockup</title>
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif; background: #fafaf7; color: #1a1a1a; }
+
+/* ===== MOCKUP LABEL ===== */
+.cro-label {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+  background: #1a1a1a; color: #fafaf7; font-size: 11px; letter-spacing: 0.08em;
+  text-align: center; padding: 6px 12px; font-family: monospace;
+}
+
+/* ===== SIMULATED PAGE CHROME ===== */
+.bp-announcement {
+  background: #1a1a1a; color: #fafaf7;
+  text-align: center; font-size: 12px; letter-spacing: 0.1em;
+  padding: 10px 16px; margin-top: 28px;
+}
+.bp-nav {
+  background: #fafaf7; border-bottom: 1px solid #e8e4df;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px; height: 64px;
+}
+.bp-nav-logo {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 22px; letter-spacing: 0.12em; color: #1a1a1a; font-weight: 400;
+}
+.bp-nav-links {
+  display: flex; gap: 28px; list-style: none;
+}
+.bp-nav-links a {
+  font-size: 13px; letter-spacing: 0.08em; color: #1a1a1a;
+  text-decoration: none; text-transform: uppercase;
+}
+.bp-nav-icons { display: flex; gap: 18px; font-size: 18px; cursor: pointer; }
+
+/* ===== HERO SECTION ===== */
+.bp-hero {
+  position: relative; width: 100%;
+  height: 580px; overflow: hidden;
+  background: #2c2825;
+}
+.bp-hero-img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  filter: brightness(0.82);
+}
+.bp-hero-placeholder {
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, #3d3028 0%, #5a3e35 40%, #7a5548 70%, #4a3530 100%);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  color: #fafaf7; text-align: center; padding: 40px;
+}
+.bp-hero-eyebrow {
+  font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+  color: rgba(250,250,247,0.7); margin-bottom: 16px;
+}
+.bp-hero-headline {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(32px, 5vw, 58px); font-weight: 400;
+  line-height: 1.15; letter-spacing: 0.04em;
+  color: #fafaf7; margin-bottom: 24px;
+}
+.bp-hero-cta-group { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+.bp-hero-cta {
+  display: inline-block; padding: 13px 32px;
+  font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+  border: 1px solid #fafaf7; color: #fafaf7;
+  text-decoration: none; background: transparent;
+  cursor: pointer; transition: background 0.2s, color 0.2s;
+}
+.bp-hero-cta:hover { background: #fafaf7; color: #1a1a1a; }
+.bp-hero-cta.primary { background: #d4735e; border-color: #d4735e; color: #fafaf7; }
+.bp-hero-cta.primary:hover { background: #bf6350; border-color: #bf6350; }
+
+/* ===== SHOPPABLE STRIP (THE TEST ELEMENT) ===== */
+#cro142-strip {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  z-index: 20;
+  transform: translateY(100%);
+  transition: transform 0.4s ease-out;
+  will-change: transform;
+}
+#cro142-strip.is-visible { transform: translateY(0); }
+#cro142-strip.is-collapsed { transform: translateY(calc(100% - 36px)); }
+
+.cro142-scrim {
+  background: rgba(250,250,247,0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(26,26,26,0.1);
+  padding: 16px 24px 20px;
+}
+
+.cro142-strip-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 14px;
+}
+.cro142-strip-heading {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 17px; font-weight: 400; letter-spacing: 0.06em;
+  color: #1a1a1a;
+}
+.cro142-strip-heading span {
+  display: inline-block; width: 28px; height: 2px;
+  background: #d4735e; margin-right: 10px; vertical-align: middle;
+  position: relative; top: -2px;
+}
+.cro142-hide-btn {
+  background: none; border: none; cursor: pointer;
+  font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: #1a1a1a; opacity: 0.55; display: flex; align-items: center; gap: 5px;
+  padding: 4px 0; transition: opacity 0.2s;
+}
+.cro142-hide-btn:hover { opacity: 1; }
+.cro142-hide-btn svg { width: 14px; height: 14px; }
+
+.cro142-tiles-track {
+  display: flex; gap: 14px;
+  overflow-x: auto; overflow-y: visible;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+.cro142-tiles-track::-webkit-scrollbar { display: none; }
+
+.cro142-tile {
+  flex: 0 0 175px; scroll-snap-align: start;
+  background: #fafaf7; border: 1px solid rgba(26,26,26,0.08);
+  position: relative; cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.2s;
+  overflow: visible;
+}
+.cro142-tile:hover {
+  box-shadow: 0 8px 24px rgba(26,26,26,0.13);
+  transform: translateY(-3px);
+}
+.cro142-tile-img-wrap {
+  width: 100%; aspect-ratio: 3/4; overflow: hidden;
+  background: #ede9e3;
+}
+.cro142-tile-img-wrap img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform 0.35s ease;
+}
+.cro142-tile:hover .cro142-tile-img-wrap img { transform: scale(1.04); }
+.cro142-tile-body { padding: 9px 10px 10px; }
+.cro142-tile-name {
+  font-size: 12px; line-height: 1.35; color: #1a1a1a;
+  letter-spacing: 0.02em; margin-bottom: 4px;
+  display: -webkit-box; -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
+.cro142-tile-price {
+  font-size: 12px; color: #d4735e; letter-spacing: 0.04em;
+  margin-bottom: 8px; font-weight: 500;
+}
+.cro142-quick-add-btn {
+  width: 100%; padding: 8px 0;
+  background: #1a1a1a; color: #fafaf7;
+  border: none; font-size: 10px; letter-spacing: 0.14em;
+  text-transform: uppercase; cursor: pointer;
+  transition: background 0.2s;
+}
+.cro142-quick-add-btn:hover { background: #d4735e; }
+
+/* Size popover */
+.cro142-size-popover {
+  display: none; position: absolute; bottom: calc(100% + 8px);
+  left: 0; right: 0; z-index: 40;
+  background: #fafaf7; border: 1px solid rgba(26,26,26,0.15);
+  box-shadow: 0 8px 28px rgba(26,26,26,0.18);
+  padding: 14px 12px 12px;
+}
+.cro142-size-popover.is-open { display: block; }
+.cro142-size-label {
+  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: #1a1a1a; opacity: 0.55; margin-bottom: 8px;
+}
+.cro142-size-chips {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px;
+}
+.cro142-size-chip {
+  padding: 5px 9px; border: 1px solid rgba(26,26,26,0.25);
+  font-size: 11px; cursor: pointer; background: #fafaf7;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  letter-spacing: 0.04em;
+}
+.cro142-size-chip.selected,
+.cro142-size-chip:hover {
+  background: #1a1a1a; color: #fafaf7; border-color: #1a1a1a;
+}
+.cro142-add-to-bag-btn {
+  width: 100%; padding: 9px 0;
+  background: #d4735e; color: #fafaf7;
+  border: none; font-size: 10px; letter-spacing: 0.14em;
+  text-transform: uppercase; cursor: pointer;
+  transition: background 0.2s;
+}
+.cro142-add-to-bag-btn:hover { background: #bf6350; }
+.cro142-popover-close {
+  position: absolute; top: 6px; right: 8px;
+  background: none; border: none; font-size: 14px;
+  cursor: pointer; color: #1a1a1a; opacity: 0.4; line-height: 1;
+}
+.cro142-popover-close:hover { opacity: 1; }
+
+/* Collapsed tab */
+.cro142-collapsed-tab {
+  position: absolute; bottom: 100%; right: 24px;
+  background: #d4735e; color: #fafaf7;
+  font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 8px 16px; cursor: pointer; border: none;
+  display: none; align-items: center; gap: 6px;
+  box-shadow: 0 -2px 12px rgba(212,115,94,0.3);
+  transition: background 0.2s;
+}
+.cro142-collapsed-tab:hover { background: #bf6350; }
+#cro142-strip.is-collapsed .cro142-collapsed-tab { display: flex; }
+#cro142-strip.is-collapsed .cro142-scrim { visibility: hidden; }
+
+/* ===== BELOW-HERO CONTENT (simulated) ===== */
+.bp-below-hero {
+  max-width: 1200px; margin: 0 auto; padding: 60px 32px;
+}
+.bp-section-heading {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 26px; font-weight: 400; letter-spacing: 0.04em;
+  color: #1a1a1a; margin-bottom: 32px; text-align: center;
+}
+.bp-category-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+}
+.bp-category-tile {
+  aspect-ratio: 3/4; background: #ede9e3;
+  display: flex; align-items: flex-end; padding: 16px;
+  text-decoration: none; color: #fafaf7;
+  position: relative; overflow: hidden;
+}
+.bp-category-tile-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(160deg, #c9b8a8 0%, #8a6e5e 100%);
+  transition: transform 0.35s ease;
+}
+.bp-category-tile:nth-child(2) .bp-category-tile-bg { background: linear-gradient(160deg, #b8a9c9 0%, #6e5e8a 100%); }
+.bp-category-tile:nth-child(3) .bp-category-tile-bg { background: linear-gradient(160deg, #c9c0a8 0%, #8a7e5e 100%); }
+.bp-category-tile:nth-child(4) .bp-category-tile-bg { background: linear-gradient(160deg, #a8b8c9 0%, #5e6e8a 100%); }
+.bp-category-tile:hover .bp-category-tile-bg { transform: scale(1.04); }
+.bp-category-label {
+  position: relative; z-index: 1;
+  font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 767px) {
+  .bp-nav { padding: 0 16px; }
+  .bp-nav-links { display: none; }
+  .bp-hero { height: 480px; }
+  .bp-hero-headline { font-size: 30px; }
+  .bp-hero-cta-group { flex-direction: column; align-items: center; }
+  .cro142-scrim { padding: 12px 14px 16px; }
+  .cro142-strip-heading { font-size: 14px; }
+  .cro142-tile { flex: 0 0 140px; }
+  .bp-below-hero { padding: 40px 16px; }
+  .bp-category-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1200px) {
+  .cro142-tiles-track { overflow-x: visible; }
+  .cro142-tile { flex: 1 1 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="cro-label">⚗️ CRO-142 MOCKUP — INTERNAL REVIEW ONLY — Boston Proper | Hero Shoppable Strip (Variant B)</div>
+
+<!-- Simulated Announcement Bar -->
+<div class="bp-announcement">20% Off $150+ &nbsp;|&nbsp; Plus Free Shipping &nbsp;|&nbsp; CODE: NEWMOOD</div>
+
+<!-- Simulated Nav -->
+<nav class="bp-nav">
+  <div class="bp-nav-logo">BOSTON PROPER</div>
+  <ul class="bp-nav-links">
+    <li><a href="#">New Arrivals</a></li>
+    <li><a href="#">Dresses</a></li>
+    <li><a href="#">Jackets</a></li>
+    <li><a href="#">Tops</a></li>
+    <li><a href="#">Sale</a></li>
+  </ul>
+  <div class="bp-nav-icons">&#9906; &#128722; &#128100;</div>
+</nav>
+
+<!-- ===== HERO (with injected shoppable strip) ===== -->
+<section class="bp-hero" id="bp-hero">
+
+  <!-- Hero background / lifestyle image placeholder -->
+  <div class="bp-hero-placeholder">
+    <p class="bp-hero-eyebrow">New Collection</p>
+    <h1 class="bp-hero-headline">The New Mood<br>is Bold</h1>
+    <div class="bp-hero-cta-group">
+      <a href="#" class="bp-hero-cta primary">Shop New Arrivals</a>
+      <a href="#" class="bp-hero-cta">Shop Jackets</a>
+    </div>
+  </div>
+
+  <!-- ===== CRO-142 TEST ELEMENT: Shoppable Strip Overlay ===== -->
+  <div id="cro142-strip" role="region" aria-label="Shop The Look">
+
+    <!-- Collapsed tab (shown only when strip is collapsed) -->
+    <button class="cro142-collapsed-tab" id="cro142-expand-tab" aria-label="Expand shop the look strip">
+      Shop The Look &nbsp;↑
+    </button>
+
+    <div class="cro142-scrim">
+      <div class="cro142-strip-header">
+        <h2 class="cro142-strip-heading"><span></span>Shop The Look</h2>
+        <button class="cro142-hide-btn" id="cro142-hide-btn" aria-label="Hide shoppable strip">
+          <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 4.5L7 9.5L12 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Hide
+        </button>
+      </div>
+
+      <div class="cro142-tiles-track" id="cro142-tiles-track">
+
+        <!-- Tile 1 -->
+        <div class="cro142-tile" data-product-id="1">
+          <div class="cro142-tile-img-wrap">
+            <img src="https://placehold.co/175x233/c9b8a8/5a3e35?text=Blazer" alt="Tailored Blazer" loading="lazy">
+          </div>
+          <div class="cro142-tile-body">
+            <p class="cro142-tile-name">Tailored Ponte Blazer</p>
+            <p class="cro142-tile-price">$148.00</p>
+            <button class="cro142-quick-add-btn" data-tile="1">Quick Add</button>
+          </div>
+          <div class="cro142-size-popover" id="cro142-popover-1" role="dialog" aria-label="Select size for Tailored Ponte Blazer">
+            <button class="cro142-popover-close" data-close="1" aria-label="Close size selector">&times;</button>
+            <p class="cro142-size-label">Select Size</p>
+            <div class="cro142-size-chips">
+              <button class="cro142-size-chip" data-size="XS">XS</button>
+              <button class="cro142-size-chip" data-size="S">S</button>
+              <button class="cro142-size-chip selected" data-size="M">M</button>
+              <button class="cro142-size-chip" data-size="L">L</button>
+              <button class="cro142-size-chip" data-size="XL">XL</button>
+            </div>
+            <button class="cro142-add-to-bag-btn" data-tile="1">Add to Bag</button>
+          </div>
+        </div>
+
+        <!-- Tile 2 -->
+        <div class="cro142-tile" data-product-id="2">
+          <div class="cro142-tile-img-wrap">
+            <img src="https://placehold.co/175x233/b8a9c9/3e2e5a?text=Trouser" alt="Wide-Leg Trouser" loading="lazy">
+          </div>
+          <div class="cro142-tile-body">
+            <p class="cro142-tile-name">Wide-Leg Trouser</p>
+            <p class="cro142-tile-price">$118.00</p>
+            <button class="cro142-quick-add-btn" data-tile="2">Quick Add</button>
+          </div>
+          <div class="cro142-size-popover" id="cro142-popover-2" role="dialog" aria-label="Select size for Wide-Leg Trouser">
+            <button class="cro142-popover-close" data-close="2" aria-label="Close size selector">&times;</button>
+            <p class="cro142-size-label">Select Size</p>
+            <div class="cro142-size-chips">
+              <button class="cro142-size-chip" data-size="XS">XS</button>
+              <button class="cro142-size-chip" data-size="S">S</button>
+              <button class="cro142-size-chip selected" data-size="M">M</button>
+              <button class="cro142-size-chip" data-size="L">L</button>
+              <button class="cro142-size-chip" data-size="XL">XL</button>
+            </div>
+            <button class="cro142-add-to-bag-btn" data-tile="2">Add to Bag</button>
+          </div>
+        </div>
+
+        <!-- Tile 3 -->
+        <div class="cro142-tile" data-product-id="3">
+          <div class="cro142-tile-img-wrap">
+            <img src="https://placehold.co/175x233/c9c0a8/5a4e2e?text=Blouse" alt="Silk-Touch Blouse" loading="lazy">
+          </div>
+          <div class="cro142-tile-body">
+            <p class="cro142-tile-name">Silk-Touch Wrap Blouse</p>
+            <p class="cro142-tile-price">$98.00</p>
+            <button class="cro142-quick-add-btn" data-tile="3">Quick Add</button>
+          </div>
+          <div class="cro142-size-popover" id="cro142-popover-3" role="dialog" aria-label="Select size for Silk-Touch Wrap Blouse">
+            <button class="cro142-popover-close" data-close="3" aria-label="Close size selector">&times;</button>
+            <p class="cro142-size-label">Select Size</p>
+            <div class="cro142-size-chips">
+              <button class="cro142-size-chip" data-size="XS">XS</button>
+              <button class="cro142-size-chip" data-size="S">S</button>
+              <button class="cro142-size-chip selected" data-size="M">M</button>
+              <button class="cro142-size-chip" data-size="L">L</button>
+              <button class="cro142-size-chip" data-size="XL">XL</button>
+            </div>
+            <button class="cro142-add-to-bag-btn" data-tile="3">Add to Bag</button>
+          </div>
+        </div>
+
+        <!-- Tile 4 -->
+        <div class="cro142-tile" data-product-id="4">
+          <div class="cro142-tile-img-wrap">
+            <img src="https://placehold.co/175x233/a8b8c9/2e3e5a?text=Heels" alt="Block Heel Sandal" loading="lazy">
+          </div>
+          <div class="cro142-tile-body">
+            <p class="cro142-tile-name">Block Heel Sandal</p>
+            <p class="cro142-tile-price">$128.00</p>
+            <button class="cro142-quick-add-btn" data-tile="4">Quick Add</button>
+          </div>
+          <div class="cro142-size-popover" id="cro142-popover-4" role="dialog" aria-label="Select size for Block Heel Sandal">
+            <button class="cro142-popover-close" data-close="4" aria-label="Close size selector">&times;</button>
+            <p class="cro142-size-label">Select Size</p>
+            <div class="cro142-size-chips">
+              <button class="cro142-size-chip" data-size="6">6</button>
+              <button class="cro142-size-chip" data-size="7">7</button>
+              <button class="cro142-size-chip selected" data-size="8">8</button>
+              <button class="cro142-size-chip" data-size="9">9</button>
+              <button class="cro142-size-chip" data-size="10">10</button>
+            </div>
+            <button class="cro142-add-to-bag-btn" data-tile="4">Add to Bag</button>
+          </div>
+        </div>
+
+      </div><!-- /tiles-track -->
+    </div><!-- /scrim -->
+  </div><!-- /cro142-strip -->
+
+</section><!-- /hero -->
+
+<!-- Simulated below-hero content -->
+<div class="bp-below-hero">
+  <h2 class="bp-section-heading">Shop By Category</h2>
+  <div class="bp-category-grid">
+    <a href="#" class="bp-category-tile"><div class="bp-category-tile-bg"></div><span class="bp-category-label">Dresses</span></a>
+    <a href="#" class="bp-category-tile"><div class="bp-category-tile-bg"></div><span class="bp-category-label">Jackets</span></a>
+    <a href="#" class="bp-category-tile"><div class="bp-category-tile-bg"></div><span class="bp-category-label">Tops</span></a>
+    <a href="#" class="bp-category-tile"><div class="bp-category-tile-bg"></div><span class="bp-category-label">Athleisure</span></a>
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  var strip = document.getElementById('cro142-strip');
+  var hideBtn = document.getElementById('cro142-hide-btn');
+  var expandTab = document.getElementById('cro142-expand-tab');
+
+  // --- Entrance animation ---
+  setTimeout(function() {
+    strip.classList.add('is-visible');
+  }, 600);
+
+  // --- Collapse strip ---
+  hideBtn.addEventListener('click', function() {
+    strip.classList.remove('is-visible');
+    strip.classList.add('is-collapsed');
+    closeAllPopovers();
+  });
+
+  // --- Expand strip ---
+  expandTab.addEventListener('click', function() {
+    strip.classList.remove('is-collapsed');
+    strip.classList.add('is-visible');
+  });
+
+  // --- Quick Add / Size popover logic ---
+  var quickAddBtns = document.querySelectorAll('.cro142-quick-add-btn');
+  quickAddBtns.forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var tileId = btn.getAttribute('data-tile');
+      var popover = document.getElementById('cro142-popover-' + tileId);
+      var isOpen = popover.classList.contains('is-open');
+      closeAllPopovers();
+      if (!isOpen) {
+        popover.classList.add('is-open');
+        btn.textContent = 'Select Size';
+      }
+    });
+  });
+
+  // --- Popover close buttons ---
+  var closeBtns = document.querySelectorAll('.cro142-popover-close');
+  closeBtns.forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var tileId = btn.getAttribute('data-close');
+      var popover = document.getElementById('cro142-popover-' + tileId);
+      popover.classList.remove('is-open');
+      var quickAdd = document.querySelector('.cro142-quick-add-btn[data-tile="' + tileId + '"]');
+      if (quickAdd) quickAdd.textContent = 'Quick Add';
+    });
+  });
+
+  // --- Size chip selection ---
+  var sizeChips = document.querySelectorAll('.cro142-size-chip');
+  sizeChips.forEach(function(chip) {
+    chip.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var siblings = chip.closest('.cro142-size-chips').querySelectorAll('.cro142-size-chip');
+      siblings.forEach(function(s) { s.classList.remove('selected'); });
+      chip.classList.add('selected');
+    });
+  });
+
+  // --- Add to Bag buttons ---
+  var addBtns = document.querySelectorAll('.cro142-add-to-bag-btn');
+  addBtns.forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var tileId = btn.getAttribute('data-tile');
+      var popover = document.getElementById('cro142-popover-' + tileId);
+      var selectedChip = popover.querySelector('.cro142-size-chip.selected');
+      var size = selectedChip ? selectedChip.getAttribute('data-size') : 'M';
+      btn.textContent = 'Added! (' + size + ')';
+      btn.style.background = '#1a1a1a';
+      setTimeout(function() {
+        popover.classList.remove('is-open');
+        btn.textContent = 'Add to Bag';
+        btn.style.background = '';
+        var quickAdd = document.querySelector('.cro142-quick-add-btn[data-tile="' + tileId + '"]');
+        if (quickAdd) quickAdd.textContent = 'Quick Add';
+      }, 1400);
+    });
+  });
+
+  // --- Close popovers on outside click ---
+  document.addEventListener('click', function() {
+    closeAllPopovers();
+  });
+
+  function closeAllPopovers() {
+    document.querySelectorAll('.cro142-size-popover.is-open').forEach(function(p) {
+      p.classList.remove('is-open');
+    });
+    document.querySelectorAll('.cro142-quick-add-btn').forEach(function(b) {
+      b.textContent = 'Quick Add';
+    });
+  }
+
+})();
+</script>
+</body>
+</html>
