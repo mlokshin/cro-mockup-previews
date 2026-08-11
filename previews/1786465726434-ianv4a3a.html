@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRO-142 — Boston Proper Hero Shoppability Strip Mockup</title>
+<style>
+/* === RESET & BASE === */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif; background: #fefffe; color: #1a1a1a; }
+
+/* === MOCK HERO (stand-in for live hero) === */
+.bp-mock-hero {
+  width: 100%;
+  min-height: 520px;
+  background: linear-gradient(135deg, #2b2b2b 0%, #4a3f3a 50%, #6b5248 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.bp-mock-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('https://via.placeholder.com/1440x520/4a3f3a/ffffff?text=Hero+Lifestyle+Image+%E2%80%94+Your+Best+Era+Yet') center/cover no-repeat;
+  opacity: 0.35;
+}
+.bp-mock-hero__eyebrow {
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #d4735e;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.bp-mock-hero__headline {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 400;
+  color: #fefffe;
+  line-height: 1.1;
+  margin-bottom: 28px;
+  position: relative;
+  z-index: 1;
+}
+.bp-mock-hero__ctas {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+.bp-mock-hero__cta {
+  display: inline-block;
+  padding: 13px 32px;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1.5px solid #fefffe;
+  color: #fefffe;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.bp-mock-hero__cta:hover { background: #fefffe; color: #1a1a1a; }
+.bp-mock-hero__cta--filled { background: #d4735e; border-color: #d4735e; color: #fefffe; }
+.bp-mock-hero__cta--filled:hover { background: #c0614d; border-color: #c0614d; }
+
+/* === SHOP THE LOOK STRIP === */
+#bp-stl-strip {
+  width: 100%;
+  background: #fefffe;
+  border-bottom: 1px solid #e8e2dc;
+  opacity: 0;
+  transform: translateY(24px);
+  animation: bpStlFadeUp 0.45s ease forwards;
+  animation-delay: 0.15s;
+}
+@keyframes bpStlFadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+.bp-stl-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px 32px;
+}
+
+/* Header bar */
+.bp-stl-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 0 20px;
+  border-bottom: 2px solid #d4735e;
+  margin-bottom: 24px;
+}
+.bp-stl-header__badge {
+  background: #d4735e;
+  color: #fefffe;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  flex-shrink: 0;
+}
+.bp-stl-header__title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: #1a1a1a;
+  letter-spacing: 0.02em;
+}
+.bp-stl-header__sub {
+  font-size: 12px;
+  color: #7a7068;
+  letter-spacing: 0.06em;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+/* Grid */
+.bp-stl-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+/* Card */
+.bp-stl-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid #ede8e2;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+.bp-stl-card:hover { box-shadow: 0 4px 18px rgba(26,26,26,0.10); }
+.bp-stl-card__img-wrap {
+  width: 100%;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  background: #f0ece7;
+  position: relative;
+}
+.bp-stl-card__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+.bp-stl-card:hover .bp-stl-card__img-wrap img { transform: scale(1.04); }
+.bp-stl-card__body {
+  padding: 14px 14px 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.bp-stl-card__name {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 13.5px;
+  font-weight: 400;
+  color: #1a1a1a;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+.bp-stl-card__price {
+  font-size: 13px;
+  font-weight: 700;
+  color: #d4735e;
+  letter-spacing: 0.03em;
+  margin-bottom: 14px;
+}
+.bp-stl-card__cta {
+  display: block;
+  text-align: center;
+  padding: 9px 16px;
+  background: #1a1a1a;
+  color: #fefffe;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  margin-top: auto;
+  transition: background 0.2s;
+}
+.bp-stl-card__cta:hover { background: #d4735e; }
+
+/* Footer CTA */
+.bp-stl-footer {
+  text-align: center;
+  margin-top: 28px;
+}
+.bp-stl-footer__link {
+  display: inline-block;
+  padding: 12px 40px;
+  border: 1.5px solid #1a1a1a;
+  color: #1a1a1a;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.bp-stl-footer__link:hover { background: #1a1a1a; color: #fefffe; }
+
+/* === MOBILE === */
+@media (max-width: 767px) {
+  .bp-mock-hero { min-height: 380px; }
+  .bp-stl-header__sub { display: none; }
+  .bp-stl-header__title { font-size: 18px; }
+  .bp-stl-grid {
+    display: flex;
+    overflow-x: auto;
+    gap: 12px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px;
+  }
+  .bp-stl-grid::-webkit-scrollbar { height: 4px; }
+  .bp-stl-grid::-webkit-scrollbar-track { background: #ede8e2; }
+  .bp-stl-grid::-webkit-scrollbar-thumb { background: #d4735e; border-radius: 2px; }
+  .bp-stl-card {
+    min-width: 200px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+  }
+  .bp-stl-inner { padding: 0 16px 24px; }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .bp-stl-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* === ANNOTATION OVERLAY (mockup-only) === */
+.bp-annotation {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  background: #1a1a1a;
+  color: #fefffe;
+  font-size: 11px;
+  line-height: 1.5;
+  padding: 12px 16px;
+  border-left: 3px solid #d4735e;
+  max-width: 280px;
+  z-index: 9999;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+}
+.bp-annotation strong { color: #d4735e; display: block; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<!-- MOCK HERO (represents existing live hero — not modified in test) -->
+<section class="bp-mock-hero" aria-label="Hero banner">
+  <p class="bp-mock-hero__eyebrow">New Collection</p>
+  <h1 class="bp-mock-hero__headline">Your Best Era Yet</h1>
+  <div class="bp-mock-hero__ctas">
+    <a href="https://www.bostonproper.com/collections/new-arrivals" class="bp-mock-hero__cta bp-mock-hero__cta--filled">Shop New Arrivals</a>
+    <a href="https://www.bostonproper.com/collections/jackets" class="bp-mock-hero__cta">Shop Jackets</a>
+  </div>
+</section>
+
+<!-- INJECTED: SHOP THE LOOK STRIP (CRO-142 Variant B) -->
+<section id="bp-stl-strip" aria-label="Shop The Look">
+  <div class="bp-stl-inner">
+    <div class="bp-stl-header">
+      <span class="bp-stl-header__badge">New</span>
+      <h2 class="bp-stl-header__title">Shop The Look</h2>
+      <span class="bp-stl-header__sub">Featured from: Your Best Era Yet</span>
+    </div>
+    <div class="bp-stl-grid" id="bp-stl-grid">
+      <!-- Cards injected by JS -->
+    </div>
+    <div class="bp-stl-footer">
+      <a href="https://www.bostonproper.com/collections/new-arrivals" class="bp-stl-footer__link">View All New Arrivals</a>
+    </div>
+  </div>
+</section>
+
+<!-- MOCKUP ANNOTATION -->
+<div class="bp-annotation">
+  <strong>CRO-142 — Mockup Only</strong>
+  Variant B: Below-hero shoppable strip. Cards cloned from existing DOM on live page. Not visible to end users.
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // === PRODUCT DATA ===
+  // On the live page, JS would clone nodes from the existing
+  // 'One Look. Every Plan.' and 'Pre-Styled Looks' sections.
+  // In this standalone mockup we use representative static data
+  // matching the product types confirmed in the live DOM scrape.
+  var PRODUCTS = [
+    {
+      name: 'Floral Wrap Midi Dress',
+      price: '$148.00',
+      img: 'https://placehold.co/400x533/e8ddd5/1a1a1a?text=Floral+Wrap+Dress',
+      url: 'https://www.bostonproper.com/collections/dresses'
+    },
+    {
+      name: 'Tailored Ponte Blazer',
+      price: '$168.00',
+      img: 'https://placehold.co/400x533/d9cfc7/1a1a1a?text=Ponte+Blazer',
+      url: 'https://www.bostonproper.com/collections/jackets'
+    },
+    {
+      name: 'Ruched Side-Slit Skirt',
+      price: '$98.00',
+      img: 'https://placehold.co/400x533/c8bfb8/1a1a1a?text=Ruched+Skirt',
+      url: 'https://www.bostonproper.com/collections/skirts'
+    },
+    {
+      name: 'Linen-Blend Wide-Leg Pant',
+      price: '$118.00',
+      img: 'https://placehold.co/400x533/b8b0aa/1a1a1a?text=Wide-Leg+Pant',
+      url: 'https://www.bostonproper.com/collections/pants'
+    }
+  ];
+
+  function buildCard(product) {
+    var card = document.createElement('article');
+    card.className = 'bp-stl-card';
+    card.setAttribute('aria-label', product.name);
+
+    var imgWrap = document.createElement('div');
+    imgWrap.className = 'bp-stl-card__img-wrap';
+    var img = document.createElement('img');
+    img.src = product.img;
+    img.alt = product.name;
+    img.loading = 'lazy';
+    imgWrap.appendChild(img);
+
+    var body = document.createElement('div');
+    body.className = 'bp-stl-card__body';
+
+    var name = document.createElement('p');
+    name.className = 'bp-stl-card__name';
+    name.textContent = product.name;
+
+    var price = document.createElement('p');
+    price.className = 'bp-stl-card__price';
+    price.textContent = product.price;
+
+    var cta = document.createElement('a');
+    cta.className = 'bp-stl-card__cta';
+    cta.href = product.url;
+    cta.textContent = 'Shop Now';
+    cta.setAttribute('aria-label', 'Shop ' + product.name);
+
+    body.appendChild(name);
+    body.appendChild(price);
+    body.appendChild(cta);
+
+    card.appendChild(imgWrap);
+    card.appendChild(body);
+    return card;
+  }
+
+  function init() {
+    var grid = document.getElementById('bp-stl-grid');
+    if (!grid) return;
+
+    // On the live page: attempt to clone existing product cards from DOM
+    // Selector targets the 'One Look. Every Plan.' product cards
+    var existingCards = document.querySelectorAll(
+      '.shoppable-look__product, .look-product-card, [class*="look"] .product-card, .product-card'
+    );
+
+    if (existingCards && existingCards.length >= 2) {
+      // Clone up to 4 existing cards
+      var count = Math.min(existingCards.length, 4);
+      for (var i = 0; i < count; i++) {
+        var clone = existingCards[i].cloneNode(true);
+        clone.className = 'bp-stl-card';
+        // Ensure links open correctly
+        var links = clone.querySelectorAll('a');
+        links.forEach(function(l) { l.setAttribute('target', '_self'); });
+        grid.appendChild(clone);
+      }
+    } else {
+      // Fallback: use static product data (also used in standalone mockup)
+      PRODUCTS.forEach(function(p) {
+        grid.appendChild(buildCard(p));
+      });
+    }
+
+    // Track strip visibility with IntersectionObserver for analytics
+    if ('IntersectionObserver' in window) {
+      var strip = document.getElementById('bp-stl-strip');
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            // Fire analytics event (replace with actual datalayer push)
+            if (window.dataLayer) {
+              window.dataLayer.push({
+                event: 'cro_stl_strip_viewed',
+                experiment: 'CRO-142',
+                variant: 'B'
+              });
+            }
+            observer.disconnect();
+          }
+        });
+      }, { threshold: 0.3 });
+      if (strip) observer.observe(strip);
+    }
+
+    // CTA click tracking
+    var ctas = document.querySelectorAll('#bp-stl-strip .bp-stl-card__cta, #bp-stl-strip .bp-stl-footer__link');
+    ctas.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        if (window.dataLayer) {
+          window.dataLayer.push({
+            event: 'cro_stl_cta_click',
+            experiment: 'CRO-142',
+            variant: 'B',
+            label: btn.textContent.trim()
+          });
+        }
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+})();
+</script>
+</body>
+</html>
