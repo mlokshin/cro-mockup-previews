@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boston Proper – Hero Shoppable Strip (CRO-142 Mockup)</title>
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; background: #fefff5; color: #1a1a1a; }
+
+/* ===== PROMO BANNER ===== */
+.bp-promo-banner {
+  background: #1a1a1a;
+  color: #fefff5;
+  text-align: center;
+  padding: 10px 16px;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+.bp-promo-banner span { color: #d4735e; font-weight: 600; }
+
+/* ===== NAV STUB ===== */
+.bp-nav {
+  background: #fefff5;
+  border-bottom: 1px solid #e0e0d8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 32px;
+}
+.bp-nav-logo {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #1a1a1a;
+  text-transform: uppercase;
+}
+.bp-nav-links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+.bp-nav-links a {
+  text-decoration: none;
+  color: #1a1a1a;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.bp-nav-icons { display: flex; gap: 16px; font-size: 13px; color: #1a1a1a; letter-spacing: 0.04em; }
+
+/* ===== HERO ===== */
+.bp-hero {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  background: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.bp-hero-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2e2e2e 40%, #3a3028 70%, #1a1a1a 100%);
+  opacity: 1;
+}
+.bp-hero-overlay {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #fefff5;
+  padding: 0 24px;
+}
+.bp-hero-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #d4735e;
+  margin-bottom: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+.bp-hero-headline {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(36px, 6vw, 68px);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.1;
+  color: #fefff5;
+  margin-bottom: 28px;
+  letter-spacing: -0.01em;
+}
+.bp-hero-ctas { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.bp-hero-cta {
+  display: inline-block;
+  padding: 13px 28px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s, color 0.2s;
+}
+.bp-hero-cta.primary {
+  background: #fefff5;
+  color: #1a1a1a;
+}
+.bp-hero-cta.primary:hover { background: #d4735e; color: #fefff5; }
+.bp-hero-cta.secondary {
+  background: transparent;
+  color: #fefff5;
+  border: 1px solid #fefff5;
+}
+.bp-hero-cta.secondary:hover { background: #fefff5; color: #1a1a1a; }
+
+/* ===== HERO SLIDE DOTS ===== */
+.bp-hero-dots {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  gap: 8px;
+}
+.bp-hero-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(254,255,245,0.4);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.bp-hero-dot.active { background: #fefff5; }
+
+/* ===== [VARIANT] SHOPPABLE STRIP ===== */
+.bp-shoppable-strip {
+  width: 100%;
+  background: #fefff5;
+  border-top: 3px solid #d4735e;
+  padding: 36px 32px 44px;
+}
+.bp-strip-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.bp-strip-label {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #d4735e;
+  margin-bottom: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+.bp-strip-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 400;
+  color: #1a1a1a;
+  letter-spacing: 0.01em;
+}
+.bp-strip-title em { font-style: italic; color: #d4735e; }
+
+/* ===== PRODUCT RAIL ===== */
+.bp-product-rail {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 8px;
+  /* hide scrollbar on webkit */
+  scrollbar-width: thin;
+  scrollbar-color: #d4735e #e8e8e0;
+}
+.bp-product-rail::-webkit-scrollbar { height: 4px; }
+.bp-product-rail::-webkit-scrollbar-track { background: #e8e8e0; border-radius: 2px; }
+.bp-product-rail::-webkit-scrollbar-thumb { background: #d4735e; border-radius: 2px; }
+
+/* ===== PRODUCT CARD ===== */
+.bp-product-card {
+  flex: 0 0 calc(25% - 15px);
+  min-width: 200px;
+  scroll-snap-align: start;
+  background: #fff;
+  border: 1px solid #e8e8e0;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s;
+}
+.bp-product-card:hover { box-shadow: 0 4px 20px rgba(26,26,26,0.12); }
+
+.bp-card-img-wrap {
+  position: relative;
+  width: 100%;
+  padding-top: 130%;
+  background: #e8e8e0;
+  overflow: hidden;
+}
+.bp-card-img-wrap img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.bp-product-card:hover .bp-card-img-wrap img { transform: scale(1.04); }
+
+.bp-card-img-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  gap: 8px;
+}
+.bp-card-img-placeholder svg { opacity: 0.35; }
+
+.bp-card-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #d4735e;
+  color: #fefff5;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+
+.bp-card-body {
+  padding: 14px 14px 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 6px;
+}
+.bp-card-name {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 14px;
+  line-height: 1.35;
+  color: #1a1a1a;
+  font-weight: 400;
+}
+.bp-card-color {
+  font-size: 11px;
+  color: #888;
+  letter-spacing: 0.04em;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+.bp-card-price {
+  font-size: 14px;
+  color: #1a1a1a;
+  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  margin-top: 2px;
+}
+.bp-card-price .bp-price-original {
+  text-decoration: line-through;
+  color: #aaa;
+  font-weight: 400;
+  margin-left: 6px;
+  font-size: 12px;
+}
+.bp-card-cta {
+  display: block;
+  width: 100%;
+  margin-top: auto;
+  padding: 11px 0;
+  background: #1a1a1a;
+  color: #fefff5;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  transition: background 0.2s;
+  text-decoration: none;
+}
+.bp-card-cta:hover { background: #d4735e; }
+
+/* ===== STRIP FOOTER ===== */
+.bp-strip-footer {
+  text-align: center;
+  margin-top: 28px;
+}
+.bp-strip-see-all {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  text-decoration: none;
+  border-bottom: 1px solid #d4735e;
+  padding-bottom: 2px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  transition: color 0.2s;
+}
+.bp-strip-see-all:hover { color: #d4735e; }
+
+/* ===== BELOW-FOLD CONTENT STUB ===== */
+.bp-below-fold {
+  background: #f0f0e8;
+  padding: 60px 32px;
+  text-align: center;
+  border-top: 1px solid #e0e0d8;
+}
+.bp-below-fold p {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 18px;
+  color: #888;
+  font-style: italic;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 767px) {
+  .bp-nav { padding: 12px 16px; }
+  .bp-nav-links { display: none; }
+  .bp-hero { height: 380px; }
+  .bp-shoppable-strip { padding: 28px 16px 36px; }
+  .bp-product-card {
+    flex: 0 0 72vw;
+    min-width: 220px;
+  }
+  .bp-strip-title { font-size: 22px; }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .bp-product-card { flex: 0 0 calc(50% - 10px); }
+}
+
+/* ===== ANNOTATION BADGE ===== */
+.bp-variant-badge {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  background: #d4735e;
+  color: #fefff5;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  z-index: 9999;
+  box-shadow: 0 2px 12px rgba(212,115,94,0.4);
+  pointer-events: none;
+}
+</style>
+</head>
+<body>
+
+<!-- PROMO BANNER -->
+<div class="bp-promo-banner">
+  20% Off $150+ with code <span>NEWMOOD</span> &nbsp;|&nbsp; Free Shipping on Orders $100+
+</div>
+
+<!-- NAV STUB -->
+<nav class="bp-nav">
+  <div class="bp-nav-logo">Boston Proper</div>
+  <ul class="bp-nav-links">
+    <li><a href="#">New Arrivals</a></li>
+    <li><a href="#">Dresses</a></li>
+    <li><a href="#">Jackets</a></li>
+    <li><a href="#">Tops</a></li>
+    <li><a href="#">Sale</a></li>
+  </ul>
+  <div class="bp-nav-icons">
+    <span>Search</span>
+    <span>Account</span>
+    <span>Bag (0)</span>
+  </div>
+</nav>
+
+<!-- HERO (represents existing live hero) -->
+<section class="bp-hero" aria-label="Hero: Defy All Expectations">
+  <div class="bp-hero-bg"></div>
+  <div class="bp-hero-overlay">
+    <p class="bp-hero-eyebrow">New Arrivals · Fall Collection</p>
+    <h1 class="bp-hero-headline">Defy All Expectations</h1>
+    <div class="bp-hero-ctas">
+      <a href="#" class="bp-hero-cta primary">Shop New Arrivals</a>
+      <a href="#" class="bp-hero-cta secondary">Shop Jackets</a>
+    </div>
+  </div>
+  <div class="bp-hero-dots">
+    <div class="bp-hero-dot active" data-slide="0"></div>
+    <div class="bp-hero-dot" data-slide="1"></div>
+  </div>
+</section>
+
+<!-- [VARIANT] SHOPPABLE STRIP — injected immediately below hero -->
+<section class="bp-shoppable-strip" aria-label="Shop The Look — Shoppable Hero Strip (CRO Variant)">
+  <div class="bp-strip-header">
+    <div class="bp-strip-label">Featured Styles</div>
+    <h2 class="bp-strip-title">Shop The Look &mdash; <em>Right Now</em></h2>
+  </div>
+
+  <div class="bp-product-rail" id="bpProductRail" role="list">
+    <!-- Cards injected by JS below; static fallback cards also here for fullPageHtml -->
+
+    <article class="bp-product-card" role="listitem">
+      <a href="#" class="bp-card-img-wrap" aria-label="View Stretch Ponte Blazer">
+        <div class="bp-card-img-placeholder">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="2" fill="#ccc"/><path d="M8 32l8-10 6 7 4-5 6 8H8z" fill="#aaa"/><circle cx="27" cy="14" r="4" fill="#aaa"/></svg>
+          <span>Product Image</span>
+        </div>
+      </a>
+      <div class="bp-card-body">
+        <div class="bp-card-name">Stretch Ponte Blazer</div>
+        <div class="bp-card-color">Black / Navy</div>
+        <div class="bp-card-price">$129.00 <span class="bp-price-original">$159.00</span></div>
+        <a href="#" class="bp-card-cta">Choose Options</a>
+      </div>
+    </article>
+
+    <article class="bp-product-card" role="listitem">
+      <a href="#" class="bp-card-img-wrap" aria-label="View Wrap Midi Dress">
+        <div class="bp-card-img-placeholder">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="2" fill="#ccc"/><path d="M8 32l8-10 6 7 4-5 6 8H8z" fill="#aaa"/><circle cx="27" cy="14" r="4" fill="#aaa"/></svg>
+          <span>Product Image</span>
+        </div>
+      </a>
+      <div class="bp-card-body">
+        <div class="bp-card-name">Wrap Midi Dress</div>
+        <div class="bp-card-color">Burgundy / Coral</div>
+        <div class="bp-card-price">$149.00</div>
+        <a href="#" class="bp-card-cta">Choose Options</a>
+      </div>
+    </article>
+
+    <article class="bp-product-card" role="listitem">
+      <span class="bp-card-badge">New</span>
+      <a href="#" class="bp-card-img-wrap" aria-label="View Animal Print Blouse">
+        <div class="bp-card-img-placeholder">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="2" fill="#ccc"/><path d="M8 32l8-10 6 7 4-5 6 8H8z" fill="#aaa"/><circle cx="27" cy="14" r="4" fill="#aaa"/></svg>
+          <span>Product Image</span>
+        </div>
+      </a>
+      <div class="bp-card-body">
+        <div class="bp-card-name">Animal Print Blouse</div>
+        <div class="bp-card-color">Leopard / Ivory</div>
+        <div class="bp-card-price">$89.00</div>
+        <a href="#" class="bp-card-cta">Add to Bag</a>
+      </div>
+    </article>
+
+    <article class="bp-product-card" role="listitem">
+      <a href="#" class="bp-card-img-wrap" aria-label="View Athleisure Jogger Set">
+        <div class="bp-card-img-placeholder">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="2" fill="#ccc"/><path d="M8 32l8-10 6 7 4-5 6 8H8z" fill="#aaa"/><circle cx="27" cy="14" r="4" fill="#aaa"/></svg>
+          <span>Product Image</span>
+        </div>
+      </a>
+      <div class="bp-card-body">
+        <div class="bp-card-name">Athleisure Jogger Set</div>
+        <div class="bp-card-color">Stone / Blush</div>
+        <div class="bp-card-price">$119.00 <span class="bp-price-original">$138.00</span></div>
+        <a href="#" class="bp-card-cta">Choose Options</a>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="bp-strip-footer">
+    <a href="#" class="bp-strip-see-all">View All New Arrivals &rarr;</a>
+  </div>
+</section>
+
+<!-- BELOW-FOLD STUB -->
+<div class="bp-below-fold">
+  <p>↓ &nbsp; Existing page content continues below (Shop By Category, Brand Story, Trending Now, Loyalty, One Look. Every Plan., Pre-Styled Looks, Product Carousel) &nbsp; ↓</p>
+</div>
+
+<!-- INTERNAL REVIEW BADGE -->
+<div class="bp-variant-badge">CRO-142 · Variant B · Internal Review</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ============================================================
+     HERO SLIDE DOT INTERACTION (cosmetic — mirrors live hero)
+  ============================================================ */
+  var dots = document.querySelectorAll('.bp-hero-dot');
+  dots.forEach(function (dot) {
+    dot.addEventListener('click', function () {
+      dots.forEach(function (d) { d.classList.remove('active'); });
+      dot.classList.add('active');
+    });
+  });
+
+  /* ============================================================
+     PRODUCTION INJECTION LOGIC (commented — shows how this
+     would work when injected via Monetate / GTM on the live page)
+
+     In production, replace the static card markup above with:
+
+     1. Query existing product cards from the DOM:
+        var existingCards = document.querySelectorAll(
+          '.shoppable-section .product-card, .pre-styled-looks .product-card'
+        );
+
+     2. Clone up to 4 cards and append to #bpProductRail:
+        var rail = document.getElementById('bpProductRail');
+        var cloned = 0;
+        existingCards.forEach(function (card) {
+          if (cloned >= 4) return;
+          var clone = card.cloneNode(true);
+          clone.classList.add('bp-product-card');
+          rail.appendChild(clone);
+          cloned++;
+        });
+
+     3. Insert the .bp-shoppable-strip element after the hero:
+        var hero = document.querySelector('.hero, [data-section-type="image-banner"]');
+        if (hero && hero.parentNode) {
+          hero.parentNode.insertBefore(strip, hero.nextSibling);
+        }
+  ============================================================ */
+
+  /* ============================================================
+     CARD CTA CLICK — analytics stub
+  ============================================================ */
+  var ctas = document.querySelectorAll('.bp-card-cta');
+  ctas.forEach(function (cta) {
+    cta.addEventListener('click', function (e) {
+      e.preventDefault();
+      var cardName = cta.closest('.bp-product-card').querySelector('.bp-card-name');
+      var productName = cardName ? cardName.textContent.trim() : 'Unknown';
+      // In production: window.dataLayer.push({ event: 'cro_hero_strip_cta_click', product: productName, test: 'CRO-142' });
+      console.log('[CRO-142] Hero strip CTA clicked:', productName);
+      // Visual feedback for review purposes
+      cta.textContent = 'Added ✓';
+      cta.style.background = '#2e7d32';
+      setTimeout(function () {
+        cta.textContent = cta.dataset.originalText || 'Choose Options';
+        cta.style.background = '';
+      }, 1800);
+    });
+  });
+
+  // Store original CTA text
+  ctas.forEach(function (cta) {
+    cta.dataset.originalText = cta.textContent.trim();
+  });
+
+  /* ============================================================
+     KEYBOARD SCROLL SUPPORT FOR PRODUCT RAIL
+  ============================================================ */
+  var rail = document.getElementById('bpProductRail');
+  if (rail) {
+    rail.setAttribute('tabindex', '0');
+    rail.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') {
+        rail.scrollBy({ left: 240, behavior: 'smooth' });
+      } else if (e.key === 'ArrowLeft') {
+        rail.scrollBy({ left: -240, behavior: 'smooth' });
+      }
+    });
+  }
+
+}());
+</script>
+</body>
+</html>
