@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boston Proper – CRO-142 Hero Shoppable Overlay Mockup</title>
+<style>
+/* === RESET & BASE === */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, -apple-system, sans-serif; background: #fafaf7; color: #1a1a1a; }
+
+/* === PROMO BANNER === */
+.bp-promo-banner {
+  background: #1a1a1a;
+  color: #fafaf7;
+  text-align: center;
+  padding: 10px 16px;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+.bp-promo-banner span { color: #d4735e; font-weight: 700; }
+
+/* === NAV === */
+.bp-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 32px;
+  background: #fafaf7;
+  border-bottom: 1px solid #e8e4de;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.bp-nav-logo {
+  font-family: Georgia, serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #1a1a1a;
+  text-transform: uppercase;
+}
+.bp-nav-links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+.bp-nav-links a {
+  text-decoration: none;
+  color: #1a1a1a;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.bp-nav-icons { display: flex; gap: 16px; font-size: 18px; cursor: pointer; }
+
+/* === HERO SECTION === */
+.bp-hero-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  cursor: pointer;
+}
+.bp-hero-image {
+  width: 100%;
+  height: 580px;
+  object-fit: cover;
+  display: block;
+  background: linear-gradient(135deg, #c9b8a8 0%, #8b7355 40%, #6b4c3b 100%);
+}
+.bp-hero-image-placeholder {
+  width: 100%;
+  height: 580px;
+  background: linear-gradient(135deg, #c9b8a8 0%, #8b7355 40%, #6b4c3b 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fafaf7;
+  text-align: center;
+  padding: 32px;
+}
+.bp-hero-image-placeholder h1 {
+  font-family: Georgia, serif;
+  font-size: clamp(32px, 5vw, 64px);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  margin-bottom: 12px;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+.bp-hero-image-placeholder p {
+  font-size: 16px;
+  opacity: 0.9;
+  margin-bottom: 28px;
+  letter-spacing: 0.04em;
+}
+.bp-hero-image-placeholder .bp-hero-ctas {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.bp-hero-cta-btn {
+  padding: 12px 28px;
+  border: 2px solid #fafaf7;
+  background: transparent;
+  color: #fafaf7;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.bp-hero-cta-btn:hover { background: #fafaf7; color: #1a1a1a; }
+
+/* === SCRIM OVERLAY === */
+.bp-hero-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(26,26,26,0.72);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+.bp-hero-wrapper.overlay-active .bp-hero-scrim {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* === SHOP THE LOOK PILL === */
+.bp-stl-pill {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  background: #d4735e;
+  color: #fafaf7;
+  border: none;
+  border-radius: 40px;
+  padding: 11px 28px;
+  font-size: 13px;
+  font-family: system-ui, -apple-system, sans-serif;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(212,115,94,0.45);
+  transition: background 0.2s, transform 0.2s;
+  white-space: nowrap;
+}
+.bp-stl-pill:hover { background: #bf5f4a; transform: translateX(-50%) translateY(-2px); }
+
+/* === PRODUCT PANEL === */
+.bp-product-panel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  padding: 28px 32px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  pointer-events: none;
+}
+.bp-hero-wrapper.overlay-active .bp-product-panel {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.bp-panel-heading {
+  font-family: Georgia, serif;
+  font-size: 22px;
+  color: #fafaf7;
+  letter-spacing: 0.06em;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 400;
+}
+.bp-cards-row {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  width: 100%;
+  max-width: 960px;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: #d4735e #1a1a1a;
+  justify-content: center;
+}
+.bp-cards-row::-webkit-scrollbar { height: 4px; }
+.bp-cards-row::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); }
+.bp-cards-row::-webkit-scrollbar-thumb { background: #d4735e; border-radius: 2px; }
+
+/* === PRODUCT CARD === */
+.bp-product-card {
+  background: #fafaf7;
+  border-radius: 4px;
+  width: 200px;
+  min-width: 180px;
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.2s;
+}
+.bp-product-card.card-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.bp-product-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.22); }
+.bp-card-img-wrap {
+  width: 100%;
+  height: 140px;
+  overflow: hidden;
+  background: #e8e4de;
+  position: relative;
+}
+.bp-card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+.bp-product-card:hover .bp-card-img-wrap img { transform: scale(1.04); }
+.bp-card-img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: #8a7a6e;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #e8e4de, #d4c8bc);
+}
+.bp-card-body {
+  padding: 12px 12px 14px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.bp-card-name {
+  font-family: Georgia, serif;
+  font-size: 13px;
+  color: #1a1a1a;
+  line-height: 1.4;
+  margin-bottom: 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.bp-card-price {
+  font-size: 13px;
+  font-weight: 700;
+  color: #d4735e;
+  margin-bottom: 10px;
+}
+.bp-card-shop-btn {
+  display: block;
+  width: 100%;
+  padding: 9px 0;
+  background: #d4735e;
+  color: #fafaf7;
+  border: none;
+  border-radius: 2px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: auto;
+}
+.bp-card-shop-btn:hover { background: #bf5f4a; }
+
+/* === CLOSE BUTTON === */
+.bp-scrim-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  z-index: 11;
+  background: rgba(250,250,247,0.15);
+  border: 1px solid rgba(250,250,247,0.4);
+  color: #fafaf7;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s, background 0.2s;
+}
+.bp-hero-wrapper.overlay-active .bp-scrim-close {
+  opacity: 1;
+  pointer-events: auto;
+}
+.bp-scrim-close:hover { background: rgba(212,115,94,0.5); }
+
+/* === BELOW-HERO CONTENT (simulated page sections) === */
+.bp-section {
+  padding: 56px 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.bp-section-title {
+  font-family: Georgia, serif;
+  font-size: clamp(22px, 3vw, 36px);
+  font-weight: 400;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+.bp-section-sub {
+  font-size: 14px;
+  color: #6b5e52;
+  margin-bottom: 32px;
+  letter-spacing: 0.03em;
+}
+.bp-category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.bp-category-tile {
+  background: linear-gradient(135deg, #c9b8a8, #8b7355);
+  border-radius: 4px;
+  height: 220px;
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+  cursor: pointer;
+}
+.bp-category-tile span {
+  font-family: Georgia, serif;
+  font-size: 16px;
+  color: #fafaf7;
+  letter-spacing: 0.05em;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+}
+.bp-loyalty-banner {
+  background: #1a1a1a;
+  color: #fafaf7;
+  text-align: center;
+  padding: 40px 32px;
+  margin: 0;
+}
+.bp-loyalty-banner h2 {
+  font-family: Georgia, serif;
+  font-size: 28px;
+  font-weight: 400;
+  margin-bottom: 10px;
+  letter-spacing: 0.04em;
+}
+.bp-loyalty-banner p { font-size: 14px; opacity: 0.8; margin-bottom: 20px; }
+.bp-loyalty-btn {
+  padding: 12px 32px;
+  background: #d4735e;
+  color: #fafaf7;
+  border: none;
+  border-radius: 2px;
+  font-size: 13px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* === MOBILE === */
+@media (max-width: 767px) {
+  .bp-nav-links { display: none; }
+  .bp-nav { padding: 12px 16px; }
+  .bp-hero-image-placeholder { height: 420px; }
+  .bp-hero-image-placeholder h1 { font-size: 28px; }
+  .bp-product-panel {
+    padding: 20px 16px 72px;
+    /* On mobile: always visible as bottom drawer */
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
+  }
+  .bp-hero-scrim {
+    opacity: 0.6 !important;
+    pointer-events: none !important;
+  }
+  .bp-cards-row {
+    justify-content: flex-start;
+    padding-bottom: 8px;
+  }
+  .bp-product-card {
+    min-width: 155px;
+    width: 155px;
+  }
+  .bp-card-img-wrap { height: 110px; }
+  .bp-panel-heading { font-size: 18px; margin-bottom: 14px; }
+  .bp-stl-pill { bottom: 16px; padding: 10px 22px; font-size: 12px; }
+  .bp-category-grid { grid-template-columns: repeat(2, 1fr); }
+  .bp-section { padding: 40px 16px; }
+  .bp-scrim-close { display: none; }
+}
+
+/* === BADGE === */
+.bp-test-badge {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  background: #d4735e;
+  color: #fafaf7;
+  font-size: 11px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+  z-index: 9999;
+  font-family: system-ui, sans-serif;
+  box-shadow: 0 2px 10px rgba(212,115,94,0.4);
+  pointer-events: none;
+}
+</style>
+</head>
+<body>
+
+<!-- PROMO BANNER -->
+<div class="bp-promo-banner">
+  Enjoy 20% Off $150+ &nbsp;|&nbsp; Code: <span>NEWMOOD</span> &nbsp;|&nbsp; Free Shipping on Orders $99+
+</div>
+
+<!-- NAV -->
+<nav class="bp-nav">
+  <div class="bp-nav-logo">Boston Proper</div>
+  <ul class="bp-nav-links">
+    <li><a href="#">New Arrivals</a></li>
+    <li><a href="#">Dresses</a></li>
+    <li><a href="#">Jackets</a></li>
+    <li><a href="#">Tops</a></li>
+    <li><a href="#">Athleisure</a></li>
+    <li><a href="#">Sale</a></li>
+  </ul>
+  <div class="bp-nav-icons">
+    <span title="Search">&#128269;</span>
+    <span title="Account">&#128100;</span>
+    <span title="Bag">&#128717;</span>
+  </div>
+</nav>
+
+<!-- ============================================================
+     HERO SECTION — CRO-142 VARIANT: HOVER-REVEAL OVERLAY PANEL
+     ============================================================ -->
+<section class="bp-hero-wrapper" id="bpHeroWrapper" role="region" aria-label="Featured Look — Shop The Look">
+
+  <!-- Hero image placeholder (simulates live hero) -->
+  <div class="bp-hero-image-placeholder" id="bpHeroImg" aria-hidden="true">
+    <h1>Your Best Era Yet</h1>
+    <p>Effortless style for every occasion — new arrivals now in.</p>
+    <div class="bp-hero-ctas">
+      <button class="bp-hero-cta-btn">Shop New Arrivals</button>
+      <button class="bp-hero-cta-btn">Shop Jackets</button>
+    </div>
+  </div>
+
+  <!-- Scrim overlay -->
+  <div class="bp-hero-scrim" id="bpScrim" aria-hidden="true"></div>
+
+  <!-- Close button -->
+  <button class="bp-scrim-close" id="bpScrimClose" aria-label="Close shop the look panel">&#10005;</button>
+
+  <!-- Shop The Look pill (persistent) -->
+  <button class="bp-stl-pill" id="bpStlPill" aria-expanded="false" aria-controls="bpProductPanel">
+    Shop The Look &#8595;
+  </button>
+
+  <!-- Product panel -->
+  <div class="bp-product-panel" id="bpProductPanel" role="region" aria-label="Shoppable product tiles">
+    <h2 class="bp-panel-heading">Shop The Look</h2>
+    <div class="bp-cards-row" id="bpCardsRow">
+      <!-- Cards injected by JS -->
+    </div>
+  </div>
+
+</section>
+
+<!-- BELOW HERO: simulated page sections -->
+<section class="bp-section">
+  <h2 class="bp-section-title">Shop By Category</h2>
+  <p class="bp-section-sub">Discover your next favourite piece.</p>
+  <div class="bp-category-grid">
+    <div class="bp-category-tile"><span>Dresses</span></div>
+    <div class="bp-category-tile" style="background:linear-gradient(135deg,#b8a898,#6b5040);"><span>Jackets</span></div>
+    <div class="bp-category-tile" style="background:linear-gradient(135deg,#d4c8bc,#9a8070);"><span>Tops</span></div>
+    <div class="bp-category-tile" style="background:linear-gradient(135deg,#c4b4a4,#7a6858);"><span>Athleisure</span></div>
+  </div>
+</section>
+
+<div class="bp-loyalty-banner">
+  <h2>Find it. Love it. Earn Double.</h2>
+  <p>Join Boston Proper Rewards and earn points on every purchase.</p>
+  <button class="bp-loyalty-btn">Join Now</button>
+</div>
+
+<!-- TEST BADGE (internal only) -->
+<div class="bp-test-badge">CRO-142 Variant B</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // ── PRODUCT DATA ──────────────────────────────────────────────
+  // Sourced from Pre-Styled Looks section present in live page DOM.
+  // In production: replace with cloned nodes from actual page elements.
+  var PRODUCTS = [
+    {
+      name: 'Printed Wrap Midi Dress',
+      price: '$129.00',
+      pdpUrl: 'https://www.bostonproper.com/collections/dresses',
+      imgAlt: 'Printed Wrap Midi Dress'
+    },
+    {
+      name: 'Tailored Blazer Jacket',
+      price: '$149.00',
+      pdpUrl: 'https://www.bostonproper.com/collections/jackets',
+      imgAlt: 'Tailored Blazer Jacket'
+    },
+    {
+      name: 'Ruched Side-Slit Top',
+      price: '$79.00',
+      pdpUrl: 'https://www.bostonproper.com/collections/tops',
+      imgAlt: 'Ruched Side-Slit Top'
+    },
+    {
+      name: 'High-Rise Slim Trouser',
+      price: '$99.00',
+      pdpUrl: 'https://www.bostonproper.com/collections/pants',
+      imgAlt: 'High-Rise Slim Trouser'
+    }
+  ];
+
+  // ── DOM REFS ──────────────────────────────────────────────────
+  var wrapper   = document.getElementById('bpHeroWrapper');
+  var pill      = document.getElementById('bpStlPill');
+  var closeBtn  = document.getElementById('bpScrimClose');
+  var scrim     = document.getElementById('bpScrim');
+  var panel     = document.getElementById('bpProductPanel');
+  var cardsRow  = document.getElementById('bpCardsRow');
+  var heroImg   = document.getElementById('bpHeroImg');
+
+  // ── BUILD CARDS ───────────────────────────────────────────────
+  function buildCards() {
+    PRODUCTS.forEach(function(p, i) {
+      var card = document.createElement('div');
+      card.className = 'bp-product-card';
+      card.setAttribute('data-index', i);
+
+      var imgWrap = document.createElement('div');
+      imgWrap.className = 'bp-card-img-wrap';
+
+      // Attempt to clone real image from page; fall back to placeholder
+      var realImg = null;
+      try {
+        var allImgs = document.querySelectorAll('img[src*="cdn.shopify"]');
+        if (allImgs && allImgs[i]) {
+          realImg = allImgs[i].cloneNode(true);
+          realImg.removeAttribute('loading');
+          realImg.style.width = '100%';
+          realImg.style.height = '100%';
+          realImg.style.objectFit = 'cover';
+        }
+      } catch(e) { realImg = null; }
+
+      if (realImg) {
+        imgWrap.appendChild(realImg);
+      } else {
+        var ph = document.createElement('div');
+        ph.className = 'bp-card-img-placeholder';
+        ph.textContent = p.imgAlt;
+        imgWrap.appendChild(ph);
+      }
+
+      var body = document.createElement('div');
+      body.className = 'bp-card-body';
+
+      var name = document.createElement('div');
+      name.className = 'bp-card-name';
+      name.textContent = p.name;
+
+      var price = document.createElement('div');
+      price.className = 'bp-card-price';
+      price.textContent = p.price;
+
+      var btn = document.createElement('a');
+      btn.className = 'bp-card-shop-btn';
+      btn.href = p.pdpUrl;
+      btn.textContent = 'Shop Now';
+      btn.setAttribute('target', '_blank');
+      btn.setAttribute('rel', 'noopener');
+
+      body.appendChild(name);
+      body.appendChild(price);
+      body.appendChild(btn);
+      card.appendChild(imgWrap);
+      card.appendChild(body);
+      cardsRow.appendChild(card);
+    });
+  }
+
+  // ── STAGGER ANIMATION ─────────────────────────────────────────
+  function animateCards() {
+    var cards = cardsRow.querySelectorAll('.bp-product-card');
+    cards.forEach(function(card, i) {
+      card.classList.remove('card-visible');
+      setTimeout(function() {
+        card.classList.add('card-visible');
+      }, 80 + i * 150);
+    });
+  }
+
+  function resetCards() {
+    var cards = cardsRow.querySelectorAll('.bp-product-card');
+    cards.forEach(function(card) {
+      card.classList.remove('card-visible');
+    });
+  }
+
+  // ── OVERLAY STATE ─────────────────────────────────────────────
+  var isOpen = false;
+
+  function openOverlay() {
+    if (isOpen) return;
+    isOpen = true;
+    wrapper.classList.add('overlay-active');
+    pill.textContent = 'Close \u2715';
+    pill.setAttribute('aria-expanded', 'true');
+    animateCards();
+  }
+
+  function closeOverlay() {
+    if (!isOpen) return;
+    isOpen = false;
+    wrapper.classList.remove('overlay-active');
+    pill.innerHTML = 'Shop The Look &#8595;';
+    pill.setAttribute('aria-expanded', 'false');
+    resetCards();
+  }
+
+  // ── EVENTS ────────────────────────────────────────────────────
+  // Pill click: toggle
+  pill.addEventListener('click', function(e) {
+    e.stopPropagation();
+    isOpen ? closeOverlay() : openOverlay();
+  });
+
+  // Close button
+  closeBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    closeOverlay();
+  });
+
+  // Hero hover (desktop): open on mouseenter, close on mouseleave
+  // Guard: only on non-touch devices
+  var isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+  if (!isTouchDevice) {
+    wrapper.addEventListener('mouseenter', function() {
+      openOverlay();
+    });
+    wrapper.addEventListener('mouseleave', function(e) {
+      // Don't close if moving to pill or panel
+      var related = e.relatedTarget;
+      if (related && wrapper.contains(related)) return;
+      closeOverlay();
+    });
+  }
+
+  // Scrim click: close
+  scrim.addEventListener('click', function() {
+    closeOverlay();
+  });
+
+  // Prevent panel clicks from closing via scrim
+  panel.addEventListener('click', function(e) {
+    e.stopPropagation();
+  });
+
+  // Keyboard: Escape to close
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && isOpen) closeOverlay();
+  });
+
+  // ── MOBILE: always-visible panel ─────────────────────────────
+  function handleMobileInit() {
+    if (window.innerWidth < 768) {
+      // On mobile, show panel immediately without hover
+      wrapper.classList.add('overlay-active');
+      isOpen = true;
+      pill.textContent = 'Close \u2715';
+      pill.setAttribute('aria-expanded', 'true');
+      // Animate cards after short delay
+      setTimeout(animateCards, 300);
+    }
+  }
+
+  // ── INIT ──────────────────────────────────────────────────────
+  buildCards();
+  handleMobileInit();
+
+  // Re-check on resize
+  var resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      if (window.innerWidth < 768 && !isOpen) {
+        openOverlay();
+      }
+    }, 200);
+  });
+
+})();
+</script>
+</body>
+</html>
