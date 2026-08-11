@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boston Proper – Sticky ATC Bar Mockup (CRO-142)</title>
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #fafaf7;
+  color: #1a1a1a;
+  min-height: 200vh;
+}
+
+/* ===== SIMULATED SITE HEADER ===== */
+.bp-sim-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e0ddd8;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.bp-sim-header__logo {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #1a1a1a;
+  text-transform: uppercase;
+}
+.bp-sim-header__nav {
+  display: flex;
+  gap: 20px;
+}
+.bp-sim-header__nav a {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  text-decoration: none;
+}
+
+/* ===== PDP LAYOUT ===== */
+.bp-pdp {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+@media (max-width: 768px) {
+  .bp-pdp {
+    grid-template-columns: 1fr;
+    padding: 16px 16px 120px;
+    gap: 24px;
+  }
+}
+
+/* ===== PRODUCT IMAGE ===== */
+.bp-pdp__image-wrap {
+  position: relative;
+  background: #ede9e3;
+  border-radius: 4px;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bp-pdp__image-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: #8a8078;
+}
+.bp-pdp__image-placeholder svg {
+  opacity: 0.4;
+}
+.bp-pdp__image-placeholder span {
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+.bp-pdp__badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: #d4735e;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 2px;
+}
+
+/* ===== PRODUCT DETAILS ===== */
+.bp-pdp__details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.bp-pdp__breadcrumb {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8a8078;
+}
+.bp-pdp__breadcrumb a {
+  color: #8a8078;
+  text-decoration: none;
+}
+.bp-pdp__breadcrumb a:hover { text-decoration: underline; }
+.bp-pdp__title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.25;
+  color: #1a1a1a;
+  letter-spacing: 0.01em;
+}
+@media (max-width: 768px) {
+  .bp-pdp__title { font-size: 22px; }
+}
+.bp-pdp__price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.bp-pdp__price {
+  font-size: 22px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+.bp-pdp__price--original {
+  font-size: 16px;
+  font-weight: 400;
+  color: #8a8078;
+  text-decoration: line-through;
+}
+.bp-pdp__price--sale {
+  color: #d4735e;
+}
+.bp-pdp__rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #8a8078;
+}
+.bp-pdp__stars {
+  color: #d4735e;
+  letter-spacing: 2px;
+}
+.bp-pdp__divider {
+  border: none;
+  border-top: 1px solid #e0ddd8;
+}
+
+/* ===== VARIANT SELECTORS ===== */
+.bp-pdp__selector-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  margin-bottom: 10px;
+}
+.bp-pdp__color-swatches {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.bp-pdp__swatch {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.bp-pdp__swatch.active,
+.bp-pdp__swatch:hover {
+  border-color: #1a1a1a;
+  outline: 2px solid #fafaf7;
+  outline-offset: -4px;
+}
+.bp-pdp__size-grid {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.bp-pdp__size-btn {
+  min-width: 48px;
+  height: 40px;
+  padding: 0 10px;
+  border: 1px solid #c8c4be;
+  background: #ffffff;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: #1a1a1a;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.15s;
+}
+.bp-pdp__size-btn.active,
+.bp-pdp__size-btn:hover {
+  background: #1a1a1a;
+  color: #ffffff;
+  border-color: #1a1a1a;
+}
+.bp-pdp__size-btn.sold-out {
+  color: #c8c4be;
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+
+/* ===== NATIVE ATC BUTTON ===== */
+#bp-native-atc {
+  display: block;
+  width: 100%;
+  padding: 16px 24px;
+  background: #d4735e;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#bp-native-atc:hover { background: #bf5f4a; }
+
+/* ===== PRODUCT DESCRIPTION ===== */
+.bp-pdp__desc {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #4a4540;
+}
+.bp-pdp__desc p + p { margin-top: 10px; }
+.bp-pdp__accordion {
+  border-top: 1px solid #e0ddd8;
+  padding-top: 16px;
+}
+.bp-pdp__accordion-item {
+  border-bottom: 1px solid #e0ddd8;
+}
+.bp-pdp__accordion-trigger {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 14px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  cursor: pointer;
+}
+.bp-pdp__accordion-trigger .icon {
+  font-size: 18px;
+  font-weight: 300;
+  color: #8a8078;
+  transition: transform 0.2s;
+}
+.bp-pdp__accordion-trigger.open .icon { transform: rotate(45deg); }
+.bp-pdp__accordion-body {
+  display: none;
+  padding: 0 0 16px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #4a4540;
+}
+.bp-pdp__accordion-body.open { display: block; }
+
+/* ===== SCROLL INDICATOR (demo helper) ===== */
+.bp-scroll-hint {
+  text-align: center;
+  padding: 40px 24px;
+  color: #8a8078;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-top: 1px solid #e0ddd8;
+  margin-top: 40px;
+}
+.bp-scroll-hint__arrow {
+  display: block;
+  font-size: 24px;
+  animation: bounce 1.4s infinite;
+  margin-bottom: 8px;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+/* ===== STICKY ATC BAR (VARIANT / TEST ELEMENT) ===== */
+#bp-sticky-atc {
+  display: none; /* hidden by default; JS shows it on mobile only */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background: #ffffff;
+  border-top: 2px solid #d4735e;
+  box-shadow: 0 -4px 20px rgba(26,26,26,0.12);
+  padding: 12px 16px;
+  align-items: center;
+  gap: 12px;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+#bp-sticky-atc.bp-sticky-atc--visible {
+  transform: translateY(0);
+}
+@media (max-width: 768px) {
+  #bp-sticky-atc {
+    display: flex;
+  }
+}
+.bp-sticky-atc__info {
+  flex: 1;
+  min-width: 0;
+}
+.bp-sticky-atc__name {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #1a1a1a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+}
+.bp-sticky-atc__price {
+  font-size: 13px;
+  font-weight: 700;
+  color: #d4735e;
+  margin-top: 2px;
+}
+.bp-sticky-atc__btn {
+  flex-shrink: 0;
+  padding: 12px 20px;
+  background: #d4735e;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.bp-sticky-atc__btn:hover { background: #bf5f4a; }
+.bp-sticky-atc__btn:active { background: #a84e3b; }
+.bp-sticky-atc__close {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: #8a8078;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px;
+  margin-left: 4px;
+  transition: color 0.15s;
+}
+.bp-sticky-atc__close:hover { color: #1a1a1a; }
+
+/* ===== DEMO LABEL ===== */
+.bp-demo-label {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: #1a1a1a;
+  color: #fafaf7;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border-radius: 2px;
+  z-index: 10000;
+  pointer-events: none;
+}
+</style>
+</head>
+<body>
+
+<!-- DEMO LABEL -->
+<div class="bp-demo-label">CRO Mockup – Mobile Only</div>
+
+<!-- SIMULATED SITE HEADER -->
+<header class="bp-sim-header">
+  <div class="bp-sim-header__logo">Boston Proper</div>
+  <nav class="bp-sim-header__nav">
+    <a href="#">New</a>
+    <a href="#">Dresses</a>
+    <a href="#">Tops</a>
+    <a href="#">Sale</a>
+  </nav>
+</header>
+
+<!-- SIMULATED PDP -->
+<main class="bp-pdp">
+
+  <!-- LEFT: Product Image -->
+  <div class="bp-pdp__image-wrap">
+    <span class="bp-pdp__badge">New Arrival</span>
+    <div class="bp-pdp__image-placeholder">
+      <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="80" height="80" rx="4" fill="#c8c4be"/>
+        <path d="M20 56 L30 38 L40 50 L52 32 L60 56 Z" fill="#8a8078"/>
+        <circle cx="28" cy="28" r="7" fill="#8a8078"/>
+      </svg>
+      <span>Product Image</span>
+    </div>
+  </div>
+
+  <!-- RIGHT: Product Details -->
+  <div class="bp-pdp__details">
+
+    <div class="bp-pdp__breadcrumb">
+      <a href="#">Home</a> / <a href="#">Dresses</a> / Floral Wrap Midi Dress
+    </div>
+
+    <h1 class="bp-pdp__title" id="bp-product-title">Floral Wrap Midi Dress</h1>
+
+    <div class="bp-pdp__price-row">
+      <span class="bp-pdp__price bp-pdp__price--sale" id="bp-product-price">$89.00</span>
+      <span class="bp-pdp__price--original">$128.00</span>
+    </div>
+
+    <div class="bp-pdp__rating">
+      <span class="bp-pdp__stars">★★★★★</span>
+      <span>4.8 (124 reviews)</span>
+    </div>
+
+    <hr class="bp-pdp__divider">
+
+    <!-- Color Selector -->
+    <div>
+      <div class="bp-pdp__selector-label">Color: <span style="font-weight:400;text-transform:none;letter-spacing:0;">Coral Sunset</span></div>
+      <div class="bp-pdp__color-swatches">
+        <div class="bp-pdp__swatch active" style="background:#d4735e;" title="Coral Sunset"></div>
+        <div class="bp-pdp__swatch" style="background:#3a5f8a;" title="Navy"></div>
+        <div class="bp-pdp__swatch" style="background:#2e6b4f;" title="Emerald"></div>
+        <div class="bp-pdp__swatch" style="background:#1a1a1a;" title="Black"></div>
+      </div>
+    </div>
+
+    <!-- Size Selector -->
+    <div>
+      <div class="bp-pdp__selector-label">Size:</div>
+      <div class="bp-pdp__size-grid">
+        <button class="bp-pdp__size-btn sold-out" disabled>XS</button>
+        <button class="bp-pdp__size-btn">S</button>
+        <button class="bp-pdp__size-btn active">M</button>
+        <button class="bp-pdp__size-btn">L</button>
+        <button class="bp-pdp__size-btn">XL</button>
+        <button class="bp-pdp__size-btn">1X</button>
+        <button class="bp-pdp__size-btn">2X</button>
+        <button class="bp-pdp__size-btn sold-out" disabled>3X</button>
+      </div>
+    </div>
+
+    <!-- Native ATC Button -->
+    <button id="bp-native-atc">Add to Cart</button>
+
+    <!-- Product Description -->
+    <div class="bp-pdp__desc">
+      <p>Effortlessly elegant, this floral wrap midi dress is crafted from a lightweight, fluid fabric that drapes beautifully. The adjustable wrap silhouette flatters every figure, while the vibrant coral sunset print makes a statement from brunch to evening.</p>
+      <p>Pair with strappy sandals and a clutch for a polished warm-weather look.</p>
+    </div>
+
+    <!-- Accordion -->
+    <div class="bp-pdp__accordion">
+      <div class="bp-pdp__accordion-item">
+        <button class="bp-pdp__accordion-trigger" data-target="acc-details">
+          Product Details <span class="icon">+</span>
+        </button>
+        <div class="bp-pdp__accordion-body" id="acc-details">
+          100% Polyester · Machine wash cold · Imported · Model is 5'9" wearing size S · Midi length (approx. 44" from shoulder)
+        </div>
+      </div>
+      <div class="bp-pdp__accordion-item">
+        <button class="bp-pdp__accordion-trigger" data-target="acc-shipping">
+          Shipping &amp; Returns <span class="icon">+</span>
+        </button>
+        <div class="bp-pdp__accordion-body" id="acc-shipping">
+          Free standard shipping on orders over $75. Easy returns within 30 days of delivery.
+        </div>
+      </div>
+      <div class="bp-pdp__accordion-item">
+        <button class="bp-pdp__accordion-trigger" data-target="acc-size">
+          Size Guide <span class="icon">+</span>
+        </button>
+        <div class="bp-pdp__accordion-body" id="acc-size">
+          S: 4–6 · M: 8–10 · L: 12–14 · XL: 16 · 1X: 16W–18W · 2X: 20W–22W · 3X: 24W–26W
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- SCROLL HINT (demo helper) -->
+<div class="bp-scroll-hint">
+  <span class="bp-scroll-hint__arrow">↓</span>
+  Scroll down on mobile to trigger sticky bar
+</div>
+
+<!-- ============================================================
+     STICKY ATC BAR — TEST VARIANT ELEMENT
+     Visible only on mobile (≤768px) via CSS + JS scroll trigger
+     ============================================================ -->
+<div id="bp-sticky-atc" role="region" aria-label="Quick Add to Cart">
+  <div class="bp-sticky-atc__info">
+    <div class="bp-sticky-atc__name" id="bp-sticky-name">Floral Wrap Midi Dress</div>
+    <div class="bp-sticky-atc__price" id="bp-sticky-price">$89.00</div>
+  </div>
+  <button class="bp-sticky-atc__btn" id="bp-sticky-atc-btn" aria-label="Add to Cart">Add to Cart</button>
+  <button class="bp-sticky-atc__close" id="bp-sticky-close" aria-label="Dismiss sticky bar">&#x2715;</button>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ── CONFIG ── */
+  var MOBILE_BREAKPOINT = 768;
+  var SESSION_KEY = 'bp_sticky_atc_dismissed';
+
+  /* ── ELEMENT REFS ── */
+  var stickyBar    = document.getElementById('bp-sticky-atc');
+  var nativeAtc    = document.getElementById('bp-native-atc');
+  var closeBtn     = document.getElementById('bp-sticky-close');
+  var stickyAtcBtn = document.getElementById('bp-sticky-atc-btn');
+  var stickyName   = document.getElementById('bp-sticky-name');
+  var stickyPrice  = document.getElementById('bp-sticky-price');
+
+  /* ── POPULATE FROM PDP DOM ──
+     In production, these selectors target the live Shopify PDP DOM.
+     Here they target the simulated PDP elements. */
+  var pdpTitle = document.getElementById('bp-product-title');
+  var pdpPrice = document.getElementById('bp-product-price');
+  if (pdpTitle && stickyName) stickyName.textContent = pdpTitle.textContent.trim();
+  if (pdpPrice && stickyPrice) stickyPrice.textContent = pdpPrice.textContent.trim();
+
+  /* ── DISMISSED STATE ── */
+  var dismissed = false;
+  try { dismissed = sessionStorage.getItem(SESSION_KEY) === '1'; } catch(e) {}
+
+  /* ── VISIBILITY LOGIC ── */
+  function isMobile() {
+    return window.innerWidth <= MOBILE_BREAKPOINT;
+  }
+
+  function isNativeAtcOutOfView() {
+    if (!nativeAtc) return false;
+    var rect = nativeAtc.getBoundingClientRect();
+    /* Native ATC is out of view when its bottom edge is above the viewport top,
+       or its top edge is below the viewport bottom */
+    return rect.bottom < 0 || rect.top > window.innerHeight;
+  }
+
+  function updateBar() {
+    if (!isMobile() || dismissed) {
+      stickyBar.classList.remove('bp-sticky-atc--visible');
+      return;
+    }
+    if (isNativeAtcOutOfView()) {
+      stickyBar.classList.add('bp-sticky-atc--visible');
+    } else {
+      stickyBar.classList.remove('bp-sticky-atc--visible');
+    }
+  }
+
+  /* ── SCROLL LISTENER (throttled) ── */
+  var ticking = false;
+  window.addEventListener('scroll', function () {
+    if (!ticking) {
+      window.requestAnimationFrame(function () {
+        updateBar();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+
+  /* ── RESIZE LISTENER ── */
+  window.addEventListener('resize', function () {
+    updateBar();
+  });
+
+  /* ── CLOSE / DISMISS ── */
+  closeBtn.addEventListener('click', function () {
+    dismissed = true;
+    try { sessionStorage.setItem(SESSION_KEY, '1'); } catch(e) {}
+    stickyBar.classList.remove('bp-sticky-atc--visible');
+  });
+
+  /* ── STICKY ATC CLICK ──
+     In production: trigger the native Shopify ATC form submit.
+     Here: scroll back to native button and flash it. */
+  stickyAtcBtn.addEventListener('click', function () {
+    if (nativeAtc) {
+      nativeAtc.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      nativeAtc.style.transition = 'box-shadow 0.2s';
+      nativeAtc.style.boxShadow = '0 0 0 4px rgba(212,115,94,0.45)';
+      setTimeout(function () {
+        nativeAtc.style.boxShadow = '';
+        /* In production, trigger: document.querySelector('form[action*="/cart/add"]').submit(); */
+      }, 1200);
+    }
+  });
+
+  /* ── SIZE BUTTON INTERACTION (demo) ── */
+  var sizeBtns = document.querySelectorAll('.bp-pdp__size-btn:not(.sold-out)');
+  sizeBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      sizeBtns.forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+    });
+  });
+
+  /* ── COLOR SWATCH INTERACTION (demo) ── */
+  var swatches = document.querySelectorAll('.bp-pdp__swatch');
+  swatches.forEach(function (sw) {
+    sw.addEventListener('click', function () {
+      swatches.forEach(function (s) { s.classList.remove('active'); });
+      sw.classList.add('active');
+    });
+  });
+
+  /* ── ACCORDION (demo) ── */
+  var triggers = document.querySelectorAll('.bp-pdp__accordion-trigger');
+  triggers.forEach(function (trigger) {
+    trigger.addEventListener('click', function () {
+      var targetId = trigger.getAttribute('data-target');
+      var body = document.getElementById(targetId);
+      var isOpen = body.classList.contains('open');
+      /* Close all */
+      document.querySelectorAll('.bp-pdp__accordion-body').forEach(function (b) { b.classList.remove('open'); });
+      document.querySelectorAll('.bp-pdp__accordion-trigger').forEach(function (t) { t.classList.remove('open'); });
+      /* Toggle clicked */
+      if (!isOpen) {
+        body.classList.add('open');
+        trigger.classList.add('open');
+      }
+    });
+  });
+
+  /* ── INITIAL CHECK ── */
+  updateBar();
+
+}());
+</script>
+</body>
+</html>
