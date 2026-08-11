@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRO-142 | Boston Proper | Hero Shoppable Strip Mockup</title>
+<style>
+/* === MOCKUP PAGE SHELL === */
+body { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; background: #f2ede8; }
+.bp-mock-hero {
+  width: 100%;
+  height: 420px;
+  background: linear-gradient(160deg, #2a2020 0%, #4a3530 60%, #d4735e 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fffef8;
+  text-align: center;
+  position: relative;
+}
+.bp-mock-hero h1 {
+  font-family: Georgia, serif;
+  font-size: 38px;
+  letter-spacing: 0.08em;
+  margin: 0 0 12px;
+  font-weight: normal;
+}
+.bp-mock-hero p {
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,254,248,0.75);
+  margin: 0 0 28px;
+}
+.bp-mock-hero-btns { display: flex; gap: 14px; }
+.bp-mock-hero-btn {
+  padding: 12px 28px;
+  border: 1.5px solid #fffef8;
+  color: #fffef8;
+  background: transparent;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.bp-mock-hero-btn:hover { background: #fffef8; color: #1a1a1a; }
+.bp-mock-label {
+  position: absolute;
+  top: 14px;
+  left: 18px;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,254,248,0.45);
+  font-family: Arial, sans-serif;
+}
+
+/* === CRO-142 BOSTON PROPER: HERO SHOPPABLE STRIP === */
+
+#bp-stl-strip {
+  width: 100%;
+  background: #fffef8;
+  border-top: 3px solid #d4735e;
+  overflow: hidden;
+  transform: translateY(40px);
+  opacity: 0;
+  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+  position: relative;
+  z-index: 10;
+}
+
+#bp-stl-strip.bp-stl-visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.bp-stl-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px 10px;
+  border-bottom: 1px solid rgba(26,26,26,0.08);
+}
+
+.bp-stl-label {
+  font-family: Georgia, serif;
+  font-size: 20px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: wrap;
+  row-gap: 2px;
+}
+
+.bp-stl-accent {
+  display: inline-block;
+  width: 28px;
+  height: 2px;
+  background: #d4735e;
+  vertical-align: middle;
+  margin: 0 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.bp-stl-subtitle {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: #888;
+  font-family: Arial, Helvetica, sans-serif;
+  text-transform: none;
+}
+
+@media (max-width: 480px) {
+  .bp-stl-subtitle { display: none; }
+  .bp-stl-header { padding: 12px 16px 8px; }
+  .bp-stl-label { font-size: 16px; }
+}
+
+.bp-stl-dismiss {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 11px;
+  color: #888;
+  line-height: 1;
+  padding: 4px 8px;
+  transition: color 0.2s;
+  font-family: Arial, Helvetica, sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  flex-shrink: 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.bp-stl-dismiss:hover { color: #1a1a1a; }
+
+.bp-stl-scroll-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.bp-stl-scroll-wrap::-webkit-scrollbar { display: none; }
+
+.bp-stl-tiles {
+  display: flex;
+  gap: 16px;
+  padding: 18px 16px 20px;
+  min-width: max-content;
+}
+
+@media (min-width: 768px) {
+  .bp-stl-tiles {
+    min-width: unset;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    padding: 20px 32px 24px;
+  }
+}
+
+.bp-stl-tile {
+  background: #fff;
+  border: 1px solid rgba(26,26,26,0.07);
+  border-radius: 2px;
+  width: 160px;
+  flex-shrink: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .bp-stl-tile { width: auto; }
+}
+
+.bp-stl-tile:hover {
+  box-shadow: 0 4px 18px rgba(26,26,26,0.10);
+}
+
+.bp-stl-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: #d4735e;
+  color: #fff;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  border-radius: 1px;
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  z-index: 2;
+}
+
+.bp-stl-img-wrap {
+  width: 100%;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  background: #e8e0d8;
+}
+
+.bp-stl-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.bp-stl-tile:hover .bp-stl-img-wrap img {
+  transform: scale(1.04);
+}
+
+.bp-stl-info {
+  padding: 10px 10px 12px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 5px;
+}
+
+.bp-stl-name {
+  font-family: Georgia, serif;
+  font-size: 12.5px;
+  color: #1a1a1a;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bp-stl-price {
+  font-size: 12px;
+  color: #d4735e;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.bp-stl-cta {
+  margin-top: auto;
+  display: block;
+  width: 100%;
+  padding: 8px 0;
+  border: 1.5px solid #d4735e;
+  background: transparent;
+  color: #d4735e;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: Arial, Helvetica, sans-serif;
+  transition: background 0.2s, color 0.2s;
+  border-radius: 1px;
+  text-align: center;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.bp-stl-cta:hover {
+  background: #d4735e;
+  color: #fff;
+}
+</style>
+</head>
+<body>
+
+<!-- Simulated Hero -->
+<div class="bp-mock-hero">
+  <span class="bp-mock-label">CRO-142 Mockup — Boston Proper</span>
+  <h1>Your Best Era Yet</h1>
+  <p>New arrivals — spring collection</p>
+  <div class="bp-mock-hero-btns">
+    <a href="#" class="bp-mock-hero-btn">Shop New Arrivals</a>
+    <a href="#" class="bp-mock-hero-btn">Shop Jackets</a>
+  </div>
+</div>
+
+<!-- CRO-142 | Boston Proper | Hero Shoppable Strip | Inject immediately after hero section -->
+<div id="bp-stl-strip" role="region" aria-label="Shop The Look">
+  <div class="bp-stl-header">
+    <div class="bp-stl-label">
+      Shop The Look
+      <span class="bp-stl-accent"></span>
+      <span class="bp-stl-subtitle">Featured from this week's looks</span>
+    </div>
+    <button class="bp-stl-dismiss" id="bp-stl-dismiss" aria-label="Dismiss shop the look strip">No thanks</button>
+  </div>
+  <div class="bp-stl-scroll-wrap">
+    <div class="bp-stl-tiles" id="bp-stl-tiles">
+      <div class="bp-stl-tile">
+        <span class="bp-stl-badge">New</span>
+        <div class="bp-stl-img-wrap">
+          <img src="" alt="Featured Style 1" loading="lazy">
+        </div>
+        <div class="bp-stl-info">
+          <div class="bp-stl-name">Floral Wrap Midi Dress</div>
+          <div class="bp-stl-price">$128.00</div>
+          <a href="https://www.bostonproper.com" class="bp-stl-cta">Add to Bag</a>
+        </div>
+      </div>
+      <div class="bp-stl-tile">
+        <div class="bp-stl-img-wrap">
+          <img src="" alt="Featured Style 2" loading="lazy">
+        </div>
+        <div class="bp-stl-info">
+          <div class="bp-stl-name">Tailored Linen Blazer</div>
+          <div class="bp-stl-price">$148.00</div>
+          <a href="https://www.bostonproper.com" class="bp-stl-cta">Add to Bag</a>
+        </div>
+      </div>
+      <div class="bp-stl-tile">
+        <div class="bp-stl-img-wrap">
+          <img src="" alt="Featured Style 3" loading="lazy">
+        </div>
+        <div class="bp-stl-info">
+          <div class="bp-stl-name">Printed Ruffle-Sleeve Top</div>
+          <div class="bp-stl-price">$89.00</div>
+          <a href="https://www.bostonproper.com" class="bp-stl-cta">Add to Bag</a>
+        </div>
+      </div>
+      <div class="bp-stl-tile">
+        <div class="bp-stl-img-wrap">
+          <img src="" alt="Featured Style 4" loading="lazy">
+        </div>
+        <div class="bp-stl-info">
+          <div class="bp-stl-name">Wide-Leg Cropped Pants</div>
+          <div class="bp-stl-price">$108.00</div>
+          <a href="https://www.bostonproper.com" class="bp-stl-cta">Add to Bag</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  var STRIP_ID = 'bp-stl-strip';
+  var DISMISS_ID = 'bp-stl-dismiss';
+  var TILES_ID = 'bp-stl-tiles';
+  var DISMISSED_KEY = 'bp_stl_dismissed_142';
+  var MAX_TILES = 4;
+
+  function init() {
+    if (sessionStorage.getItem(DISMISSED_KEY)) {
+      var s = document.getElementById(STRIP_ID);
+      if (s) s.style.display = 'none';
+      return;
+    }
+    injectTiles();
+    animateIn();
+    bindDismiss();
+  }
+
+  function injectTiles() {
+    var tilesWrap = document.getElementById(TILES_ID);
+    if (!tilesWrap) return;
+    var selectors = [
+      '.product-card',
+      '.product-item',
+      '[class*="product-card"]',
+      '[class*="product-item"]',
+      '.grid-product',
+      '.product'
+    ];
+    var sourceCards = [];
+    for (var i = 0; i < selectors.length; i++) {
+      var found = document.querySelectorAll(selectors[i]);
+      if (found && found.length >= 2) {
+        sourceCards = Array.prototype.slice.call(found, 0, MAX_TILES);
+        break;
+      }
+    }
+    if (sourceCards.length === 0) return;
+    tilesWrap.innerHTML = '';
+    sourceCards.forEach(function(card, idx) {
+      var tile = document.createElement('div');
+      tile.className = 'bp-stl-tile';
+      if (idx === 0) {
+        var badge = document.createElement('span');
+        badge.className = 'bp-stl-badge';
+        badge.textContent = 'New';
+        tile.appendChild(badge);
+      }
+      var img = card.querySelector('img');
+      var nameEl = card.querySelector('[class*="title"], [class*="name"], h2, h3, h4, .product-title, .product-name');
+      var priceEl = card.querySelector('[class*="price"], .price, .money');
+      var linkEl = card.querySelector('a[href*="/products/"]');
+      var imgWrap = document.createElement('div');
+      imgWrap.className = 'bp-stl-img-wrap';
+      if (img) {
+        var newImg = document.createElement('img');
+        newImg.src = img.src || img.getAttribute('data-src') || img.getAttribute('data-lazy-src') || '';
+        newImg.alt = img.alt || 'Featured Style';
+        newImg.loading = 'lazy';
+        imgWrap.appendChild(newImg);
+      }
+      tile.appendChild(imgWrap);
+      var info = document.createElement('div');
+      info.className = 'bp-stl-info';
+      var nameDiv = document.createElement('div');
+      nameDiv.className = 'bp-stl-name';
+      nameDiv.textContent = nameEl ? (nameEl.textContent || '').trim().replace(/\s+/g, ' ') : 'Featured Style';
+      info.appendChild(nameDiv);
+      var priceDiv = document.createElement('div');
+      priceDiv.className = 'bp-stl-price';
+      if (priceEl) {
+        var rawPrice = (priceEl.textContent || '').trim().split('\n')[0].trim();
+        priceDiv.textContent = rawPrice;
+      }
+      info.appendChild(priceDiv);
+      var cta = document.createElement('a');
+      cta.className = 'bp-stl-cta';
+      cta.href = linkEl ? linkEl.href : 'https://www.bostonproper.com';
+      cta.textContent = 'Add to Bag';
+      cta.setAttribute('data-cro', 'stl-cta-' + idx);
+      info.appendChild(cta);
+      tile.appendChild(info);
+      tilesWrap.appendChild(tile);
+    });
+  }
+
+  function animateIn() {
+    var strip = document.getElementById(STRIP_ID);
+    if (!strip) return;
+    setTimeout(function() {
+      strip.classList.add('bp-stl-visible');
+    }, 300);
+  }
+
+  function bindDismiss() {
+    var btn = document.getElementById(DISMISS_ID);
+    if (!btn) return;
+    btn.addEventListener('click', function() {
+      var strip = document.getElementById(STRIP_ID);
+      if (strip) {
+        var currentHeight = strip.offsetHeight;
+        strip.style.transition = 'opacity 0.3s ease, max-height 0.4s ease, padding 0.4s ease, border-top-width 0.4s ease';
+        strip.style.maxHeight = currentHeight + 'px';
+        strip.style.overflow = 'hidden';
+        strip.offsetHeight;
+        requestAnimationFrame(function() {
+          strip.style.opacity = '0';
+          strip.style.maxHeight = '0';
+          strip.style.paddingTop = '0';
+          strip.style.paddingBottom = '0';
+          strip.style.borderTopWidth = '0';
+        });
+        setTimeout(function() {
+          strip.style.display = 'none';
+        }, 420);
+      }
+      try { sessionStorage.setItem(DISMISSED_KEY, '1'); } catch(e) {}
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>
