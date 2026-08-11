@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRO-142 | Boston Proper | Hero Shoppable Drawer Mockup</title>
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Arial, Helvetica, sans-serif; background: #fefffa; color: #1a1a1a; }
+
+/* ===== PROMO BANNER ===== */
+.bp-promo-banner {
+  background: #1a1a1a;
+  color: #fefffa;
+  text-align: center;
+  padding: 10px 16px;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+.bp-promo-banner strong { color: #d4735e; }
+
+/* ===== NAV ===== */
+.bp-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 32px;
+  background: #fefffa;
+  border-bottom: 1px solid #e0ddd8;
+}
+.bp-nav-logo {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #1a1a1a;
+  text-transform: uppercase;
+}
+.bp-nav-links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+.bp-nav-links a {
+  font-size: 13px;
+  text-decoration: none;
+  color: #1a1a1a;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.bp-nav-icons { display: flex; gap: 16px; font-size: 18px; cursor: pointer; }
+
+/* ===== HERO SECTION ===== */
+.bp-hero-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #2a2420;
+}
+.bp-hero-slide {
+  position: relative;
+  width: 100%;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: linear-gradient(135deg, #3a2e28 0%, #5c4a3a 40%, #8a7060 70%, #b89880 100%);
+}
+.bp-hero-slide-inner {
+  position: relative;
+  z-index: 2;
+  padding: 60px 60px;
+  max-width: 520px;
+}
+.bp-hero-badge {
+  display: inline-block;
+  background: #d4735e;
+  color: #fefffa;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  margin-bottom: 18px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.bp-hero-headline {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 700;
+  color: #fefffa;
+  line-height: 1.1;
+  margin-bottom: 28px;
+  letter-spacing: -0.01em;
+}
+.bp-hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+.bp-hero-cta {
+  display: inline-block;
+  padding: 12px 26px;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  font-family: Arial, Helvetica, sans-serif;
+  transition: background 0.2s, color 0.2s;
+}
+.bp-hero-cta.primary { background: #fefffa; color: #1a1a1a; }
+.bp-hero-cta.primary:hover { background: #d4735e; color: #fefffa; }
+.bp-hero-cta.secondary { background: transparent; color: #fefffa; border: 1px solid #fefffa; }
+.bp-hero-cta.secondary:hover { background: #fefffa; color: #1a1a1a; }
+
+/* Decorative hero image placeholder */
+.bp-hero-img-placeholder {
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 55%;
+  background: linear-gradient(160deg, #7a6050 0%, #c4a882 50%, #d8c4a8 100%);
+  opacity: 0.55;
+  z-index: 1;
+}
+
+/* ===== SHOP THIS LOOK PILL BUTTON ===== */
+.bp-stl-trigger {
+  position: absolute;
+  bottom: 28px;
+  left: 32px;
+  z-index: 10;
+  background: #d4735e;
+  color: #fefffa;
+  border: none;
+  border-radius: 24px;
+  padding: 11px 22px;
+  font-size: 13px;
+  font-family: Arial, Helvetica, sans-serif;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.28);
+  transition: background 0.2s, transform 0.15s;
+}
+.bp-stl-trigger:hover { background: #b85e4a; transform: translateY(-1px); }
+.bp-stl-trigger .bp-stl-arrow {
+  display: inline-block;
+  transition: transform 0.3s;
+}
+.bp-stl-trigger.open .bp-stl-arrow { transform: rotate(180deg); }
+
+/* ===== SHOPPABLE DRAWER ===== */
+.bp-stl-drawer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9;
+  background: rgba(254,255,250,0.96);
+  border-top: 2px solid #1a1a1a;
+  padding: 20px 28px 24px;
+  transform: translateY(100%);
+  transition: transform 0.38s cubic-bezier(0.4,0,0.2,1);
+  backdrop-filter: blur(4px);
+}
+.bp-stl-drawer.open { transform: translateY(0); }
+.bp-stl-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.bp-stl-drawer-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: 0.02em;
+}
+.bp-stl-close {
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: #1a1a1a;
+  cursor: pointer;
+  line-height: 1;
+  padding: 2px 6px;
+  transition: color 0.2s;
+}
+.bp-stl-close:hover { color: #d4735e; }
+
+/* ===== PRODUCT CARDS GRID ===== */
+.bp-stl-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.bp-stl-card {
+  background: #fefffa;
+  border: 1px solid #e8e4de;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+.bp-stl-card:hover { box-shadow: 0 6px 20px rgba(26,26,26,0.13); }
+.bp-stl-card-img-wrap {
+  width: 100%;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  background: #e8e4de;
+  position: relative;
+}
+.bp-stl-card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s;
+}
+.bp-stl-card:hover .bp-stl-card-img-wrap img { transform: scale(1.04); }
+.bp-stl-card-img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: #8a8078;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #e8e4de 0%, #d8d0c8 100%);
+}
+.bp-stl-card-body {
+  padding: 10px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 6px;
+}
+.bp-stl-card-name {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 13px;
+  color: #1a1a1a;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-weight: 600;
+}
+.bp-stl-card-price {
+  font-size: 13px;
+  color: #d4735e;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.bp-stl-card-cta {
+  margin-top: auto;
+  display: block;
+  width: 100%;
+  padding: 8px 10px;
+  background: transparent;
+  border: 1px solid #d4735e;
+  color: #d4735e;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  cursor: pointer;
+  font-family: Arial, Helvetica, sans-serif;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.bp-stl-card-cta:hover { background: #d4735e; color: #fefffa; }
+
+/* ===== BELOW-HERO CONTENT (placeholder) ===== */
+.bp-below-hero {
+  padding: 48px 32px;
+  text-align: center;
+}
+.bp-below-hero h2 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 28px;
+  color: #1a1a1a;
+  margin-bottom: 12px;
+}
+.bp-below-hero p { font-size: 15px; color: #5a5550; max-width: 560px; margin: 0 auto; }
+
+/* ===== CRO LABEL ===== */
+.bp-cro-label {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: #d4735e;
+  color: #fff;
+  font-size: 11px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  z-index: 9999;
+  font-family: Arial, sans-serif;
+  letter-spacing: 0.05em;
+  pointer-events: none;
+  opacity: 0.92;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 767px) {
+  .bp-nav { padding: 12px 16px; }
+  .bp-nav-links { display: none; }
+  .bp-hero-slide { min-height: 380px; }
+  .bp-hero-slide-inner { padding: 36px 20px; max-width: 100%; }
+  .bp-hero-img-placeholder { width: 100%; opacity: 0.22; }
+  .bp-stl-trigger { bottom: 16px; left: 16px; font-size: 12px; padding: 9px 16px; }
+  .bp-stl-drawer { padding: 16px 14px 20px; }
+  .bp-stl-cards { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .bp-stl-card-name { font-size: 12px; }
+  .bp-stl-card-price { font-size: 12px; }
+  .bp-stl-card-cta { font-size: 10px; padding: 7px 6px; }
+  .bp-below-hero { padding: 32px 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="bp-cro-label">CRO-142 · Variant B · Internal Mockup</div>
+
+<!-- PROMO BANNER -->
+<div class="bp-promo-banner">
+  Enjoy 20% Off $150+, Plus Free Shipping &nbsp;|&nbsp; Code: <strong>NEWMOOD</strong>
+</div>
+
+<!-- NAV -->
+<nav class="bp-nav">
+  <div class="bp-nav-logo">Boston Proper</div>
+  <ul class="bp-nav-links">
+    <li><a href="#">New Arrivals</a></li>
+    <li><a href="#">Dresses</a></li>
+    <li><a href="#">Tops</a></li>
+    <li><a href="#">Jackets</a></li>
+    <li><a href="#">Pants</a></li>
+    <li><a href="#">Sale</a></li>
+  </ul>
+  <div class="bp-nav-icons">
+    <span title="Search">&#128269;</span>
+    <span title="Account">&#128100;</span>
+    <span title="Bag">&#128717;</span>
+  </div>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="bp-hero-wrapper" id="bp-hero">
+  <div class="bp-hero-slide" id="bp-hero-slide">
+    <div class="bp-hero-img-placeholder" aria-hidden="true"></div>
+    <div class="bp-hero-slide-inner">
+      <span class="bp-hero-badge">New Season</span>
+      <h1 class="bp-hero-headline">Your Best<br>Era Yet</h1>
+      <div class="bp-hero-ctas">
+        <a href="#" class="bp-hero-cta primary">Shop New Arrivals</a>
+        <a href="#" class="bp-hero-cta secondary">Shop Jackets</a>
+      </div>
+    </div>
+
+    <!-- SHOP THIS LOOK TRIGGER -->
+    <button class="bp-stl-trigger" id="bp-stl-trigger" aria-expanded="false" aria-controls="bp-stl-drawer">
+      <span>Shop This Look</span>
+      <span class="bp-stl-arrow" aria-hidden="true">&#9650;</span>
+    </button>
+
+    <!-- SHOPPABLE DRAWER -->
+    <div class="bp-stl-drawer" id="bp-stl-drawer" role="region" aria-label="Shop This Look products">
+      <div class="bp-stl-drawer-header">
+        <span class="bp-stl-drawer-title">Shop This Look</span>
+        <button class="bp-stl-close" id="bp-stl-close" aria-label="Close shop this look panel">&#215;</button>
+      </div>
+      <div class="bp-stl-cards" id="bp-stl-cards">
+        <!-- Cards injected by JS -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BELOW HERO PLACEHOLDER -->
+<div class="bp-below-hero">
+  <h2>One Look. Every Plan.</h2>
+  <p>Existing shoppable modules and product carousels continue below as on the live page. Product cards above are cloned from these on-page DOM nodes.</p>
+</div>
+
+<!-- EXISTING PAGE PRODUCT DATA (simulated on-page DOM nodes for mockup) -->
+<div id="bp-source-products" style="display:none;" aria-hidden="true">
+  <div class="bp-src-card" data-name="Ponte Blazer" data-price="$148" data-pdp="/products/ponte-blazer" data-img="" data-img-alt="Ponte Blazer"></div>
+  <div class="bp-src-card" data-name="Wide-Leg Trouser" data-price="$98" data-pdp="/products/wide-leg-trouser" data-img="" data-img-alt="Wide-Leg Trouser"></div>
+  <div class="bp-src-card" data-name="Layered Chain Necklace" data-price="$48" data-pdp="/products/layered-chain-necklace" data-img="" data-img-alt="Layered Chain Necklace"></div>
+  <div class="bp-src-card" data-name="Block-Heel Kitten Mule" data-price="$118" data-pdp="/products/block-heel-kitten-mule" data-img="" data-img-alt="Block-Heel Kitten Mule"></div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  var trigger = document.getElementById('bp-stl-trigger');
+  var drawer = document.getElementById('bp-stl-drawer');
+  var closeBtn = document.getElementById('bp-stl-close');
+  var cardsContainer = document.getElementById('bp-stl-cards');
+  var isOpen = false;
+
+  // ---- Build product cards from existing on-page DOM nodes ----
+  // In production this would clone real product card nodes from
+  // the 'One Look. Every Plan.' section already in the page DOM.
+  // In this mockup we read from the hidden #bp-source-products div.
+
+  function buildCards() {
+    var sources = document.querySelectorAll('#bp-source-products .bp-src-card');
+    if (!sources || sources.length === 0) return;
+    var fragment = document.createDocumentFragment();
+    var max = Math.min(sources.length, 4);
+    for (var i = 0; i < max; i++) {
+      var src = sources[i];
+      var name = src.getAttribute('data-name') || 'Product';
+      var price = src.getAttribute('data-price') || '';
+      var pdp = src.getAttribute('data-pdp') || '#';
+      var imgSrc = src.getAttribute('data-img') || '';
+      var imgAlt = src.getAttribute('data-img-alt') || name;
+
+      var card = document.createElement('div');
+      card.className = 'bp-stl-card';
+
+      var imgWrap = document.createElement('div');
+      imgWrap.className = 'bp-stl-card-img-wrap';
+
+      if (imgSrc) {
+        var img = document.createElement('img');
+        img.src = imgSrc;
+        img.alt = imgAlt;
+        img.loading = 'lazy';
+        imgWrap.appendChild(img);
+      } else {
+        var placeholder = document.createElement('div');
+        placeholder.className = 'bp-stl-card-img-placeholder';
+        placeholder.textContent = imgAlt;
+        imgWrap.appendChild(placeholder);
+      }
+
+      var body = document.createElement('div');
+      body.className = 'bp-stl-card-body';
+
+      var nameEl = document.createElement('a');
+      nameEl.className = 'bp-stl-card-name';
+      nameEl.href = pdp;
+      nameEl.textContent = name;
+
+      var priceEl = document.createElement('span');
+      priceEl.className = 'bp-stl-card-price';
+      priceEl.textContent = price;
+
+      var cta = document.createElement('a');
+      cta.className = 'bp-stl-card-cta';
+      cta.href = pdp;
+      cta.textContent = 'Add to Bag';
+      cta.setAttribute('aria-label', 'Add ' + name + ' to bag');
+
+      body.appendChild(nameEl);
+      body.appendChild(priceEl);
+      body.appendChild(cta);
+
+      card.appendChild(imgWrap);
+      card.appendChild(body);
+      fragment.appendChild(card);
+    }
+    cardsContainer.appendChild(fragment);
+  }
+
+  function openDrawer() {
+    drawer.classList.add('open');
+    trigger.classList.add('open');
+    trigger.setAttribute('aria-expanded', 'true');
+    isOpen = true;
+    // Ensure trigger stays visible above drawer
+    trigger.style.bottom = (drawer.offsetHeight + 16) + 'px';
+  }
+
+  function closeDrawer() {
+    drawer.classList.remove('open');
+    trigger.classList.remove('open');
+    trigger.setAttribute('aria-expanded', 'false');
+    isOpen = false;
+    trigger.style.bottom = '';
+  }
+
+  function toggleDrawer() {
+    if (isOpen) { closeDrawer(); } else { openDrawer(); }
+  }
+
+  // Keyboard accessibility
+  function handleKeydown(e) {
+    if (e.key === 'Escape' && isOpen) { closeDrawer(); trigger.focus(); }
+  }
+
+  buildCards();
+  trigger.addEventListener('click', toggleDrawer);
+  closeBtn.addEventListener('click', function() { closeDrawer(); trigger.focus(); });
+  document.addEventListener('keydown', handleKeydown);
+
+  // Recalculate trigger position on resize
+  window.addEventListener('resize', function() {
+    if (isOpen) { trigger.style.bottom = (drawer.offsetHeight + 16) + 'px'; }
+  });
+
+})();
+</script>
+</body>
+</html>
