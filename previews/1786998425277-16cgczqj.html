@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boston Proper – Sticky Free Shipping Bar (CRO-900 Mockup)</title>
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif; background: #fafaf7; color: #1a1a1a; }
+
+/* ===== STICKY BAR ===== */
+#bp-sticky-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  background: #1a1a1a;
+  color: #fafaf7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 6px 48px 6px 48px;
+  transition: transform 0.3s ease;
+}
+#bp-sticky-bar.hidden {
+  transform: translateY(-100%);
+}
+#bp-sticky-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 900px;
+  position: relative;
+}
+.bp-bar-message {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  text-align: center;
+  line-height: 1.4;
+  color: #fafaf7;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+.bp-bar-message.active {
+  opacity: 1;
+  pointer-events: auto;
+  position: relative;
+  transform: none;
+  top: auto;
+  left: auto;
+}
+.bp-bar-message .bp-code {
+  color: #d4735e;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+#bp-bar-dismiss {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #fafaf7;
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px 8px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  font-family: Arial, sans-serif;
+}
+#bp-bar-dismiss:hover { opacity: 1; }
+#bp-sticky-bar-spacer {
+  height: 40px;
+  width: 100%;
+  display: block;
+}
+
+/* ===== SIMULATED PAGE CHROME ===== */
+.bp-page-wrapper {
+  background: #fafaf7;
+  min-height: 100vh;
+}
+
+/* NAV */
+.bp-nav {
+  background: #fafaf7;
+  border-bottom: 1px solid #e8e4df;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  height: 64px;
+  position: sticky;
+  top: 40px;
+  z-index: 100;
+}
+.bp-nav-logo {
+  font-family: Georgia, serif;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  color: #1a1a1a;
+  text-transform: uppercase;
+}
+.bp-nav-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+.bp-nav-links li a {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  text-decoration: none;
+  font-weight: 500;
+}
+.bp-nav-links li a:hover { color: #d4735e; }
+.bp-nav-icons {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+.bp-nav-icons span {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: #1a1a1a;
+}
+.bp-nav-icons span:hover { color: #d4735e; }
+
+/* HERO */
+.bp-hero {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  background: linear-gradient(135deg, #e8e0d8 0%, #d4c9bc 50%, #c9bfb5 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.bp-hero-overlay {
+  text-align: center;
+  z-index: 2;
+}
+.bp-hero-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  margin-bottom: 12px;
+  font-family: -apple-system, sans-serif;
+}
+.bp-hero-headline {
+  font-family: Georgia, serif;
+  font-size: 42px;
+  font-weight: 400;
+  color: #1a1a1a;
+  line-height: 1.15;
+  margin-bottom: 24px;
+  letter-spacing: 0.02em;
+}
+.bp-hero-ctas {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.bp-btn-primary {
+  background: #1a1a1a;
+  color: #fafaf7;
+  border: none;
+  padding: 13px 28px;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: -apple-system, sans-serif;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+.bp-btn-primary:hover { background: #d4735e; }
+.bp-btn-outline {
+  background: transparent;
+  color: #1a1a1a;
+  border: 1.5px solid #1a1a1a;
+  padding: 13px 28px;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: -apple-system, sans-serif;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+.bp-btn-outline:hover { background: #1a1a1a; color: #fafaf7; }
+
+/* SECTION LABEL */
+.bp-section-label {
+  font-family: Georgia, serif;
+  font-size: 26px;
+  font-weight: 400;
+  text-align: center;
+  color: #1a1a1a;
+  letter-spacing: 0.04em;
+  margin-bottom: 28px;
+}
+.bp-section {
+  padding: 52px 32px;
+}
+.bp-section-alt {
+  background: #f2ede8;
+}
+
+/* CATEGORY GRID */
+.bp-category-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.bp-category-tile {
+  background: #e0d9d2;
+  aspect-ratio: 3/4;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 18px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+.bp-category-tile:hover { transform: scale(1.02); }
+.bp-category-tile:nth-child(1) { background: #cfc8c0; }
+.bp-category-tile:nth-child(2) { background: #d8d2ca; }
+.bp-category-tile:nth-child(3) { background: #c9c2ba; }
+.bp-category-tile:nth-child(4) { background: #d0cbc4; }
+.bp-category-tile:nth-child(5) { background: #c5bfb8; }
+.bp-category-tile-label {
+  font-family: Georgia, serif;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  background: rgba(250,250,247,0.85);
+  padding: 7px 16px;
+  text-align: center;
+}
+
+/* PRODUCT CAROUSEL */
+.bp-product-carousel {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  max-width: 1100px;
+  margin: 0 auto;
+  overflow-x: auto;
+}
+.bp-product-card {
+  background: #fff;
+  border: 1px solid #ece8e3;
+  display: flex;
+  flex-direction: column;
+}
+.bp-product-img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: #e8e2db;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: #999;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.bp-product-info {
+  padding: 12px;
+}
+.bp-product-name {
+  font-family: Georgia, serif;
+  font-size: 13px;
+  color: #1a1a1a;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+.bp-product-price {
+  font-size: 12px;
+  color: #555;
+  letter-spacing: 0.05em;
+}
+.bp-product-cta {
+  margin-top: 10px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  border: 1px solid #1a1a1a;
+  padding: 6px 12px;
+  cursor: pointer;
+  background: none;
+  font-family: -apple-system, sans-serif;
+  transition: all 0.2s;
+  align-self: flex-start;
+}
+.bp-product-cta:hover { background: #1a1a1a; color: #fafaf7; }
+
+/* WHO WE ARE */
+.bp-who-we-are {
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+}
+.bp-who-we-are p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #444;
+  margin-bottom: 20px;
+}
+
+/* SHOP THE LOOK */
+.bp-stl-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.bp-stl-tile {
+  background: #ddd7d0;
+  aspect-ratio: 2/3;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 14px;
+  cursor: pointer;
+}
+.bp-stl-tile:nth-child(2) { background: #d0cac3; }
+.bp-stl-tile:nth-child(3) { background: #c8c2bb; }
+.bp-stl-tile:nth-child(4) { background: #d5cfc8; }
+.bp-stl-label {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  background: rgba(250,250,247,0.9);
+  padding: 5px 14px;
+}
+
+/* LOYALTY */
+.bp-loyalty {
+  background: #1a1a1a;
+  color: #fafaf7;
+  text-align: center;
+  padding: 52px 32px;
+}
+.bp-loyalty h2 {
+  font-family: Georgia, serif;
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  margin-bottom: 12px;
+}
+.bp-loyalty p {
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #d4735e;
+  margin-bottom: 24px;
+}
+.bp-loyalty-btn {
+  background: #fafaf7;
+  color: #1a1a1a;
+  border: none;
+  padding: 13px 32px;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: -apple-system, sans-serif;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.bp-loyalty-btn:hover { background: #d4735e; color: #fafaf7; }
+
+/* FOOTER */
+.bp-footer {
+  background: #f2ede8;
+  padding: 36px 32px;
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #888;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 767px) {
+  #bp-sticky-bar {
+    min-height: 44px;
+    padding: 8px 40px 8px 12px;
+  }
+  #bp-sticky-bar-spacer { height: 44px; }
+  .bp-bar-message { font-size: 11px; letter-spacing: 0.04em; }
+  .bp-nav { padding: 0 16px; top: 44px; }
+  .bp-nav-links { display: none; }
+  .bp-hero { height: 340px; }
+  .bp-hero-headline { font-size: 26px; }
+  .bp-section { padding: 36px 16px; }
+  .bp-category-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .bp-category-tile:nth-child(5) { grid-column: span 2; aspect-ratio: 5/2; }
+  .bp-product-carousel { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .bp-stl-grid { grid-template-columns: repeat(2, 1fr); }
+  .bp-section-label { font-size: 20px; }
+  .bp-nav-logo { font-size: 17px; }
+}
+</style>
+</head>
+<body>
+
+<!-- VARIANT: STICKY FREE-SHIPPING BAR (CRO-900) -->
+<div id="bp-sticky-bar" role="banner" aria-label="Promotional offer">
+  <div id="bp-sticky-bar-inner">
+    <div class="bp-bar-message active" id="bp-msg-1">
+      Take 25% Off, No Minimum + Free Shipping &mdash; Use code: <span class="bp-code">MY25</span>
+    </div>
+    <div class="bp-bar-message" id="bp-msg-2">
+      DISCOVER BOSTON PROPER &middot; 25% Off Your First Order Plus Free Shipping &middot; CODE: <span class="bp-code">WELCOME25</span>
+    </div>
+    <button id="bp-bar-dismiss" aria-label="Dismiss offer bar">&times;</button>
+  </div>
+</div>
+<div id="bp-sticky-bar-spacer"></div>
+
+<!-- SIMULATED PAGE CONTENT -->
+<div class="bp-page-wrapper">
+
+  <!-- NAV -->
+  <nav class="bp-nav">
+    <div class="bp-nav-logo">Boston Proper</div>
+    <ul class="bp-nav-links">
+      <li><a href="#">New Arrivals</a></li>
+      <li><a href="#">Clothing</a></li>
+      <li><a href="#">Dresses</a></li>
+      <li><a href="#">Jackets</a></li>
+      <li><a href="#">Denim</a></li>
+      <li><a href="#">Sale</a></li>
+    </ul>
+    <div class="bp-nav-icons">
+      <span>Search</span>
+      <span>Account</span>
+      <span>Bag (0)</span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="bp-hero">
+    <div class="bp-hero-overlay">
+      <div class="bp-hero-eyebrow">New Arrivals</div>
+      <h1 class="bp-hero-headline">Wild texture.<br>Fresh attitude.</h1>
+      <div class="bp-hero-ctas">
+        <button class="bp-btn-primary">Shop New Arrivals</button>
+        <button class="bp-btn-outline">Shop Jackets</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOP BY CATEGORY -->
+  <section class="bp-section">
+    <h2 class="bp-section-label">Shop By Category</h2>
+    <div class="bp-category-grid">
+      <div class="bp-category-tile"><span class="bp-category-tile-label">Jacket Edit</span></div>
+      <div class="bp-category-tile"><span class="bp-category-tile-label">Tops</span></div>
+      <div class="bp-category-tile"><span class="bp-category-tile-label">Dresses</span></div>
+      <div class="bp-category-tile"><span class="bp-category-tile-label">Denim</span></div>
+      <div class="bp-category-tile"><span class="bp-category-tile-label">Athleisure</span></div>
+    </div>
+  </section>
+
+  <!-- PRODUCT CAROUSEL -->
+  <section class="bp-section bp-section-alt">
+    <h2 class="bp-section-label">Wild texture. Fresh attitude.</h2>
+    <div class="bp-product-carousel">
+      <div class="bp-product-card">
+        <div class="bp-product-img">Product Image</div>
+        <div class="bp-product-info">
+          <div class="bp-product-name">Textured Knit Jacket</div>
+          <div class="bp-product-price">$148.00</div>
+          <button class="bp-product-cta">Add to Bag</button>
+        </div>
+      </div>
+      <div class="bp-product-card">
+        <div class="bp-product-img">Product Image</div>
+        <div class="bp-product-info">
+          <div class="bp-product-name">Floral Wrap Dress</div>
+          <div class="bp-product-price">$118.00</div>
+          <button class="bp-product-cta">Choose Options</button>
+        </div>
+      </div>
+      <div class="bp-product-card">
+        <div class="bp-product-img">Product Image</div>
+        <div class="bp-product-info">
+          <div class="bp-product-name">Slim Leg Denim</div>
+          <div class="bp-product-price">$98.00</div>
+          <button class="bp-product-cta">Add to Bag</button>
+        </div>
+      </div>
+      <div class="bp-product-card">
+        <div class="bp-product-img">Product Image</div>
+        <div class="bp-product-info">
+          <div class="bp-product-name">Sandshell Linen Top</div>
+          <div class="bp-product-price">$88.00</div>
+          <button class="bp-product-cta">Choose Options</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO WE ARE -->
+  <section class="bp-section">
+    <h2 class="bp-section-label">Who We Are</h2>
+    <div class="bp-who-we-are">
+      <p>Boston Proper is a premium women's fashion brand dedicated to the woman who lives life on her own terms. From resort-ready looks to elevated everyday essentials, we design for confidence, comfort, and style.</p>
+      <button class="bp-btn-primary">Our Story</button>
+    </div>
+  </section>
+
+  <!-- SHOP THE LOOK -->
+  <section class="bp-section bp-section-alt">
+    <h2 class="bp-section-label">Shop the Look</h2>
+    <div class="bp-stl-grid">
+      <div class="bp-stl-tile"><span class="bp-stl-label">Look 1</span></div>
+      <div class="bp-stl-tile"><span class="bp-stl-label">Look 2</span></div>
+      <div class="bp-stl-tile"><span class="bp-stl-label">Look 3</span></div>
+      <div class="bp-stl-tile"><span class="bp-stl-label">Look 4</span></div>
+    </div>
+  </section>
+
+  <!-- LOYALTY -->
+  <div class="bp-loyalty">
+    <h2>Boston Proper Insider Rewards</h2>
+    <p>Find it. Love it. Earn Double.</p>
+    <button class="bp-loyalty-btn">Join Now</button>
+  </div>
+
+  <!-- BESTSELLERS -->
+  <section class="bp-section">
+    <h2 class="bp-section-label">Bestsellers</h2>
+    <div class="bp-product-carousel">
+      <div class="bp-product-card">
+        <div class="bp-product-img">Product Image</div>
+        <div class="bp-product-info">
+          <div class="bp-product-name">Proper Black Blazer</div>
+          <div class="bp-product-price">$168.00</div>
+          <button class="bp-product-cta">Add to Bag</button>
+        </div>
+      </div>
+      <div class="bp-product-card">
+        <div class="bp-product-img">Product Image</div>
+        <div class="bp-product-info">
+          <div class="bp-product-name">Off White Maxi Dress</div>
+          <div class="bp-product-price">$138.00</div>
+          <button class="bp-product-cta">Choose Options</button>
+        </div>
+      </div>
+      <div class="bp-product-card">
+        <div class="bp-product-img">Product Image</div>
+        <div class="bp-product-info">
+          <div class="bp-product-name">Athleisure Jogger Set</div>
+          <div class="bp-product-price">$108.00</div>
+          <button class="bp-product-cta">Add to Bag</button>
+        </div>
+      </div>
+      <div class="bp-product-card">
+        <div class="bp-product-img">Product Image</div>
+        <div class="bp-product-info">
+          <div class="bp-product-name">Coral Sunset Blouse</div>
+          <div class="bp-product-price">$92.00</div>
+          <button class="bp-product-cta">Choose Options</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bp-footer">
+    &copy; 2024 Boston Proper. All rights reserved.
+  </footer>
+
+</div>
+
+<script>
+(function() {
+  var bar = document.getElementById('bp-sticky-bar');
+  var spacer = document.getElementById('bp-sticky-bar-spacer');
+  var dismissBtn = document.getElementById('bp-bar-dismiss');
+  var msg1 = document.getElementById('bp-msg-1');
+  var msg2 = document.getElementById('bp-msg-2');
+  var messages = [msg1, msg2];
+  var currentMsg = 0;
+  var rotateInterval = null;
+
+  // Message rotation
+  function showMessage(idx) {
+    messages.forEach(function(m, i) {
+      if (i === idx) {
+        m.classList.add('active');
+      } else {
+        m.classList.remove('active');
+      }
+    });
+  }
+
+  function startRotation() {
+    rotateInterval = setInterval(function() {
+      currentMsg = (currentMsg + 1) % messages.length;
+      showMessage(currentMsg);
+    }, 4000);
+  }
+
+  showMessage(0);
+  startRotation();
+
+  // Dismiss
+  dismissBtn.addEventListener('click', function() {
+    bar.classList.add('hidden');
+    spacer.style.height = '0';
+    clearInterval(rotateInterval);
+    // Update nav top offset
+    var nav = document.querySelector('.bp-nav');
+    if (nav) nav.style.top = '0';
+  });
+
+  // Keep spacer in sync with bar height (handles mobile resize)
+  function syncSpacer() {
+    if (!bar.classList.contains('hidden')) {
+      spacer.style.height = bar.offsetHeight + 'px';
+      var nav = document.querySelector('.bp-nav');
+      if (nav) nav.style.top = bar.offsetHeight + 'px';
+    }
+  }
+
+  syncSpacer();
+  window.addEventListener('resize', syncSpacer);
+})();
+</script>
+</body>
+</html>
