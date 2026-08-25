@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boston Proper – Countdown Timer Banner (CRO-777 Mockup)</title>
+<style>
+/* ===== RESET / BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Arial, Helvetica, sans-serif; background: #fafaf7; color: #1a1a1a; }
+
+/* ===== COUNTDOWN BANNER ===== */
+#bp-countdown-banner {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  background: #1a1a1a;
+  color: #fafaf7;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  height: 52px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  transition: transform 0.3s ease;
+}
+#bp-countdown-banner.bp-hidden {
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+.bp-banner-message {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 13px;
+  font-weight: normal;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fafaf7;
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+.bp-banner-message strong {
+  color: #d4735e;
+}
+.bp-timer-wrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1 1 auto;
+  justify-content: center;
+}
+.bp-timer-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+}
+.bp-timer-digits {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 22px;
+  font-weight: bold;
+  color: #d4735e;
+  letter-spacing: 0.04em;
+  min-width: 36px;
+  text-align: center;
+}
+.bp-timer-label {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #b0a89e;
+  margin-top: 2px;
+}
+.bp-timer-sep {
+  font-family: Georgia, serif;
+  font-size: 20px;
+  color: #d4735e;
+  font-weight: bold;
+  margin-bottom: 8px;
+  align-self: flex-start;
+  padding-top: 4px;
+}
+.bp-banner-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 0 0 auto;
+}
+.bp-shop-btn {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fafaf7;
+  background: #d4735e;
+  border: none;
+  padding: 7px 16px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.bp-shop-btn:hover { background: #bf5e4a; }
+.bp-dismiss-btn {
+  background: none;
+  border: none;
+  color: #b0a89e;
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px;
+  transition: color 0.2s;
+  flex-shrink: 0;
+}
+.bp-dismiss-btn:hover { color: #fafaf7; }
+
+/* ===== ANNOUNCEMENT BAR (simulated) ===== */
+.bp-announcement-bar {
+  background: #1a1a1a;
+  color: #fafaf7;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border-top: 1px solid #333;
+}
+.bp-announcement-bar a {
+  color: #d4735e;
+  text-decoration: underline;
+  margin-left: 8px;
+}
+
+/* ===== NAV (simulated) ===== */
+.bp-nav {
+  background: #fafaf7;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 32px;
+}
+.bp-nav-logo {
+  font-family: Georgia, serif;
+  font-size: 22px;
+  font-weight: normal;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+}
+.bp-nav-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+.bp-nav-links li a {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  text-decoration: none;
+}
+.bp-nav-links li a:hover { color: #d4735e; }
+.bp-nav-icons {
+  display: flex;
+  gap: 18px;
+  font-size: 13px;
+  color: #1a1a1a;
+  letter-spacing: 0.08em;
+}
+
+/* ===== HERO ===== */
+.bp-hero {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  background: linear-gradient(135deg, #2c2c2c 0%, #4a3f3a 50%, #6b5a52 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.bp-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(26,26,26,0.38);
+}
+.bp-hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #fafaf7;
+}
+.bp-hero-eyebrow {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  color: #e8ddd8;
+}
+.bp-hero-heading {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 52px;
+  font-weight: normal;
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+.bp-hero-sub {
+  font-family: Georgia, serif;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: italic;
+  margin-bottom: 28px;
+  color: #e8ddd8;
+}
+.bp-hero-cta {
+  display: inline-block;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  background: #fafaf7;
+  padding: 13px 32px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.bp-hero-cta:hover { background: #e8ddd8; }
+
+/* ===== SECTION HEADINGS ===== */
+.bp-section {
+  padding: 48px 32px;
+}
+.bp-section-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 28px;
+  font-weight: normal;
+  text-align: center;
+  margin-bottom: 32px;
+  color: #1a1a1a;
+  letter-spacing: 0.04em;
+}
+
+/* ===== CATEGORY GRID ===== */
+.bp-category-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.bp-cat-tile {
+  background: #d9d0c7;
+  aspect-ratio: 3/4;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 16px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.bp-cat-tile:nth-child(1) { background: linear-gradient(160deg,#3a3530,#5c4f46); }
+.bp-cat-tile:nth-child(2) { background: linear-gradient(160deg,#6b7c6e,#4a5e4d); }
+.bp-cat-tile:nth-child(3) { background: linear-gradient(160deg,#8c6b5a,#c4967e); }
+.bp-cat-tile:nth-child(4) { background: linear-gradient(160deg,#3d4a5c,#5a6e82); }
+.bp-cat-tile:nth-child(5) { background: linear-gradient(160deg,#5c5c5c,#888); }
+.bp-cat-label {
+  font-family: Georgia, serif;
+  font-size: 16px;
+  color: #fafaf7;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+
+/* ===== PRODUCT CAROUSEL ===== */
+.bp-product-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.bp-product-tile {
+  background: #f0ece6;
+  display: flex;
+  flex-direction: column;
+}
+.bp-product-img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: #d9d0c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  position: relative;
+}
+.bp-product-img:nth-child(1) { background: linear-gradient(160deg,#c4b8ae,#a89890); }
+.bp-sale-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #d4735e;
+  color: #fafaf7;
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+}
+.bp-product-info {
+  padding: 12px 10px 14px;
+}
+.bp-product-name {
+  font-family: Georgia, serif;
+  font-size: 13px;
+  color: #1a1a1a;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+.bp-product-price {
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  color: #1a1a1a;
+}
+.bp-product-price .bp-was {
+  text-decoration: line-through;
+  color: #999;
+  margin-left: 6px;
+}
+.bp-product-cta {
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  border: 1px solid #1a1a1a;
+  padding: 7px 0;
+  text-align: center;
+  margin: 0 10px 10px;
+  cursor: pointer;
+  background: none;
+  transition: background 0.2s, color 0.2s;
+}
+.bp-product-cta:hover { background: #1a1a1a; color: #fafaf7; }
+
+/* ===== SALE BANNER STRIP ===== */
+.bp-sale-strip {
+  background: #d4735e;
+  color: #fafaf7;
+  text-align: center;
+  padding: 18px 20px;
+  font-family: Georgia, serif;
+  font-size: 18px;
+  letter-spacing: 0.06em;
+}
+.bp-sale-strip span {
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  display: block;
+  margin-top: 4px;
+  color: rgba(255,255,255,0.85);
+}
+
+/* ===== FOOTER ===== */
+.bp-footer {
+  background: #1a1a1a;
+  color: #b0a89e;
+  text-align: center;
+  padding: 32px 20px;
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 767px) {
+  #bp-countdown-banner {
+    height: auto;
+    padding: 8px 12px;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .bp-banner-message {
+    font-size: 10px;
+    width: 100%;
+    text-align: center;
+    order: 1;
+  }
+  .bp-timer-wrap {
+    order: 2;
+    width: 100%;
+    justify-content: center;
+  }
+  .bp-timer-digits { font-size: 18px; }
+  .bp-banner-right {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+  }
+  .bp-shop-btn { font-size: 10px; padding: 6px 14px; }
+  .bp-nav { padding: 12px 16px; }
+  .bp-nav-links { display: none; }
+  .bp-hero { height: 320px; }
+  .bp-hero-heading { font-size: 32px; }
+  .bp-hero-sub { font-size: 15px; }
+  .bp-section { padding: 32px 16px; }
+  .bp-category-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .bp-product-row { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .bp-section-title { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== VARIANT: COUNTDOWN TIMER BANNER (CRO-777) ===== -->
+<div id="bp-countdown-banner" role="banner" aria-label="Limited time sale countdown">
+  <div class="bp-banner-message">3 Days Only &mdash; <strong>Save Up to 50% Off</strong></div>
+  <div class="bp-timer-wrap">
+    <div class="bp-timer-unit">
+      <span class="bp-timer-digits" id="bp-hours">00</span>
+      <span class="bp-timer-label">Hrs</span>
+    </div>
+    <div class="bp-timer-sep">:</div>
+    <div class="bp-timer-unit">
+      <span class="bp-timer-digits" id="bp-mins">00</span>
+      <span class="bp-timer-label">Min</span>
+    </div>
+    <div class="bp-timer-sep">:</div>
+    <div class="bp-timer-unit">
+      <span class="bp-timer-digits" id="bp-secs">00</span>
+      <span class="bp-timer-label">Sec</span>
+    </div>
+  </div>
+  <div class="bp-banner-right">
+    <a href="https://www.bostonproper.com" class="bp-shop-btn">Shop Now</a>
+    <button class="bp-dismiss-btn" id="bp-dismiss" aria-label="Dismiss banner">&times;</button>
+  </div>
+</div>
+
+<!-- ===== ANNOUNCEMENT BAR (existing page element, unchanged) ===== -->
+<div class="bp-announcement-bar">
+  Style for Every Move &nbsp;|&nbsp; Save up to 50% Off &nbsp;
+  <a href="https://www.bostonproper.com">Shop The Event &rsaquo;</a>
+  &nbsp;&nbsp;|&nbsp;&nbsp; WELCOME25 &mdash; 25% Off Your First Order + Free Shipping
+</div>
+
+<!-- ===== NAV (simulated, unchanged) ===== -->
+<nav class="bp-nav">
+  <div class="bp-nav-logo">Boston Proper</div>
+  <ul class="bp-nav-links">
+    <li><a href="#">New Arrivals</a></li>
+    <li><a href="#">Jackets</a></li>
+    <li><a href="#">Tops</a></li>
+    <li><a href="#">Dresses</a></li>
+    <li><a href="#">Denim</a></li>
+    <li><a href="#">Athleisure</a></li>
+    <li><a href="#">Sale</a></li>
+  </ul>
+  <div class="bp-nav-icons">&#9906; &nbsp; &#9906; &nbsp; &#128722;</div>
+</nav>
+
+<!-- ===== HERO CAROUSEL (simulated, unchanged) ===== -->
+<section class="bp-hero" aria-label="Hero carousel">
+  <div class="bp-hero-overlay"></div>
+  <div class="bp-hero-content">
+    <p class="bp-hero-eyebrow">New Arrivals</p>
+    <h1 class="bp-hero-heading">Wild Texture.<br>Fresh Attitude.</h1>
+    <p class="bp-hero-sub">Jackets &amp; beyond for every move.</p>
+    <a href="https://www.bostonproper.com" class="bp-hero-cta">Shop New Arrivals</a>
+  </div>
+</section>
+
+<!-- ===== SHOP BY CATEGORY ===== -->
+<section class="bp-section">
+  <h2 class="bp-section-title">Shop By Category</h2>
+  <div class="bp-category-grid">
+    <div class="bp-cat-tile"><span class="bp-cat-label">Jackets</span></div>
+    <div class="bp-cat-tile"><span class="bp-cat-label">Tops</span></div>
+    <div class="bp-cat-tile"><span class="bp-cat-label">Dresses</span></div>
+    <div class="bp-cat-tile"><span class="bp-cat-label">Denim</span></div>
+    <div class="bp-cat-tile"><span class="bp-cat-label">Athleisure</span></div>
+  </div>
+</section>
+
+<!-- ===== SALE STRIP ===== -->
+<div class="bp-sale-strip">
+  3 Days Only. Price as marked.
+  <span>Shop The Event &rsaquo;</span>
+</div>
+
+<!-- ===== PRODUCT CAROUSEL ===== -->
+<section class="bp-section" style="background:#fafaf7;">
+  <h2 class="bp-section-title">Wild Texture. Fresh Attitude.</h2>
+  <div class="bp-product-row">
+    <div class="bp-product-tile">
+      <div class="bp-product-img" style="background:linear-gradient(160deg,#b8a898,#8c7a6e);"><span class="bp-sale-badge">Sale</span></div>
+      <div class="bp-product-info">
+        <div class="bp-product-name">Contour Knit Cami</div>
+        <div class="bp-product-price">$15 <span class="bp-was">$25</span></div>
+      </div>
+      <button class="bp-product-cta">Add</button>
+    </div>
+    <div class="bp-product-tile">
+      <div class="bp-product-img" style="background:linear-gradient(160deg,#c4b0a0,#a08070);"><span class="bp-sale-badge">Sale</span></div>
+      <div class="bp-product-info">
+        <div class="bp-product-name">Variegated Rib Knit Button Front Tank</div>
+        <div class="bp-product-price">$19 <span class="bp-was">$40</span></div>
+      </div>
+      <button class="bp-product-cta">Add</button>
+    </div>
+    <div class="bp-product-tile">
+      <div class="bp-product-img" style="background:linear-gradient(160deg,#9aacb0,#7a8e92);"></div>
+      <div class="bp-product-info">
+        <div class="bp-product-name">Faux Leather Vest</div>
+        <div class="bp-product-price">$89</div>
+      </div>
+      <button class="bp-product-cta">Choose</button>
+    </div>
+    <div class="bp-product-tile">
+      <div class="bp-product-img" style="background:linear-gradient(160deg,#7a6e8a,#5a4e6a);"></div>
+      <div class="bp-product-info">
+        <div class="bp-product-name">Burgundy Wrap Dress</div>
+        <div class="bp-product-price">$120</div>
+      </div>
+      <button class="bp-product-cta">Choose</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BESTSELLERS ===== -->
+<section class="bp-section">
+  <h2 class="bp-section-title">Bestsellers</h2>
+  <div class="bp-product-row">
+    <div class="bp-product-tile">
+      <div class="bp-product-img" style="background:linear-gradient(160deg,#c8b8a8,#a89888);"><span class="bp-sale-badge">3 Days Only</span></div>
+      <div class="bp-product-info">
+        <div class="bp-product-name">Contour Knit Cami</div>
+        <div class="bp-product-price">$15 <span class="bp-was">$25</span></div>
+      </div>
+      <button class="bp-product-cta">Add</button>
+    </div>
+    <div class="bp-product-tile">
+      <div class="bp-product-img" style="background:linear-gradient(160deg,#b0c0b8,#8a9e96);"><span class="bp-sale-badge">3 Days Only</span></div>
+      <div class="bp-product-info">
+        <div class="bp-product-name">Variegated Rib Knit Button Front Tank</div>
+        <div class="bp-product-price">$19 <span class="bp-was">$40</span></div>
+      </div>
+      <button class="bp-product-cta">Add</button>
+    </div>
+    <div class="bp-product-tile">
+      <div class="bp-product-img" style="background:linear-gradient(160deg,#c0a898,#a08878);"></div>
+      <div class="bp-product-info">
+        <div class="bp-product-name">Blazer with Faux Leather Detail</div>
+        <div class="bp-product-price">$170</div>
+      </div>
+      <button class="bp-product-cta">Choose</button>
+    </div>
+    <div class="bp-product-tile">
+      <div class="bp-product-img" style="background:linear-gradient(160deg,#a8b8c8,#8898a8);"></div>
+      <div class="bp-product-info">
+        <div class="bp-product-name">Athleisure Jogger Set</div>
+        <div class="bp-product-price">$35</div>
+      </div>
+      <button class="bp-product-cta">Add</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="bp-footer">
+  &copy; 2024 Boston Proper. All rights reserved.
+</footer>
+
+<script>
+(function() {
+  // Sale end: 3 days from page load (for demo purposes)
+  var saleEnd = new Date();
+  saleEnd.setDate(saleEnd.getDate() + 3);
+  saleEnd.setHours(23, 59, 59, 0);
+
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+  function tick() {
+    var now = new Date();
+    var diff = saleEnd - now;
+    if (diff <= 0) {
+      document.getElementById('bp-hours').textContent = '00';
+      document.getElementById('bp-mins').textContent = '00';
+      document.getElementById('bp-secs').textContent = '00';
+      return;
+    }
+    var totalSecs = Math.floor(diff / 1000);
+    var h = Math.floor(totalSecs / 3600);
+    var m = Math.floor((totalSecs % 3600) / 60);
+    var s = totalSecs % 60;
+    document.getElementById('bp-hours').textContent = pad(h);
+    document.getElementById('bp-mins').textContent = pad(m);
+    document.getElementById('bp-secs').textContent = pad(s);
+  }
+
+  tick();
+  setInterval(tick, 1000);
+
+  document.getElementById('bp-dismiss').addEventListener('click', function() {
+    var banner = document.getElementById('bp-countdown-banner');
+    banner.classList.add('bp-hidden');
+    setTimeout(function() { banner.style.display = 'none'; }, 350);
+  });
+})();
+</script>
+</body>
+</html>
