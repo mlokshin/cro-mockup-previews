@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>J.Crew Homepage – CRO-812 Recently Viewed Carousel Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', Arial, sans-serif; background: #fff; color: #1a1a1a; }
+a { text-decoration: none; color: inherit; }
+img { display: block; max-width: 100%; }
+
+/* NAV */
+.jc-nav { background: #fff; border-bottom: 1px solid #e0e0e0; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; height: 56px; position: sticky; top: 0; z-index: 100; }
+.jc-nav-logo { font-family: 'EB Garamond', Georgia, serif; font-size: 22px; font-weight: 600; letter-spacing: 0.18em; color: #001F5B; text-transform: uppercase; }
+.jc-nav-links { display: flex; gap: 20px; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #1a1a1a; }
+.jc-nav-links a:hover { text-decoration: underline; }
+.jc-nav-actions { display: flex; gap: 16px; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
+
+/* PROMO BAR */
+.jc-promo-bar { background: #001F5B; color: #fff; text-align: center; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; padding: 8px 16px; }
+
+/* HERO */
+.jc-hero { position: relative; background: #f5f0eb; display: flex; align-items: center; justify-content: center; min-height: 520px; overflow: hidden; }
+.jc-hero-img-placeholder { width: 100%; min-height: 520px; background: linear-gradient(135deg, #e8ddd0 0%, #c9b99a 50%, #a89070 100%); display: flex; align-items: center; justify-content: center; position: relative; }
+.jc-hero-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 24px; }
+.jc-hero-eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #fff; margin-bottom: 12px; font-family: 'Inter', sans-serif; }
+.jc-hero-headline { font-family: 'EB Garamond', Georgia, serif; font-size: clamp(36px, 6vw, 72px); color: #fff; line-height: 1.1; margin-bottom: 8px; font-style: italic; }
+.jc-hero-sub { font-family: 'EB Garamond', Georgia, serif; font-size: clamp(18px, 3vw, 28px); color: #fff; margin-bottom: 28px; }
+.jc-hero-cta { display: inline-block; background: #fff; color: #001F5B; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; padding: 12px 32px; font-family: 'Inter', sans-serif; font-weight: 500; border: none; cursor: pointer; transition: background 0.2s, color 0.2s; }
+.jc-hero-cta:hover { background: #001F5B; color: #fff; }
+.jc-hero-pdp-tiles { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; justify-content: center; }
+.jc-hero-pdp-tile { background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.4); padding: 6px 14px; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #fff; cursor: pointer; transition: background 0.2s; }
+.jc-hero-pdp-tile:hover { background: rgba(255,255,255,0.35); }
+
+/* NEW ARRIVALS */
+.jc-section { padding: 48px 24px; }
+.jc-section-title { font-family: 'EB Garamond', Georgia, serif; font-size: 28px; text-align: center; margin-bottom: 32px; letter-spacing: 0.04em; color: #1a1a1a; }
+.jc-arrivals-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; max-width: 1100px; margin: 0 auto; }
+.jc-arrival-tile { position: relative; overflow: hidden; cursor: pointer; }
+.jc-arrival-img { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
+.jc-arrival-img-placeholder { width: 100%; aspect-ratio: 3/4; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 20px; font-family: 'EB Garamond', Georgia, serif; font-size: 20px; color: #fff; letter-spacing: 0.08em; text-transform: uppercase; }
+.jc-arrival-tile:nth-child(1) .jc-arrival-img-placeholder { background: linear-gradient(160deg, #b8c5d6 0%, #6a8aaa 100%); }
+.jc-arrival-tile:nth-child(2) .jc-arrival-img-placeholder { background: linear-gradient(160deg, #c5bdb5 0%, #8a7d72 100%); }
+.jc-arrival-tile:nth-child(3) .jc-arrival-img-placeholder { background: linear-gradient(160deg, #c8d5c0 0%, #7a9a6e 100%); }
+.jc-arrival-tile:nth-child(4) .jc-arrival-img-placeholder { background: linear-gradient(160deg, #d5c8b8 0%, #a08060 100%); }
+.jc-arrival-label { text-align: center; margin-top: 10px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #1a1a1a; }
+
+/* PASSPORT MODULE */
+.jc-passport { background: #001F5B; color: #fff; padding: 56px 24px; text-align: center; }
+.jc-passport-eyebrow { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 12px; opacity: 0.75; }
+.jc-passport-title { font-family: 'EB Garamond', Georgia, serif; font-size: clamp(28px, 4vw, 48px); margin-bottom: 16px; font-style: italic; }
+.jc-passport-body { font-size: 14px; max-width: 560px; margin: 0 auto 28px; line-height: 1.6; opacity: 0.9; }
+.jc-passport-cta { display: inline-block; border: 1px solid #fff; color: #fff; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; padding: 12px 32px; cursor: pointer; transition: background 0.2s, color 0.2s; }
+.jc-passport-cta:hover { background: #fff; color: #001F5B; }
+
+/* CREDIT CARD */
+.jc-cc { background: #f7f5f2; padding: 40px 24px; text-align: center; border-top: 1px solid #e8e4df; }
+.jc-cc-title { font-family: 'EB Garamond', Georgia, serif; font-size: 22px; margin-bottom: 10px; }
+.jc-cc-body { font-size: 13px; color: #555; max-width: 480px; margin: 0 auto 20px; line-height: 1.5; }
+.jc-cc-cta { display: inline-block; background: #001F5B; color: #fff; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; padding: 11px 28px; cursor: pointer; }
+.jc-cc-cta:hover { background: #002a80; }
+
+/* ===== RECENTLY VIEWED CAROUSEL (NEW - CRO-812) ===== */
+.jc-rv { background: #fff; padding: 48px 0 56px; border-top: 1px solid #e8e4df; }
+.jc-rv-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.jc-rv-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+.jc-rv-title { font-family: 'EB Garamond', Georgia, serif; font-size: 26px; letter-spacing: 0.04em; color: #1a1a1a; }
+.jc-rv-controls { display: flex; gap: 10px; }
+.jc-rv-btn { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid #001F5B; background: #fff; color: #001F5B; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; transition: background 0.2s, color 0.2s; flex-shrink: 0; }
+.jc-rv-btn:hover { background: #001F5B; color: #fff; }
+.jc-rv-btn:disabled { border-color: #ccc; color: #ccc; cursor: default; background: #fff; }
+.jc-rv-viewport { overflow: hidden; width: 100%; }
+.jc-rv-track { display: flex; gap: 16px; transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); will-change: transform; }
+.jc-rv-tile { flex: 0 0 200px; cursor: pointer; }
+.jc-rv-tile:hover .jc-rv-tile-name { text-decoration: underline; }
+.jc-rv-tile-img-wrap { width: 200px; height: 260px; overflow: hidden; background: #f0ece6; }
+.jc-rv-tile-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+.jc-rv-tile:hover .jc-rv-tile-img { transform: scale(1.04); }
+.jc-rv-tile-img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #888; }
+.jc-rv-tile-info { padding: 10px 0 0; }
+.jc-rv-tile-name { font-size: 12px; letter-spacing: 0.04em; color: #1a1a1a; margin-bottom: 4px; line-height: 1.4; }
+.jc-rv-tile-price { font-size: 12px; color: #555; }
+.jc-rv-empty { display: none; text-align: center; padding: 32px 0; font-size: 14px; color: #888; font-style: italic; }
+
+/* CCPA */
+.jc-ccpa { background: #f7f5f2; border-top: 1px solid #e0dbd4; padding: 20px 24px; text-align: center; font-size: 11px; color: #777; letter-spacing: 0.04em; }
+.jc-ccpa a { color: #001F5B; text-decoration: underline; }
+
+/* FOOTER */
+.jc-footer { background: #1a1a1a; color: #ccc; padding: 40px 24px; text-align: center; font-size: 11px; letter-spacing: 0.06em; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .jc-arrivals-grid { grid-template-columns: repeat(2, 1fr); }
+  .jc-nav-links { display: none; }
+}
+@media (max-width: 600px) {
+  .jc-arrivals-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .jc-rv-tile { flex: 0 0 160px; }
+  .jc-rv-tile-img-wrap { width: 160px; height: 208px; }
+  .jc-hero-pdp-tiles { gap: 8px; }
+  .jc-section { padding: 32px 16px; }
+  .jc-rv-inner { padding: 0 16px; }
+  .jc-rv-title { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+<!-- PROMO BAR -->
+<div class="jc-promo-bar">Free shipping on orders $150+ &nbsp;|&nbsp; New arrivals: the Tiny Rollneck collection</div>
+
+<!-- NAV -->
+<nav class="jc-nav">
+  <div class="jc-nav-links">
+    <a href="#">Women</a>
+    <a href="#">Men</a>
+    <a href="#">Girls</a>
+    <a href="#">Boys</a>
+    <a href="#">Sale</a>
+  </div>
+  <div class="jc-nav-logo">J.Crew</div>
+  <div class="jc-nav-actions">
+    <a href="#">Search</a>
+    <a href="#">Sign In</a>
+    <a href="#">Bag (0)</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="jc-hero">
+  <div class="jc-hero-img-placeholder">
+    <div class="jc-hero-overlay">
+      <div class="jc-hero-eyebrow">New Collection</div>
+      <h1 class="jc-hero-headline">The Tiny Rollneck</h1>
+      <div class="jc-hero-sub">As seen on Emma Chamberlain</div>
+      <a href="https://www.jcrew.com/c/womens_category" class="jc-hero-cta">Shop the Collection</a>
+      <div class="jc-hero-pdp-tiles">
+        <a href="https://www.jcrew.com/p/CX627" class="jc-hero-pdp-tile">Style CX627</a>
+        <a href="https://www.jcrew.com/p/CY782" class="jc-hero-pdp-tile">Style CY782</a>
+        <a href="https://www.jcrew.com/p/CZ387" class="jc-hero-pdp-tile">Style CZ387</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEW ARRIVALS -->
+<section class="jc-section">
+  <h2 class="jc-section-title">Shop New Arrivals</h2>
+  <div class="jc-arrivals-grid">
+    <a href="https://www.jcrew.com/c/womens_category/new_arrivals" class="jc-arrival-tile">
+      <div class="jc-arrival-img-placeholder">Women</div>
+      <div class="jc-arrival-label">Women</div>
+    </a>
+    <a href="https://www.jcrew.com/c/mens_category/new_arrivals" class="jc-arrival-tile">
+      <div class="jc-arrival-img-placeholder">Men</div>
+      <div class="jc-arrival-label">Men</div>
+    </a>
+    <a href="https://www.jcrew.com/c/girls_category/new_arrivals" class="jc-arrival-tile">
+      <div class="jc-arrival-img-placeholder">Girls</div>
+      <div class="jc-arrival-label">Girls</div>
+    </a>
+    <a href="https://www.jcrew.com/c/boys_category/new_arrivals" class="jc-arrival-tile">
+      <div class="jc-arrival-img-placeholder">Boys</div>
+      <div class="jc-arrival-label">Boys</div>
+    </a>
+  </div>
+</section>
+
+<!-- PASSPORT -->
+<section class="jc-passport">
+  <div class="jc-passport-eyebrow">Loyalty &amp; Rewards</div>
+  <h2 class="jc-passport-title">J.Crew Passport</h2>
+  <p class="jc-passport-body">Earn points on every purchase. Unlock exclusive perks, early access to new arrivals, and Navy Access member benefits.</p>
+  <a href="https://www.jcrew.com/r/loyalty" class="jc-passport-cta">Join Now</a>
+</section>
+
+<!-- CREDIT CARD -->
+<section class="jc-cc">
+  <h2 class="jc-cc-title">The J.Crew Credit Card</h2>
+  <p class="jc-cc-body">Earn 5 points per $1 spent at J.Crew and J.Crew Factory. Plus, get a $25 reward when you're approved.</p>
+  <a href="https://www.jcrew.com/r/credit-card" class="jc-cc-cta">Learn More</a>
+</section>
+
+<!-- ===== RECENTLY VIEWED CAROUSEL (NEW - CRO-812) ===== -->
+<section class="jc-rv" id="jc-rv-section">
+  <div class="jc-rv-inner">
+    <div class="jc-rv-header">
+      <h2 class="jc-rv-title">Recently Viewed</h2>
+      <div class="jc-rv-controls">
+        <button class="jc-rv-btn" id="jc-rv-prev" aria-label="Previous">&#8592;</button>
+        <button class="jc-rv-btn" id="jc-rv-next" aria-label="Next">&#8594;</button>
+      </div>
+    </div>
+    <div class="jc-rv-viewport">
+      <div class="jc-rv-track" id="jc-rv-track"></div>
+    </div>
+    <div class="jc-rv-empty" id="jc-rv-empty">No recently viewed items yet. Start browsing to see your history here.</div>
+  </div>
+</section>
+
+<!-- CCPA -->
+<div class="jc-ccpa">California residents: <a href="https://www.jcrew.com/r/privacy">Do Not Sell or Share My Personal Information</a></div>
+
+<!-- FOOTER -->
+<footer class="jc-footer">
+  &copy; 2024 J.Crew Group, Inc. All rights reserved.
+</footer>
+
+<script>
+(function() {
+  // Seed demo data for mockup review (simulates a returning visitor's localStorage)
+  var DEMO_PRODUCTS = [
+    { id: 'CX627', name: 'Tiny Rollneck Sweater', price: '$89.50', url: 'https://www.jcrew.com/p/CX627', color: '#c9b99a' },
+    { id: 'CY782', name: 'Classic Crewneck Tee', price: '$34.50', url: 'https://www.jcrew.com/p/CY782', color: '#b8c5d6' },
+    { id: 'CZ387', name: 'Slim Straight Jean', price: '$118.00', url: 'https://www.jcrew.com/p/CZ387', color: '#8a9aaa' },
+    { id: 'BW441', name: 'Relaxed Blazer', price: '$198.00', url: 'https://www.jcrew.com/p/BW441', color: '#c5bdb5' },
+    { id: 'AK209', name: 'Merino Turtleneck', price: '$98.00', url: 'https://www.jcrew.com/p/AK209', color: '#c8d5c0' },
+    { id: 'DM554', name: 'Vintage Oxford Shirt', price: '$74.50', url: 'https://www.jcrew.com/p/DM554', color: '#d5c8b8' }
+  ];
+
+  var LS_KEY = 'jcrew_recently_viewed';
+
+  // Seed localStorage with demo data if empty (for mockup review only)
+  if (!localStorage.getItem(LS_KEY)) {
+    localStorage.setItem(LS_KEY, JSON.stringify(DEMO_PRODUCTS));
+  }
+
+  var products = [];
+  try {
+    products = JSON.parse(localStorage.getItem(LS_KEY)) || [];
+  } catch(e) { products = []; }
+
+  var section = document.getElementById('jc-rv-section');
+  var track = document.getElementById('jc-rv-track');
+  var emptyMsg = document.getElementById('jc-rv-empty');
+  var prevBtn = document.getElementById('jc-rv-prev');
+  var nextBtn = document.getElementById('jc-rv-next');
+
+  if (!products.length) {
+    section.style.display = 'none';
+    return;
+  }
+
+  // Build tiles
+  products.forEach(function(p) {
+    var tile = document.createElement('a');
+    tile.className = 'jc-rv-tile';
+    tile.href = p.url || '#';
+    tile.setAttribute('aria-label', p.name);
+
+    var imgWrap = document.createElement('div');
+    imgWrap.className = 'jc-rv-tile-img-wrap';
+
+    var imgPlaceholder = document.createElement('div');
+    imgPlaceholder.className = 'jc-rv-tile-img-placeholder';
+    imgPlaceholder.style.background = 'linear-gradient(160deg, ' + (p.color || '#e0d8cc') + ' 0%, ' + shadeColor(p.color || '#e0d8cc', -30) + ' 100%)';
+    imgPlaceholder.textContent = p.id || '';
+
+    imgWrap.appendChild(imgPlaceholder);
+
+    var info = document.createElement('div');
+    info.className = 'jc-rv-tile-info';
+
+    var name = document.createElement('div');
+    name.className = 'jc-rv-tile-name';
+    name.textContent = p.name || '';
+
+    var price = document.createElement('div');
+    price.className = 'jc-rv-tile-price';
+    price.textContent = p.price || '';
+
+    info.appendChild(name);
+    info.appendChild(price);
+    tile.appendChild(imgWrap);
+    tile.appendChild(info);
+    track.appendChild(tile);
+  });
+
+  // Carousel logic
+  var TILE_WIDTH = 200;
+  var GAP = 16;
+  var STEP = TILE_WIDTH + GAP;
+  var currentIndex = 0;
+
+  function getVisibleCount() {
+    var vw = document.querySelector('.jc-rv-viewport').offsetWidth;
+    return Math.floor(vw / STEP) || 1;
+  }
+
+  function getMaxIndex() {
+    return Math.max(0, products.length - getVisibleCount());
+  }
+
+  function updateCarousel() {
+    var maxIdx = getMaxIndex();
+    currentIndex = Math.min(currentIndex, maxIdx);
+    track.style.transform = 'translateX(-' + (currentIndex * STEP) + 'px)';
+    prevBtn.disabled = currentIndex === 0;
+    nextBtn.disabled = currentIndex >= maxIdx;
+  }
+
+  prevBtn.addEventListener('click', function() {
+    if (currentIndex > 0) { currentIndex--; updateCarousel(); }
+  });
+
+  nextBtn.addEventListener('click', function() {
+    if (currentIndex < getMaxIndex()) { currentIndex++; updateCarousel(); }
+  });
+
+  window.addEventListener('resize', updateCarousel);
+  updateCarousel();
+
+  // Mobile tile width adjustment
+  function adjustTileWidth() {
+    if (window.innerWidth <= 600) {
+      TILE_WIDTH = 160;
+      GAP = 16;
+      STEP = TILE_WIDTH + GAP;
+      updateCarousel();
+    } else {
+      TILE_WIDTH = 200;
+      GAP = 16;
+      STEP = TILE_WIDTH + GAP;
+      updateCarousel();
+    }
+  }
+  window.addEventListener('resize', adjustTileWidth);
+  adjustTileWidth();
+
+  // Helper: darken a hex color
+  function shadeColor(color, percent) {
+    var num = parseInt((color || '#c0b090').replace('#',''), 16);
+    var amt = Math.round(2.55 * percent);
+    var R = Math.min(255, Math.max(0, (num >> 16) + amt));
+    var G = Math.min(255, Math.max(0, ((num >> 8) & 0x00FF) + amt));
+    var B = Math.min(255, Math.max(0, (num & 0x0000FF) + amt));
+    return '#' + (0x1000000 + R*0x10000 + G*0x100 + B).toString(16).slice(1);
+  }
+})();
+</script>
+</body>
+</html>
