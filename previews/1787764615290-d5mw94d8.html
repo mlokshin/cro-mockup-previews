@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nordstrom PLP — CRO-2001 Size Availability Badge Mockup</title>
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #f5f5f5; color: #000; -webkit-font-smoothing: antialiased; }
+a { text-decoration: none; color: inherit; }
+
+/* ===== SITE HEADER ===== */
+.n-header { background: #fff; border-bottom: 1px solid #e0e0e0; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 60px; position: sticky; top: 0; z-index: 100; }
+.n-header__logo { font-size: 22px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #000; }
+.n-header__nav { display: flex; gap: 24px; }
+.n-header__nav a { font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: #000; font-weight: 500; }
+.n-header__nav a:hover { border-bottom: 2px solid #000; }
+.n-header__actions { display: flex; gap: 16px; align-items: center; }
+.n-header__actions button { background: none; border: none; cursor: pointer; font-size: 13px; letter-spacing: 0.04em; }
+
+/* ===== BREADCRUMB ===== */
+.n-breadcrumb { background: #fff; padding: 10px 24px; font-size: 12px; color: #767676; border-bottom: 1px solid #e0e0e0; }
+.n-breadcrumb span { color: #000; font-weight: 500; }
+
+/* ===== PLP TOOLBAR ===== */
+.n-toolbar { background: #fff; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e0e0e0; position: sticky; top: 60px; z-index: 99; }
+.n-toolbar__title { font-size: 20px; font-weight: 700; letter-spacing: 0.02em; }
+.n-toolbar__meta { font-size: 13px; color: #767676; }
+.n-toolbar__controls { display: flex; gap: 12px; align-items: center; }
+.n-toolbar__filter-btn { background: #000; color: #fff; border: none; padding: 8px 18px; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; font-family: inherit; }
+.n-toolbar__filter-btn:hover { background: #333; }
+.n-toolbar__sort { border: 1px solid #ccc; padding: 7px 12px; font-size: 12px; font-family: inherit; background: #fff; cursor: pointer; }
+
+/* ===== CRO BADGE ANNOTATION BANNER ===== */
+.cro-banner { background: #000; color: #fff; text-align: center; padding: 10px 24px; font-size: 12px; letter-spacing: 0.06em; }
+.cro-banner strong { color: #f0c040; }
+
+/* ===== MAIN LAYOUT ===== */
+.n-plp { max-width: 1320px; margin: 0 auto; padding: 24px 24px 48px; }
+
+/* ===== PRODUCT GRID ===== */
+.n-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px 16px; }
+@media (max-width: 1023px) { .n-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 767px) { .n-grid { grid-template-columns: repeat(2, 1fr); gap: 16px 10px; } }
+@media (max-width: 399px) { .n-grid { grid-template-columns: 1fr 1fr; gap: 12px 8px; } }
+
+/* ===== PRODUCT TILE ===== */
+.n-tile { background: #fff; cursor: pointer; transition: box-shadow 0.2s ease; position: relative; }
+.n-tile:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.12); }
+
+/* Image area */
+.n-tile__img-wrap { position: relative; width: 100%; aspect-ratio: 3/4; background: #e8e8e8; overflow: hidden; }
+.n-tile__img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.n-tile__img-placeholder svg { opacity: 0.18; }
+
+/* Existing badges (Popular, New Markdown) — top-left */
+.n-tile__badge { position: absolute; top: 10px; left: 10px; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; z-index: 2; }
+.n-tile__badge--popular { background: #000; color: #fff; }
+.n-tile__badge--markdown { background: #D6001C; color: #fff; }
+.n-tile__badge--new { background: #fff; color: #000; border: 1px solid #000; }
+
+/* CRO-2001: Availability badge — bottom-left of image */
+.n-tile__avail { position: absolute; bottom: 10px; left: 10px; font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; padding: 4px 9px; border-radius: 2px; z-index: 3; display: flex; align-items: center; gap: 5px; opacity: 0; transition: opacity 0.3s ease; }
+.n-tile__avail.is-visible { opacity: 1; }
+.n-tile__avail--low { background: #C8651A; color: #fff; }
+.n-tile__avail--limited { background: #C8651A; color: #fff; }
+.n-tile__avail--oos { background: #2D2D2D; color: #fff; }
+.n-tile__avail__dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+
+/* Tile info area */
+.n-tile__info { padding: 10px 4px 14px; }
+.n-tile__brand { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #767676; margin-bottom: 4px; }
+.n-tile__name { font-size: 13px; color: #000; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 6px; }
+.n-tile__price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 5px; }
+.n-tile__price { font-size: 13px; font-weight: 600; color: #000; }
+.n-tile__price--orig { font-size: 12px; color: #767676; text-decoration: line-through; font-weight: 400; }
+.n-tile__price--sale { font-size: 13px; font-weight: 600; color: #D6001C; }
+.n-tile__stars { display: flex; align-items: center; gap: 4px; }
+.n-tile__stars__icons { color: #000; font-size: 11px; letter-spacing: 1px; }
+.n-tile__stars__count { font-size: 11px; color: #767676; }
+
+/* OOS tile dim */
+.n-tile[data-avail="oos"] .n-tile__img-placeholder { opacity: 0.6; }
+
+/* ===== ANNOTATION TOOLTIP ===== */
+.cro-annotation { position: absolute; top: 10px; right: 10px; z-index: 10; }
+.cro-annotation__icon { width: 20px; height: 20px; background: #f0c040; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #000; cursor: pointer; }
+.cro-annotation__tip { display: none; position: absolute; right: 0; top: 26px; background: #000; color: #fff; font-size: 11px; line-height: 1.5; padding: 8px 10px; width: 200px; border-radius: 2px; z-index: 20; }
+.cro-annotation__icon:hover + .cro-annotation__tip,
+.cro-annotation__tip:hover { display: block; }
+
+/* ===== FOOTER SPACER ===== */
+.n-footer { background: #000; color: #fff; text-align: center; padding: 32px 24px; font-size: 12px; letter-spacing: 0.06em; margin-top: 48px; }
+
+/* ===== MOBILE ADJUSTMENTS ===== */
+@media (max-width: 767px) {
+  .n-header__nav { display: none; }
+  .n-toolbar__title { font-size: 16px; }
+  .n-tile__info { padding: 8px 2px 10px; }
+  .n-tile__name { font-size: 12px; }
+  .n-tile__brand { font-size: 9px; }
+  .n-tile__avail { font-size: 9px; padding: 3px 7px; bottom: 7px; left: 7px; }
+}
+</style>
+</head>
+<body>
+
+<!-- CRO ANNOTATION BANNER -->
+<div class="cro-banner">
+  <strong>CRO-2001 MOCKUP — INTERNAL REVIEW ONLY</strong> &nbsp;|&nbsp; Hypothesis: Size-availability badges injected on PLP product tiles to reduce out-of-stock click-throughs.
+</div>
+
+<!-- SITE HEADER -->
+<header class="n-header">
+  <div class="n-header__logo">Nordstrom</div>
+  <nav class="n-header__nav">
+    <a href="#">Women</a>
+    <a href="#">Men</a>
+    <a href="#">Kids</a>
+    <a href="#">Home</a>
+    <a href="#">Beauty</a>
+    <a href="#">Sale</a>
+  </nav>
+  <div class="n-header__actions">
+    <button>Search</button>
+    <button>Account</button>
+    <button>Bag (0)</button>
+  </div>
+</header>
+
+<!-- BREADCRUMB -->
+<div class="n-breadcrumb">
+  <a href="#">Home</a> &rsaquo; <a href="#">Women</a> &rsaquo; <span>Clothing</span>
+</div>
+
+<!-- PLP TOOLBAR -->
+<div class="n-toolbar">
+  <div>
+    <div class="n-toolbar__title">Women's Clothing</div>
+    <div class="n-toolbar__meta">1,284 items</div>
+  </div>
+  <div class="n-toolbar__controls">
+    <button class="n-toolbar__filter-btn">Filter &amp; Sort</button>
+    <select class="n-toolbar__sort">
+      <option>Featured</option>
+      <option>New Arrivals</option>
+      <option>Price: Low to High</option>
+      <option>Price: High to Low</option>
+      <option>Best Sellers</option>
+    </select>
+  </div>
+</div>
+
+<!-- PRODUCT GRID -->
+<main class="n-plp">
+  <div class="n-grid" id="plp-grid">
+
+    <!-- TILE 1: Low Stock -->
+    <div class="n-tile" data-avail="low" data-avail-label="Low Stock">
+      <div class="n-tile__img-wrap">
+        <div class="n-tile__img-placeholder">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="8" width="60" height="64" rx="2" fill="#000"/><circle cx="40" cy="28" r="10" fill="#fff"/><path d="M18 72c0-12 10-20 22-20s22 8 22 20" fill="#fff"/></svg>
+        </div>
+        <div class="n-tile__badge n-tile__badge--popular">Popular</div>
+        <div class="n-tile__avail n-tile__avail--low"><span class="n-tile__avail__dot"></span>Low Stock</div>
+        <div class="cro-annotation"><div class="cro-annotation__icon">★</div><div class="cro-annotation__tip">CRO-2001: Availability badge injected via JS reading data-avail attribute. 'Low Stock' = amber badge.</div></div>
+      </div>
+      <div class="n-tile__info">
+        <div class="n-tile__brand">Vince</div>
+        <div class="n-tile__name">Relaxed Fit Cashmere Crewneck Sweater</div>
+        <div class="n-tile__price-row"><span class="n-tile__price">$298.00</span></div>
+        <div class="n-tile__stars"><span class="n-tile__stars__icons">★★★★★</span><span class="n-tile__stars__count">(142)</span></div>
+      </div>
+    </div>
+
+    <!-- TILE 2: In Stock (no badge) -->
+    <div class="n-tile" data-avail="in" data-avail-label="">
+      <div class="n-tile__img-wrap">
+        <div class="n-tile__img-placeholder">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="8" width="60" height="64" rx="2" fill="#000"/><circle cx="40" cy="28" r="10" fill="#fff"/><path d="M18 72c0-12 10-20 22-20s22 8 22 20" fill="#fff"/></svg>
+        </div>
+      </div>
+      <div class="n-tile__info">
+        <div class="n-tile__brand">Theory</div>
+        <div class="n-tile__name">Admiral Crepe Blazer</div>
+        <div class="n-tile__price-row"><span class="n-tile__price">$495.00</span></div>
+        <div class="n-tile__stars"><span class="n-tile__stars__icons">★★★★☆</span><span class="n-tile__stars__count">(87)</span></div>
+      </div>
+    </div>
+
+    <!-- TILE 3: Out of Stock -->
+    <div class="n-tile" data-avail="oos" data-avail-label="Out of Stock">
+      <div class="n-tile__img-wrap">
+        <div class="n-tile__img-placeholder">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="8" width="60" height="64" rx="2" fill="#000"/><circle cx="40" cy="28" r="10" fill="#fff"/><path d="M18 72c0-12 10-20 22-20s22 8 22 20" fill="#fff"/></svg>
+        </div>
+        <div class="n-tile__avail n-tile__avail--oos"><span class="n-tile__avail__dot"></span>Out of Stock</div>
+        <div class="cro-annotation"><div class="cro-annotation__icon">★</div><div class="cro-annotation__tip">CRO-2001: 'Out of Stock' = dark charcoal badge. Tile image is dimmed to 60% opacity to reinforce unavailability.</div></div>
+      </div>
+      <div class="n-tile__info">
+        <div class="n-tile__brand">Toteme</div>
+        <div class="n-tile__name">Monogram Scarf Coat</div>
+        <div class="n-tile__price-row"><span class="n-tile__price">$1,290.00</span></div>
+        <div class="n-tile__stars"><span class="n-tile__stars__icons">★★★★★</span><span class="n-tile__stars__count">(34)</span></div>
+      </div>
+    </div>
+
+    <!-- TILE 4: Limited Sizes + Sale -->
+    <div class="n-tile" data-avail="limited" data-avail-label="Limited Sizes">
+      <div class="n-tile__img-wrap">
+        <div class="n-tile__img-placeholder">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="8" width="60" height="64" rx="2" fill="#000"/><circle cx="40" cy="28" r="10" fill="#fff"/><path d="M18 72c0-12 10-20 22-20s22 8 22 20" fill="#fff"/></svg>
+        </div>
+        <div class="n-tile__badge n-tile__badge--markdown">New Markdown</div>
+        <div class="n-tile__avail n-tile__avail--limited"><span class="n-tile__avail__dot"></span>Limited Sizes</div>
+        <div class="cro-annotation"><div class="cro-annotation__icon">★</div><div class="cro-annotation__tip">CRO-2001: 'Limited Sizes' = amber badge. Coexists with existing 'New Markdown' badge at top-left.</div></div>
+      </div>
+      <div class="n-tile__info">
+        <div class="n-tile__brand">Madewell</div>
+        <div class="n-tile__name">The Perfect Vintage Wide-Leg Jean</div>
+        <div class="n-tile__price-row"><span class="n-tile__price--orig">$148.00</span><span class="n-tile__price--sale">$89.90</span></div>
+        <div class="n-tile__stars"><span class="n-tile__stars__icons">★★★★★</span><span class="n-tile__stars__count">(512)</span></div>
+      </div>
+    </div>
+
+    <!-- TILE 5: In Stock -->
+    <div class="n-tile" data-avail="in" data-avail-label="">
+      <div class="n-tile__img-wrap">
+        <div class="n-tile__img-placeholder">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="8" width="60" height="64" rx="2" fill="#000"/><circle cx="40" cy="28" r="10" fill="#fff"/><path d="M18 72c0-12 10-20 22-20s22 8 22 20" fill="#fff"/></svg>
+        </div>
+        <div class="n-tile__badge n-tile__badge--new">New</div>
+      </div>
+      <div class="n-tile__info">
+        <div class="n-tile__brand">Reformation</div>
+        <div class="n-tile__name">Winslow Linen Midi Dress</div>
+        <div class="n-tile__price-row"><span class="n-tile__price">$218.00</span></div>
+        <div class="n-tile__stars"><span class="n-tile__stars__icons">★★★★☆</span><span class="n-tile__stars__count">(203)</span></div>
+      </div>
+    </div>
+
+    <!-- TILE 6: Low Stock + Sale -->
+    <div class="n-tile" data-avail="low" data-avail-label="Low Stock">
+      <div class="n-tile__img-wrap">
+        <div class="n-tile__img-placeholder">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="8" width="60" height="64" rx="2" fill="#000"/><circle cx="40" cy="28" r="10" fill="#fff"/><path d="M18 72c0-12 10-20 22-20s22 8 22 20" fill="#fff"/></svg>
+        </div>
+        <div class="n-tile__badge n-tile__badge--markdown">New Markdown</div>
+        <div class="n-tile__avail n-tile__avail--low"><span class="n-tile__avail__dot"></span>Low Stock</div>
+        <div class="cro-annotation"><div class="cro-annotation__icon">★</div><div class="cro-annotation__tip">CRO-2001: Dual-badge scenario — existing 'New Markdown' top-left, new availability badge bottom-left. No visual conflict.</div></div>
+      </div>
+      <div class="n-tile__info">
+        <div class="n-tile__brand">Rag &amp; Bone</div>
+        <div class="n-tile__name">Fit 2 Slim-Fit Stretch Chino Pants</div>
+        <div class="n-tile__price-row"><span class="n-tile__price--orig">$225.00</span><span class="n-tile__price--sale">$134.90</span></div>
+        <div class="n-tile__stars"><span class="n-tile__stars__icons">★★★★★</span><span class="n-tile__stars__count">(76)</span></div>
+      </div>
+    </div>
+
+    <!-- TILE 7: In Stock -->
+    <div class="n-tile" data-avail="in" data-avail-label="">
+      <div class="n-tile__img-wrap">
+        <div class="n-tile__img-placeholder">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="8" width="60" height="64" rx="2" fill="#000"/><circle cx="40" cy="28" r="10" fill="#fff"/><path d="M18 72c0-12 10-20 22-20s22 8 22 20" fill="#fff"/></svg>
+        </div>
+        <div class="n-tile__badge n-tile__badge--popular">Popular</div>
+      </div>
+      <div class="n-tile__info">
+        <div class="n-tile__brand">Free People</div>
+        <div class="n-tile__name">Movement Never Better Flare Legging</div>
+        <div class="n-tile__price-row"><span class="n-tile__price">$78.00</span></div>
+        <div class="n-tile__stars"><span class="n-tile__stars__icons">★★★★★</span><span class="n-tile__stars__count">(1,204)</span></div>
+      </div>
+    </div>
+
+    <!-- TILE 8: Limited Sizes -->
+    <div class="n-tile" data-avail="limited" data-avail-label="Limited Sizes">
+      <div class="n-tile__img-wrap">
+        <div class="n-tile__img-placeholder">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="8" width="60" height="64" rx="2" fill="#000"/><circle cx="40" cy="28" r="10" fill="#fff"/><path d="M18 72c0-12 10-20 22-20s22 8 22 20" fill="#fff"/></svg>
+        </div>
+        <div class="n-tile__avail n-tile__avail--limited"><span class="n-tile__avail__dot"></span>Limited Sizes</div>
+        <div class="cro-annotation"><div class="cro-annotation__icon">★</div><div class="cro-annotation__tip">CRO-2001: 'Limited Sizes' badge — amber, bottom-left. No existing badge on this tile.</div></div>
+      </div>
+      <div class="n-tile__info">
+        <div class="n-tile__brand">Spanx</div>
+        <div class="n-tile__name">The Perfect Pant, Wide Leg</div>
+        <div class="n-tile__price-row"><span class="n-tile__price">$148.00</span></div>
+        <div class="n-tile__stars"><span class="n-tile__stars__icons">★★★★★</span><span class="n-tile__stars__count">(389)</span></div>
+      </div>
+    </div>
+
+  </div><!-- /.n-grid -->
+</main>
+
+<!-- FOOTER -->
+<footer class="n-footer">
+  NORDSTROM &nbsp;&nbsp;|&nbsp;&nbsp; &copy; 2025 Nordstrom, Inc. &nbsp;&nbsp;|&nbsp;&nbsp; <em>Internal CRO Mockup — Not for Client Distribution</em>
+</footer>
+
+<script>
+(function() {
+  'use strict';
+
+  // CRO-2001: Size Availability Badge Injector
+  // Simulates reading availability state from data attributes on each tile
+  // (On the live PLP, this data would be read from server-rendered DOM nodes,
+  //  existing data attributes, or text content already present in the tile HTML.)
+
+  function initAvailabilityBadges() {
+    var tiles = document.querySelectorAll('.n-tile');
+    tiles.forEach(function(tile) {
+      var avail = tile.getAttribute('data-avail');
+      var badge = tile.querySelector('.n-tile__avail');
+      if (badge && avail && avail !== 'in') {
+        // Animate in after a short delay to simulate async DOM injection
+        setTimeout(function() {
+          badge.classList.add('is-visible');
+        }, 120);
+      }
+    });
+  }
+
+  // Run on DOMContentLoaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAvailabilityBadges);
+  } else {
+    initAvailabilityBadges();
+  }
+
+  // Simulate tile click tracking (would fire analytics event in real test)
+  document.querySelectorAll('.n-tile').forEach(function(tile) {
+    tile.addEventListener('click', function() {
+      var avail = tile.getAttribute('data-avail');
+      var brand = tile.querySelector('.n-tile__brand') ? tile.querySelector('.n-tile__brand').textContent : '';
+      var name = tile.querySelector('.n-tile__name') ? tile.querySelector('.n-tile__name').textContent : '';
+      // In real test: window.dataLayer.push({ event: 'plp_tile_click', availability: avail, product: name });
+      console.log('[CRO-2001] Tile clicked:', { availability: avail, brand: brand, product: name });
+    });
+  });
+
+})();
+</script>
+</body>
+</html>
