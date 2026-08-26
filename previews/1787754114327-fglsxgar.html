@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nordstrom – Size Availability on Tiles (CRO-999 Mockup)</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica Neue, Arial, sans-serif; background: #fff; color: #000; }
+
+/* PROMO BANNER */
+.promo-banner { background: #000; color: #fff; text-align: center; font-size: 13px; letter-spacing: 0.08em; padding: 10px 16px; }
+.promo-banner a { color: #fff; text-decoration: underline; margin-left: 6px; }
+
+/* NAV */
+.site-nav { display: flex; align-items: center; justify-content: space-between; padding: 0 24px; height: 60px; border-bottom: 1px solid #e0e0e0; background: #fff; }
+.site-nav .nav-logo { font-size: 22px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+.site-nav .nav-links { display: flex; gap: 24px; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; }
+.site-nav .nav-links a { text-decoration: none; color: #000; }
+.site-nav .nav-actions { display: flex; gap: 18px; font-size: 13px; align-items: center; }
+.site-nav .nav-actions a { text-decoration: none; color: #000; }
+
+/* SECONDARY NAV */
+.secondary-nav { display: flex; gap: 0; border-bottom: 1px solid #e0e0e0; padding: 0 24px; overflow-x: auto; background: #fff; }
+.secondary-nav a { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: #000; text-decoration: none; padding: 12px 16px; white-space: nowrap; border-bottom: 2px solid transparent; }
+.secondary-nav a:hover { border-bottom-color: #000; }
+
+/* HERO BANNER */
+.hero-banner { background: #f5f5f5; display: flex; align-items: center; justify-content: center; height: 320px; position: relative; overflow: hidden; }
+.hero-banner .hero-img-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, #e8e0d8 0%, #d4c8b8 100%); display: flex; align-items: center; justify-content: center; }
+.hero-banner .hero-text { position: absolute; text-align: center; }
+.hero-banner .hero-text .hero-eyebrow { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 8px; }
+.hero-banner .hero-text h1 { font-size: 36px; font-weight: 300; letter-spacing: 0.04em; margin-bottom: 16px; }
+.hero-banner .hero-text .hero-cta { display: inline-block; background: #000; color: #fff; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 28px; text-decoration: none; }
+
+/* SECTION */
+.section { padding: 40px 24px; }
+.section-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 24px; }
+.section-header h2 { font-size: 20px; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase; }
+.section-header a { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #000; text-decoration: underline; }
+
+/* CAROUSEL WRAPPER */
+.carousel-wrapper { position: relative; }
+.carousel-track { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; padding-bottom: 8px; scrollbar-width: none; }
+.carousel-track::-webkit-scrollbar { display: none; }
+.carousel-btn { position: absolute; top: 38%; transform: translateY(-50%); background: #fff; border: 1px solid #000; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 2; font-size: 16px; }
+.carousel-btn.prev { left: -18px; }
+.carousel-btn.next { right: -18px; }
+
+/* PRODUCT TILE */
+.product-tile { flex: 0 0 240px; scroll-snap-align: start; position: relative; background: #fff; }
+@media (max-width: 767px) { .product-tile { flex: 0 0 180px; } }
+.tile-image-wrap { position: relative; width: 100%; padding-top: 125%; background: #f0ece6; overflow: hidden; margin-bottom: 10px; }
+.tile-image-wrap img, .tile-image-wrap .img-placeholder { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+.img-placeholder { display: flex; align-items: center; justify-content: center; font-size: 11px; color: #999; letter-spacing: 0.06em; text-transform: uppercase; }
+.tile-badge { position: absolute; top: 10px; left: 10px; background: #000; color: #fff; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; }
+.tile-badge.markdown { background: #fff; color: #000; border: 1px solid #000; }
+.tile-brand { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; margin-bottom: 3px; }
+.tile-name { font-size: 13px; font-weight: 300; color: #333; margin-bottom: 6px; line-height: 1.35; }
+.tile-price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px; }
+.tile-price { font-size: 13px; font-weight: 500; }
+.tile-price.sale { color: #c00; }
+.tile-price.original { font-size: 12px; color: #888; text-decoration: line-through; font-weight: 400; }
+.tile-rating { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #555; margin-bottom: 8px; }
+.tile-rating .stars { color: #000; letter-spacing: -1px; }
+
+/* SIZE AVAILABILITY STRIP — NEW (CRO-999) */
+.size-strip { margin-top: 2px; }
+.size-strip-label { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: #555; margin-bottom: 5px; }
+.size-chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.size-chip { display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 22px; padding: 0 5px; border: 1px solid #000; font-size: 10px; letter-spacing: 0.04em; background: #fff; color: #000; cursor: default; }
+.size-chip.oos { border-color: #ccc; background: #f5f5f5; color: #bdbdbd; text-decoration: line-through; position: relative; }
+.size-scarcity { font-size: 10px; color: #b94a00; letter-spacing: 0.03em; margin-top: 5px; font-weight: 500; }
+
+/* EDITORIAL GRID */
+.editorial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 767px) { .editorial-grid { grid-template-columns: repeat(2, 1fr); } }
+.editorial-card { background: #f5f5f5; aspect-ratio: 3/4; display: flex; align-items: flex-end; padding: 16px; position: relative; overflow: hidden; }
+.editorial-card .card-bg { position: absolute; inset: 0; background: linear-gradient(160deg, #e0d8cc 0%, #c8bfb0 100%); }
+.editorial-card .card-text { position: relative; z-index: 1; }
+.editorial-card .card-text h3 { font-size: 16px; font-weight: 400; letter-spacing: 0.04em; margin-bottom: 6px; }
+.editorial-card .card-text a { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #000; text-decoration: underline; }
+
+/* BRANDS GRID */
+.brands-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+@media (max-width: 767px) { .brands-grid { grid-template-columns: repeat(2, 1fr); } }
+.brand-card { background: #f5f5f5; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; }
+
+/* FOOTER */
+footer { background: #000; color: #fff; padding: 40px 24px; margin-top: 40px; }
+.footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 32px; }
+@media (max-width: 767px) { .footer-grid { grid-template-columns: repeat(2, 1fr); } }
+.footer-col h4 { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px; font-weight: 600; }
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 8px; }
+.footer-col ul li a { color: #ccc; font-size: 12px; text-decoration: none; }
+.footer-bottom { font-size: 11px; color: #888; border-top: 1px solid #333; padding-top: 20px; }
+
+/* RESPONSIVE NAV */
+@media (max-width: 767px) {
+  .site-nav .nav-links { display: none; }
+  .site-nav .nav-logo { font-size: 18px; }
+  .hero-banner { height: 220px; }
+  .hero-banner .hero-text h1 { font-size: 24px; }
+  .section { padding: 28px 16px; }
+  .carousel-btn { display: none; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- PROMO BANNER -->
+<div class="promo-banner">
+  Get $40 off your next purchase &mdash; <a href="#">Shop Now</a>
+</div>
+
+<!-- MAIN NAV -->
+<nav class="site-nav">
+  <div class="nav-logo">Nordstrom</div>
+  <div class="nav-links">
+    <a href="#">Women</a>
+    <a href="#">Men</a>
+    <a href="#">Kids</a>
+    <a href="#">Home</a>
+    <a href="#">Beauty</a>
+    <a href="#">Sale</a>
+  </div>
+  <div class="nav-actions">
+    <a href="#">Search</a>
+    <a href="#">Sign In</a>
+    <a href="#">Stores</a>
+    <a href="#">Bag (0)</a>
+  </div>
+</nav>
+
+<!-- SECONDARY NAV -->
+<div class="secondary-nav">
+  <a href="#">New Arrivals</a>
+  <a href="#">Clothing</a>
+  <a href="#">Shoes</a>
+  <a href="#">Handbags</a>
+  <a href="#">Accessories</a>
+  <a href="#">Beauty</a>
+  <a href="#">Brands</a>
+  <a href="#">Sale</a>
+</div>
+
+<!-- HERO -->
+<div class="hero-banner">
+  <div class="hero-img-placeholder"></div>
+  <div class="hero-text">
+    <div class="hero-eyebrow">New Season</div>
+    <h1>Rustic Retreat</h1>
+    <a href="#" class="hero-cta">Shop the Story</a>
+  </div>
+</div>
+
+<!-- PRODUCT CAROUSEL: Rustic Retreat — WITH SIZE AVAILABILITY (CRO-999) -->
+<div class="section">
+  <div class="section-header">
+    <h2>Rustic Retreat</h2>
+    <a href="#">See All</a>
+  </div>
+  <div class="carousel-wrapper">
+    <button class="carousel-btn prev" aria-label="Previous" onclick="scrollCarousel('carousel1', -1)">&lsaquo;</button>
+    <div class="carousel-track" id="carousel1">
+
+      <!-- TILE 1 -->
+      <div class="product-tile">
+        <div class="tile-image-wrap">
+          <div class="img-placeholder">Product Image</div>
+          <span class="tile-badge">Popular</span>
+        </div>
+        <div class="tile-brand">Treasure &amp; Bond</div>
+        <div class="tile-name">Relaxed Linen Blend Shirt</div>
+        <div class="tile-price-row">
+          <span class="tile-price">$89.00</span>
+        </div>
+        <div class="tile-rating"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> (142)</div>
+        <div class="size-strip">
+          <div class="size-strip-label">Sizes Available</div>
+          <div class="size-chips">
+            <span class="size-chip oos">XS</span>
+            <span class="size-chip">S</span>
+            <span class="size-chip">M</span>
+            <span class="size-chip">L</span>
+            <span class="size-chip oos">XL</span>
+            <span class="size-chip oos">XXL</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TILE 2 -->
+      <div class="product-tile">
+        <div class="tile-image-wrap">
+          <div class="img-placeholder">Product Image</div>
+        </div>
+        <div class="tile-brand">Caslon</div>
+        <div class="tile-name">Organic Cotton Henley Top</div>
+        <div class="tile-price-row">
+          <span class="tile-price sale">$52.90</span>
+          <span class="tile-price original">$79.00</span>
+        </div>
+        <div class="tile-rating"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span> (87)</div>
+        <div class="size-strip">
+          <div class="size-strip-label">Sizes Available</div>
+          <div class="size-chips">
+            <span class="size-chip oos">XS</span>
+            <span class="size-chip oos">S</span>
+            <span class="size-chip">M</span>
+            <span class="size-chip oos">L</span>
+            <span class="size-chip oos">XL</span>
+          </div>
+          <div class="size-scarcity">Only 1 size left</div>
+        </div>
+      </div>
+
+      <!-- TILE 3 -->
+      <div class="product-tile">
+        <div class="tile-image-wrap">
+          <div class="img-placeholder">Product Image</div>
+          <span class="tile-badge markdown">New Markdown</span>
+        </div>
+        <div class="tile-brand">Madewell</div>
+        <div class="tile-name">Denim Midi Skirt</div>
+        <div class="tile-price-row">
+          <span class="tile-price sale">$69.30</span>
+          <span class="tile-price original">$99.00</span>
+        </div>
+        <div class="tile-rating"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> (204)</div>
+        <div class="size-strip">
+          <div class="size-strip-label">Sizes Available</div>
+          <div class="size-chips">
+            <span class="size-chip">24</span>
+            <span class="size-chip">25</span>
+            <span class="size-chip">26</span>
+            <span class="size-chip oos">27</span>
+            <span class="size-chip">28</span>
+            <span class="size-chip oos">29</span>
+            <span class="size-chip oos">30</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TILE 4 -->
+      <div class="product-tile">
+        <div class="tile-image-wrap">
+          <div class="img-placeholder">Product Image</div>
+          <span class="tile-badge">Popular</span>
+        </div>
+        <div class="tile-brand">Vince</div>
+        <div class="tile-name">Pima Cotton Crewneck Sweater</div>
+        <div class="tile-price-row">
+          <span class="tile-price">$195.00</span>
+        </div>
+        <div class="tile-rating"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span> (61)</div>
+        <div class="size-strip">
+          <div class="size-strip-label">Sizes Available</div>
+          <div class="size-chips">
+            <span class="size-chip">XS</span>
+            <span class="size-chip">S</span>
+            <span class="size-chip">M</span>
+            <span class="size-chip">L</span>
+            <span class="size-chip">XL</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TILE 5 -->
+      <div class="product-tile">
+        <div class="tile-image-wrap">
+          <div class="img-placeholder">Product Image</div>
+        </div>
+        <div class="tile-brand">Nordstrom</div>
+        <div class="tile-name">Linen Wide-Leg Trousers</div>
+        <div class="tile-price-row">
+          <span class="tile-price">$119.00</span>
+        </div>
+        <div class="tile-rating"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> (38)</div>
+        <div class="size-strip">
+          <div class="size-strip-label">Sizes Available</div>
+          <div class="size-chips">
+            <span class="size-chip oos">XS</span>
+            <span class="size-chip oos">S</span>
+            <span class="size-chip">M</span>
+            <span class="size-chip">L</span>
+            <span class="size-chip oos">XL</span>
+          </div>
+          <div class="size-scarcity">Only 2 sizes left</div>
+        </div>
+      </div>
+
+      <!-- TILE 6 -->
+      <div class="product-tile">
+        <div class="tile-image-wrap">
+          <div class="img-placeholder">Product Image</div>
+        </div>
+        <div class="tile-brand">Rails</div>
+        <div class="tile-name">Hunter Plaid Flannel Shirt</div>
+        <div class="tile-price-row">
+          <span class="tile-price sale">$116.60</span>
+          <span class="tile-price original">$168.00</span>
+        </div>
+        <div class="tile-rating"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> (93)</div>
+        <div class="size-strip">
+          <div class="size-strip-label">Sizes Available</div>
+          <div class="size-chips">
+            <span class="size-chip">XS</span>
+            <span class="size-chip">S</span>
+            <span class="size-chip">M</span>
+            <span class="size-chip">L</span>
+            <span class="size-chip">XL</span>
+            <span class="size-chip">XXL</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <button class="carousel-btn next" aria-label="Next" onclick="scrollCarousel('carousel1', 1)">&rsaquo;</button>
+  </div>
+</div>
+
+<!-- BEST SELLERS CAROUSEL -->
+<div class="section" style="background:#f5f5f5; margin: 0 -24px; padding: 40px 24px;">
+  <div class="section-header">
+    <h2>Best Sellers</h2>
+    <a href="#">See All</a>
+  </div>
+  <div class="carousel-wrapper">
+    <button class="carousel-btn prev" aria-label="Previous" onclick="scrollCarousel('carousel2', -1)">&lsaquo;</button>
+    <div class="carousel-track" id="carousel2">
+
+      <div class="product-tile">
+        <div class="tile-image-wrap"><div class="img-placeholder">Product Image</div><span class="tile-badge">Popular</span></div>
+        <div class="tile-brand">BP.</div>
+        <div class="tile-name">Ribbed Crop Cardigan</div>
+        <div class="tile-price-row"><span class="tile-price">$59.00</span></div>
+        <div class="tile-rating"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> (311)</div>
+        <div class="size-strip">
+          <div class="size-strip-label">Sizes Available</div>
+          <div class="size-chips">
+            <span class="size-chip">XS</span>
+            <span class="size-chip">S</span>
+            <span class="size-chip">M</span>
+            <span class="size-chip oos">L</span>
+            <span class="size-chip oos">XL</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-tile">
+        <div class="tile-image-wrap"><div class="img-placeholder">Product Image</div></div>
+        <div class="tile-brand">Zella</div>
+        <div class="tile-name">Live In High Waist Leggings</div>
+        <div class="tile-price-row"><span class="tile-price">$69.00</span></div>
+        <div class="tile-rating"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> (1,204)</div>
+        <div class="size-strip">
+          <div class="size-strip-label">Sizes Available</div>
+          <div class="size-chips">
+            <span class="size-chip oos">XS</span>
+            <span class="size-chip oos">S</span>
+            <span class="size-chip oos">M</span>
+            <span class="size-chip oos">L</span>
+            <span class="size-chip oos">XL</span>
+          </div>
+          <div class="size-scarcity">Sold out — check back soon</div>
+        </div>
+      </div>
+
+      <div class="product-tile">
+        <div class="tile-image-wrap"><div class="img-placeholder">Product Image</div><span class="tile-badge">Popular</span></div>
+        <div class="tile-brand">Halogen</div>
+        <div class="tile-name">Ponte Straight Leg Pants</div>
+        <div class="tile-price-row"><span class="tile-price">$89.00</span></div>
+        <div class="tile-rating"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span> (178)</div>
+        <div class="size-strip">
+          <div class="size-strip-label">Sizes Available</div>
+          <div class="size-chips">
+            <span class="size-chip">00</span>
+            <span class="size-chip">0</span>
+            <span class="size-chip">2</span>
+            <span class="size-chip">4</span>
+            <span class="size-chip oos">6</span>
+            <span class="size-chip oos">8</span>
+            <span class="size-chip">10</span>
+            <span class="size-chip">12</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-tile">
+        <div class="tile-image-wrap"><div class="img-placeholder">Product Image</div></div>
+        <div class="tile-brand">Treasure &amp; Bond</div>
+        <div class="tile-name">Smocked Midi Dress</div>
+        <div class="tile-price-row"><span class="tile-price sale">$71.40</span><span class="tile-price original">$119.00</span></div>
+        <div class="tile-rating"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> (56)</div>
+        <div class="size-strip">
+          <div class="size-strip-label">Sizes Available</div>
+          <div class="size-chips">
+            <span class="size-chip oos">XS</span>
+            <span class="size-chip">S</span>
+            <span class="size-chip">M</span>
+            <span class="size-chip oos">L</span>
+            <span class="size-chip oos">XL</span>
+          </div>
+          <div class="size-scarcity">Only 2 sizes left</div>
+        </div>
+      </div>
+
+    </div>
+    <button class="carousel-btn next" aria-label="Next" onclick="scrollCarousel('carousel2', 1)">&rsaquo;</button>
+  </div>
+</div>
+
+<!-- NEW & NOW EDITORIAL -->
+<div class="section">
+  <div class="section-header">
+    <h2>New &amp; Now</h2>
+    <a href="#">See All</a>
+  </div>
+  <div class="editorial-grid">
+    <div class="editorial-card"><div class="card-bg"></div><div class="card-text"><h3>Wedding Guest</h3><a href="#">Shop Now</a></div></div>
+    <div class="editorial-card"><div class="card-bg" style="background:linear-gradient(160deg,#d8d0e0 0%,#b8b0c8 100%)"></div><div class="card-text"><h3>CHANEL Fragrance</h3><a href="#">Discover</a></div></div>
+    <div class="editorial-card"><div class="card-bg" style="background:linear-gradient(160deg,#e0d8d0 0%,#c8c0b0 100%)"></div><div class="card-text"><h3>Victorian Poet</h3><a href="#">Shop the Trend</a></div></div>
+  </div>
+</div>
+
+<!-- BRANDS WE LOVE -->
+<div class="section" style="background:#f5f5f5; margin: 0 -24px; padding: 40px 24px;">
+  <div class="section-header">
+    <h2>Brands We Love</h2>
+    <a href="#">See All Brands</a>
+  </div>
+  <div class="brands-grid">
+    <div class="brand-card">Madewell</div>
+    <div class="brand-card">Vince</div>
+    <div class="brand-card">Rails</div>
+    <div class="brand-card">Caslon</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col"><h4>Help</h4><ul><li><a href="#">Order Status</a></li><li><a href="#">Shipping &amp; Returns</a></li><li><a href="#">Contact Us</a></li><li><a href="#">FAQs</a></li></ul></div>
+    <div class="footer-col"><h4>About</h4><ul><li><a href="#">About Nordstrom</a></li><li><a href="#">Careers</a></li><li><a href="#">Investors</a></li><li><a href="#">Press</a></li></ul></div>
+    <div class="footer-col"><h4>Nordstrom Card</h4><ul><li><a href="#">Apply Now</a></li><li><a href="#">Manage Account</a></li><li><a href="#">Rewards</a></li></ul></div>
+    <div class="footer-col"><h4>Download the App</h4><ul><li><a href="#">iOS App</a></li><li><a href="#">Android App</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">&copy; 2024 Nordstrom, Inc. All rights reserved.</div>
+</footer>
+
+<script>
+function scrollCarousel(id, dir) {
+  var track = document.getElementById(id);
+  if (!track) return;
+  var tileWidth = track.querySelector('.product-tile') ? track.querySelector('.product-tile').offsetWidth + 16 : 256;
+  track.scrollBy({ left: dir * tileWidth * 2, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
