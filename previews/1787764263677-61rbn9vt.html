@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>J.Crew – Recently Viewed Carousel Mockup (CRO-812)</title>
+<style>
+/* ── Reset & base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Georgia', 'Times New Roman', serif; background: #fff; color: #000; }
+
+/* ── Simulated page chrome ── */
+.jc-page-chrome { width: 100%; }
+.jc-nav { background: #000; color: #fff; text-align: center; padding: 14px 24px; font-family: Arial, Helvetica, sans-serif; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; }
+.jc-hero { background: #f0ede8; min-height: 320px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px; padding: 60px 24px; }
+.jc-hero h1 { font-family: Georgia, serif; font-size: clamp(28px, 5vw, 52px); letter-spacing: 0.04em; color: #000; text-align: center; }
+.jc-hero p { font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #444; letter-spacing: 0.08em; text-transform: uppercase; }
+.jc-hero-btn { display: inline-block; margin-top: 8px; padding: 12px 32px; background: #000; color: #fff; font-family: Arial, Helvetica, sans-serif; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; }
+.jc-section-placeholder { padding: 48px 24px; text-align: center; border-top: 1px solid #e0e0e0; }
+.jc-section-placeholder h2 { font-family: Georgia, serif; font-size: 20px; letter-spacing: 0.06em; margin-bottom: 8px; }
+.jc-section-placeholder p { font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #666; }
+.jc-footer-placeholder { background: #000; color: #fff; text-align: center; padding: 32px 24px; font-family: Arial, Helvetica, sans-serif; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; }
+
+/* ── Recently Viewed Carousel ── */
+#jc-rv-section {
+  width: 100%;
+  background: #fff;
+  border-top: 1px solid #000;
+  padding: 48px 0 56px;
+  position: relative;
+}
+#jc-rv-section .jc-rv-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 48px;
+  position: relative;
+}
+#jc-rv-section .jc-rv-heading {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-align: center;
+  color: #000;
+  margin-bottom: 32px;
+}
+#jc-rv-section .jc-rv-heading::after {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: #000;
+  margin: 10px auto 0;
+}
+/* Scroll wrapper */
+.jc-rv-scroll-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+.jc-rv-track {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 4px;
+}
+.jc-rv-track::-webkit-scrollbar { display: none; }
+/* Cards */
+.jc-rv-card {
+  flex: 0 0 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-decoration: none;
+  color: #000;
+  cursor: pointer;
+}
+.jc-rv-card:hover .jc-rv-card-img-wrap { opacity: 0.88; }
+.jc-rv-card-img-wrap {
+  width: 220px;
+  height: 275px;
+  background: #e8e8e8;
+  position: relative;
+  overflow: hidden;
+  transition: opacity 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.jc-rv-card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.jc-rv-card-img-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #e8e8e8 0%, #d4d4d4 50%, #e8e8e8 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.jc-rv-card-img-placeholder svg { opacity: 0.25; }
+.jc-rv-card-color {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #888;
+  margin-top: 2px;
+}
+.jc-rv-card-name {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #000;
+  letter-spacing: 0.01em;
+}
+.jc-rv-card-price {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  color: #000;
+  letter-spacing: 0.04em;
+}
+.jc-rv-card-cta {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #000;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  margin-top: 2px;
+  display: inline-block;
+}
+/* Arrow buttons */
+.jc-rv-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background: #000;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+.jc-rv-scroll-wrapper:hover .jc-rv-arrow { opacity: 1; pointer-events: auto; }
+.jc-rv-arrow:hover { background: #333; }
+.jc-rv-arrow-left { left: -20px; }
+.jc-rv-arrow-right { right: -20px; }
+.jc-rv-arrow svg { fill: #fff; }
+/* Empty state */
+.jc-rv-empty {
+  text-align: center;
+  padding: 24px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  color: #888;
+  letter-spacing: 0.06em;
+}
+/* Dot indicators */
+.jc-rv-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 24px;
+}
+.jc-rv-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ccc;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s;
+}
+.jc-rv-dot.active { background: #000; }
+
+/* ── Mobile ── */
+@media (max-width: 767px) {
+  #jc-rv-section { padding: 36px 0 44px; }
+  #jc-rv-section .jc-rv-inner { padding: 0 20px; }
+  .jc-rv-card { flex: 0 0 160px; }
+  .jc-rv-card-img-wrap { width: 160px; height: 200px; }
+  .jc-rv-arrow { display: none; }
+  .jc-rv-track { gap: 14px; }
+  #jc-rv-section .jc-rv-heading { font-size: 11px; margin-bottom: 24px; }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .jc-rv-card { flex: 0 0 190px; }
+  .jc-rv-card-img-wrap { width: 190px; height: 237px; }
+  #jc-rv-section .jc-rv-inner { padding: 0 32px; }
+}
+</style>
+</head>
+<body>
+<div class="jc-page-chrome">
+  <!-- Simulated Nav -->
+  <div class="jc-nav">J.CREW &nbsp;|&nbsp; Women &nbsp;|&nbsp; Men &nbsp;|&nbsp; Girls &nbsp;|&nbsp; Boys &nbsp;|&nbsp; Sale</div>
+
+  <!-- Simulated Hero -->
+  <div class="jc-hero">
+    <p>New Arrivals</p>
+    <h1>The Tiny Rollneck</h1>
+    <a href="#" class="jc-hero-btn">Shop Now</a>
+  </div>
+
+  <!-- Simulated Content Section -->
+  <div class="jc-section-placeholder">
+    <h2>Shop New Arrivals</h2>
+    <p>Women &nbsp;&nbsp;|&nbsp;&nbsp; Men &nbsp;&nbsp;|&nbsp;&nbsp; Girls &nbsp;&nbsp;|&nbsp;&nbsp; Boys</p>
+  </div>
+
+  <div class="jc-section-placeholder" style="background:#f7f7f7;">
+    <h2>J.Crew Passport</h2>
+    <p>Earn points. Unlock rewards. Travel further with J.Crew.</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       VARIANT INJECTION: Recently Viewed Carousel
+       (injected above footer via Monetate / GTM)
+  ═══════════════════════════════════════════ -->
+  <section id="jc-rv-section" aria-label="Recently Viewed Products">
+    <div class="jc-rv-inner">
+      <h2 class="jc-rv-heading">Recently Viewed</h2>
+      <div class="jc-rv-scroll-wrapper">
+        <button class="jc-rv-arrow jc-rv-arrow-left" aria-label="Scroll left">
+          <svg width="12" height="12" viewBox="0 0 12 12"><path d="M8 1L3 6l5 5" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="jc-rv-track" id="jc-rv-track"></div>
+        <button class="jc-rv-arrow jc-rv-arrow-right" aria-label="Scroll right">
+          <svg width="12" height="12" viewBox="0 0 12 12"><path d="M4 1l5 5-5 5" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <div class="jc-rv-dots" id="jc-rv-dots"></div>
+    </div>
+  </section>
+
+  <!-- Simulated Footer -->
+  <div class="jc-footer-placeholder">© J.Crew Group, LLC &nbsp;|&nbsp; Privacy Policy &nbsp;|&nbsp; Terms</div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // ── Seed / fallback product data (mirrors real J.Crew product codes & URL pattern) ──
+  var SEED_PRODUCTS = [
+    { code: 'CX627', name: 'Tiny Rollneck Sweater', color: 'Heather Camel', price: '$98.00', url: '/p/CX627' },
+    { code: 'CY782', name: 'Classic Straight-Leg Jean', color: 'Vintage Indigo', price: '$128.00', url: '/p/CY782' },
+    { code: 'CZ387', name: 'Relaxed Blazer', color: 'Navy', price: '$198.00', url: '/p/CZ387' },
+    { code: 'AH456', name: 'Merino Crewneck', color: 'Ivory', price: '$88.00', url: '/p/AH456' },
+    { code: 'BK901', name: 'Pleated Midi Skirt', color: 'Mazie Blue', price: '$118.00', url: '/p/BK901' },
+    { code: 'DL234', name: 'Cashmere V-Neck', color: 'Heather Grey', price: '$168.00', url: '/p/DL234' }
+  ];
+
+  // ── Read recently viewed from localStorage (J.Crew session key patterns) ──
+  function readRecentlyViewed() {
+    var keys = ['jcrew_recently_viewed', 'recentlyViewed', 'recently_viewed', 'rv_products'];
+    for (var i = 0; i < keys.length; i++) {
+      try {
+        var raw = localStorage.getItem(keys[i]);
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+      } catch(e) {}
+    }
+    return null;
+  }
+
+  // ── Normalise a product object to our card schema ──
+  function normalise(p) {
+    return {
+      code: p.code || p.productCode || p.id || '',
+      name: p.name || p.productName || p.title || 'J.Crew Product',
+      color: p.color || p.colorName || '',
+      price: p.price || p.displayPrice || '',
+      url: p.url || p.pdpUrl || (p.code ? '/p/' + p.code : '#'),
+      img: p.img || p.imageUrl || ''
+    };
+  }
+
+  // ── Build placeholder SVG for cards without a real image ──
+  function placeholderSvg() {
+    return '<div class="jc-rv-card-img-placeholder">'
+      + '<svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">'
+      + '<rect x="6" y="10" width="36" height="28" rx="2" stroke="#000" stroke-width="2" fill="none"/>'
+      + '<circle cx="18" cy="20" r="4" stroke="#000" stroke-width="2" fill="none"/>'
+      + '<path d="M6 32l10-8 8 6 6-5 12 9" stroke="#000" stroke-width="2" fill="none" stroke-linejoin="round"/>'
+      + '</svg></div>';
+  }
+
+  // ── Render a single card ──
+  function renderCard(p) {
+    var n = normalise(p);
+    var imgHtml = n.img
+      ? '<img src="' + n.img + '" alt="' + n.name + '" loading="lazy">'
+      : placeholderSvg();
+    return '<a class="jc-rv-card" href="https://www.jcrew.com' + (n.url.startsWith('http') ? n.url.replace('https://www.jcrew.com','') : n.url) + '" target="_blank" rel="noopener">'
+      + '<div class="jc-rv-card-img-wrap">' + imgHtml + '</div>'
+      + (n.color ? '<span class="jc-rv-card-color">' + n.color + '</span>' : '')
+      + '<span class="jc-rv-card-name">' + n.name + '</span>'
+      + (n.price ? '<span class="jc-rv-card-price">' + n.price + '</span>' : '')
+      + '<span class="jc-rv-card-cta">Shop Now</span>'
+      + '</a>';
+  }
+
+  // ── Dot navigation ──
+  function buildDots(track, dotsEl, cardWidth, gap) {
+    var totalCards = track.querySelectorAll('.jc-rv-card').length;
+    var visibleCount = Math.floor(track.offsetWidth / (cardWidth + gap));
+    var dotCount = Math.max(1, totalCards - visibleCount + 1);
+    dotsEl.innerHTML = '';
+    if (dotCount <= 1) { dotsEl.style.display = 'none'; return; }
+    dotsEl.style.display = 'flex';
+    for (var i = 0; i < dotCount; i++) {
+      var dot = document.createElement('button');
+      dot.className = 'jc-rv-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+      (function(idx) {
+        dot.addEventListener('click', function() {
+          track.scrollTo({ left: idx * (cardWidth + gap), behavior: 'smooth' });
+        });
+      })(i);
+      dotsEl.appendChild(dot);
+    }
+    track.addEventListener('scroll', function() {
+      var scrollIdx = Math.round(track.scrollLeft / (cardWidth + gap));
+      dotsEl.querySelectorAll('.jc-rv-dot').forEach(function(d, i) {
+        d.classList.toggle('active', i === scrollIdx);
+      });
+    });
+  }
+
+  // ── Main init ──
+  function init() {
+    var track = document.getElementById('jc-rv-track');
+    var dotsEl = document.getElementById('jc-rv-dots');
+    if (!track) return;
+
+    var products = readRecentlyViewed() || SEED_PRODUCTS;
+    // Limit to 8 most recent
+    products = products.slice(0, 8);
+
+    if (products.length === 0) {
+      track.innerHTML = '<div class="jc-rv-empty">No recently viewed products yet.</div>';
+      return;
+    }
+
+    track.innerHTML = products.map(renderCard).join('');
+
+    // Arrow buttons
+    var section = document.getElementById('jc-rv-section');
+    var btnLeft = section.querySelector('.jc-rv-arrow-left');
+    var btnRight = section.querySelector('.jc-rv-arrow-right');
+    var CARD_W = window.innerWidth < 768 ? 160 : window.innerWidth < 1024 ? 190 : 220;
+    var GAP = window.innerWidth < 768 ? 14 : 20;
+    var SCROLL_AMT = (CARD_W + GAP) * 2;
+
+    btnLeft.addEventListener('click', function() {
+      track.scrollBy({ left: -SCROLL_AMT, behavior: 'smooth' });
+    });
+    btnRight.addEventListener('click', function() {
+      track.scrollBy({ left: SCROLL_AMT, behavior: 'smooth' });
+    });
+
+    // Dots
+    buildDots(track, dotsEl, CARD_W, GAP);
+
+    // Arrow visibility based on scroll position
+    function updateArrows() {
+      btnLeft.style.opacity = track.scrollLeft > 0 ? '1' : '0';
+      btnLeft.style.pointerEvents = track.scrollLeft > 0 ? 'auto' : 'none';
+      var atEnd = track.scrollLeft >= track.scrollWidth - track.offsetWidth - 2;
+      btnRight.style.opacity = atEnd ? '0' : '1';
+      btnRight.style.pointerEvents = atEnd ? 'none' : 'auto';
+    }
+    track.addEventListener('scroll', updateArrows);
+    updateArrows();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>
