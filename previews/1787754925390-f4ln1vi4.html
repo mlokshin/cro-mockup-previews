@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nordstrom – Size Availability Indicator Mockup (CRO-1001)</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'NordstromSans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; background: #fff; color: #000; }
+
+/* ── TOP PROMO BANNER ── */
+.promo-banner { background: #000; color: #fff; text-align: center; font-size: 12px; letter-spacing: 0.08em; padding: 9px 16px; }
+.promo-banner a { color: #fff; text-decoration: underline; }
+
+/* ── NAV ── */
+.site-nav { display: flex; align-items: center; justify-content: space-between; padding: 0 24px; height: 56px; border-bottom: 1px solid #e5e5e5; background: #fff; }
+.site-nav .logo { font-size: 22px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+.nav-links { display: flex; gap: 24px; font-size: 13px; letter-spacing: 0.06em; }
+.nav-links span { cursor: pointer; }
+.nav-icons { display: flex; gap: 18px; font-size: 13px; }
+
+/* ── HERO BANNER ── */
+.hero { position: relative; background: #f5f0eb; overflow: hidden; height: 420px; display: flex; align-items: center; justify-content: center; }
+.hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, #e8ddd4 0%, #f5f0eb 60%, #ddd0c8 100%); }
+.hero-content { position: relative; z-index: 1; text-align: center; }
+.hero-eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 12px; color: #555; }
+.hero-title { font-size: 42px; font-weight: 300; letter-spacing: 0.04em; line-height: 1.15; margin-bottom: 18px; }
+.hero-cta { display: inline-block; border: 1px solid #000; padding: 11px 32px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; background: transparent; }
+.hero-dots { display: flex; gap: 8px; justify-content: center; margin-top: 20px; }
+.hero-dot { width: 7px; height: 7px; border-radius: 50%; background: #bbb; }
+.hero-dot.active { background: #000; }
+
+/* ── SECTION HEADER ── */
+.section { padding: 40px 24px 24px; }
+.section-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 20px; }
+.section-title { font-size: 20px; font-weight: 400; letter-spacing: 0.04em; }
+.section-link { font-size: 12px; letter-spacing: 0.08em; text-decoration: underline; cursor: pointer; color: #000; }
+
+/* ── CAROUSEL ── */
+.carousel-track { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 12px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.carousel-track::-webkit-scrollbar { display: none; }
+
+/* ── PRODUCT TILE ── */
+.product-tile { flex: 0 0 210px; scroll-snap-align: start; display: flex; flex-direction: column; }
+.tile-image-wrap { position: relative; width: 100%; aspect-ratio: 3/4; background: #f0ece8; overflow: hidden; margin-bottom: 10px; }
+.tile-image-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tile-badge { position: absolute; top: 8px; left: 8px; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 7px; font-weight: 600; }
+.badge-popular { background: #000; color: #fff; }
+.badge-markdown { background: #c0392b; color: #fff; }
+.tile-brand { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #555; margin-bottom: 2px; }
+.tile-name { font-size: 13px; font-weight: 400; line-height: 1.35; margin-bottom: 4px; color: #000; }
+.tile-price-row { display: flex; gap: 8px; align-items: baseline; margin-bottom: 6px; }
+.tile-price { font-size: 13px; font-weight: 600; color: #000; }
+.tile-price-orig { font-size: 12px; color: #888; text-decoration: line-through; }
+.tile-price-sale { font-size: 13px; font-weight: 600; color: #c0392b; }
+.tile-reviews { font-size: 11px; color: #888; margin-bottom: 8px; }
+.tile-stars { color: #000; letter-spacing: -1px; }
+
+/* ── SIZE AVAILABILITY (HYPOTHESIS CHANGE) ── */
+.size-row-wrap { margin-bottom: 4px; }
+.low-stock-badge { display: inline-block; font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase; font-weight: 600; color: #7a4f00; background: #fef3cd; border: 1px solid #f0c040; padding: 2px 7px; border-radius: 2px; margin-bottom: 5px; }
+.size-row { display: flex; flex-wrap: wrap; gap: 4px; }
+.size-swatch { position: relative; width: 28px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 10px; letter-spacing: 0.04em; font-weight: 500; border: 1px solid #000; color: #000; background: #fff; cursor: pointer; user-select: none; overflow: hidden; }
+.size-swatch.oos { border-color: #ccc; color: #bbb; cursor: default; }
+.size-swatch.oos::after { content: ''; position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background: #ccc; transform: rotate(-35deg); transform-origin: center; }
+
+/* ── EDITORIAL STRIP ── */
+.editorial-strip { display: flex; gap: 0; overflow-x: auto; padding: 0 24px 32px; gap: 16px; scrollbar-width: none; }
+.editorial-strip::-webkit-scrollbar { display: none; }
+.editorial-card { flex: 0 0 260px; position: relative; aspect-ratio: 3/4; background: #e8e0d8; overflow: hidden; }
+.editorial-card-label { position: absolute; bottom: 20px; left: 16px; right: 16px; }
+.editorial-card-eyebrow { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: #fff; margin-bottom: 4px; }
+.editorial-card-title { font-size: 18px; font-weight: 300; color: #fff; line-height: 1.2; }
+.editorial-card-bg { position: absolute; inset: 0; }
+.ec1 { background: linear-gradient(160deg, #c9b8a8 0%, #8a7060 100%); }
+.ec2 { background: linear-gradient(160deg, #d4c5b5 0%, #6a5a4a 100%); }
+.ec3 { background: linear-gradient(160deg, #b8c4c8 0%, #5a6a70 100%); }
+.ec4 { background: linear-gradient(160deg, #c8c0b0 0%, #706858 100%); }
+
+/* ── BRANDS WE LOVE ── */
+.brands-row { display: flex; gap: 24px; overflow-x: auto; padding: 0 24px 32px; align-items: center; scrollbar-width: none; }
+.brands-row::-webkit-scrollbar { display: none; }
+.brand-pill { flex: 0 0 auto; border: 1px solid #000; padding: 8px 20px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; cursor: pointer; }
+
+/* ── FOOTER ── */
+footer { background: #000; color: #fff; padding: 40px 24px; margin-top: 32px; }
+.footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 32px; }
+.footer-col h4 { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px; font-weight: 600; }
+.footer-col ul { list-style: none; }
+.footer-col ul li { font-size: 12px; color: #aaa; margin-bottom: 8px; cursor: pointer; }
+.footer-bottom { border-top: 1px solid #333; padding-top: 20px; font-size: 11px; color: #666; text-align: center; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hero { height: 300px; }
+  .hero-title { font-size: 28px; }
+  .footer-grid { grid-template-columns: repeat(2, 1fr); }
+  .product-tile { flex: 0 0 160px; }
+  .size-swatch { width: 24px; height: 22px; font-size: 9px; }
+  .editorial-card { flex: 0 0 200px; }
+}
+@media (max-width: 480px) {
+  .product-tile { flex: 0 0 145px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP PROMO BANNER -->
+<div class="promo-banner">
+  Get rewarded with every purchase. <a href="#">Apply for the Nordstrom Credit Card</a>
+</div>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <div class="logo">Nordstrom</div>
+  <div class="nav-links">
+    <span>Women</span>
+    <span>Men</span>
+    <span>Kids</span>
+    <span>Home</span>
+    <span>Beauty</span>
+    <span>Sale</span>
+    <span>Brands</span>
+  </div>
+  <div class="nav-icons">
+    <span>&#128269;</span>
+    <span>&#9825;</span>
+    <span>&#128717;</span>
+    <span>&#128100;</span>
+  </div>
+</nav>
+
+<!-- HERO CAROUSEL -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">New Arrivals</div>
+    <div class="hero-title">Romantic Estate</div>
+    <div class="hero-cta">Shop the Story</div>
+    <div class="hero-dots">
+      <div class="hero-dot active"></div>
+      <div class="hero-dot"></div>
+      <div class="hero-dot"></div>
+      <div class="hero-dot"></div>
+    </div>
+  </div>
+</div>
+
+<!-- RUSTIC RETREAT CAROUSEL -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-title">Rustic Retreat</div>
+    <a class="section-link">Shop All</a>
+  </div>
+  <div class="carousel-track" id="carousel-rustic"></div>
+</div>
+
+<!-- BEST SELLERS CAROUSEL -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-title">Best Sellers</div>
+    <a class="section-link">Shop All</a>
+  </div>
+  <div class="carousel-track" id="carousel-best"></div>
+</div>
+
+<!-- EDITORIAL STRIP -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-title">Get Inspired</div>
+  </div>
+</div>
+<div class="editorial-strip">
+  <div class="editorial-card">
+    <div class="editorial-card-bg ec1"></div>
+    <div class="editorial-card-label">
+      <div class="editorial-card-eyebrow">Trend</div>
+      <div class="editorial-card-title">Romantic Estate</div>
+    </div>
+  </div>
+  <div class="editorial-card">
+    <div class="editorial-card-bg ec2"></div>
+    <div class="editorial-card-label">
+      <div class="editorial-card-eyebrow">Fragrance</div>
+      <div class="editorial-card-title">CHANEL</div>
+    </div>
+  </div>
+  <div class="editorial-card">
+    <div class="editorial-card-bg ec3"></div>
+    <div class="editorial-card-label">
+      <div class="editorial-card-eyebrow">Trend</div>
+      <div class="editorial-card-title">Victorian Poet</div>
+    </div>
+  </div>
+  <div class="editorial-card">
+    <div class="editorial-card-bg ec4"></div>
+    <div class="editorial-card-label">
+      <div class="editorial-card-eyebrow">Trend</div>
+      <div class="editorial-card-title">Rustic Retreat</div>
+    </div>
+  </div>
+</div>
+
+<!-- BRANDS WE LOVE -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-title">Brands We Love</div>
+  </div>
+</div>
+<div class="brands-row">
+  <div class="brand-pill">Madewell</div>
+  <div class="brand-pill">Free People</div>
+  <div class="brand-pill">Vince</div>
+  <div class="brand-pill">Veronica Beard</div>
+  <div class="brand-pill">Treasure &amp; Bond</div>
+  <div class="brand-pill">Zella</div>
+  <div class="brand-pill">Caslon</div>
+  <div class="brand-pill">Topshop</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Help</h4>
+      <ul>
+        <li>Order Status</li>
+        <li>Shipping &amp; Returns</li>
+        <li>Store Pickup</li>
+        <li>Contact Us</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>About Us</h4>
+      <ul>
+        <li>About Nordstrom</li>
+        <li>Careers</li>
+        <li>Investor Relations</li>
+        <li>Press</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Nordstrom Credit</h4>
+      <ul>
+        <li>Nordstrom Card</li>
+        <li>Nordstrom Rewards</li>
+        <li>Manage Account</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Get Inspired</h4>
+      <ul>
+        <li>Style Guides</li>
+        <li>New &amp; Now</li>
+        <li>Gift Ideas</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">&copy; 2024 Nordstrom, Inc. All rights reserved.</div>
+</footer>
+
+<script>
+(function() {
+  // ── PRODUCT DATA (representative tiles matching page summary) ──
+  const rusticProducts = [
+    { brand: 'Treasure & Bond', name: 'Chunky Knit Pullover Sweater', price: '$89.00', origPrice: null, salePrice: null, reviews: 142, stars: 4, badge: 'popular', sizes: ['XS','S','M','L','XL'], oos: ['XL'] },
+    { brand: 'Caslon', name: 'Plaid Flannel Shirt', price: '$65.00', origPrice: '$65.00', salePrice: '$42.90', reviews: 87, stars: 4, badge: 'markdown', sizes: ['XS','S','M','L','XL'], oos: ['XS','XL'], lowStock: true },
+    { brand: 'Vince', name: 'Suede Ankle Boot', price: '$395.00', origPrice: null, salePrice: null, reviews: 56, stars: 5, badge: null, sizes: ['6','7','8','9','10'], oos: ['6','10'] },
+    { brand: 'Zella', name: 'High Waist Legging', price: '$59.00', origPrice: null, salePrice: null, reviews: 310, stars: 4, badge: 'popular', sizes: ['XS','S','M','L','XL'], oos: [] },
+    { brand: 'Free People', name: 'Linen Blend Wide Leg Pant', price: '$128.00', origPrice: '$128.00', salePrice: '$76.80', reviews: 44, stars: 4, badge: 'markdown', sizes: ['XS','S','M','L','XL'], oos: ['M','L','XL'], lowStock: true },
+    { brand: 'Madewell', name: 'The Perfect Vintage Jean', price: '$135.00', origPrice: null, salePrice: null, reviews: 228, stars: 5, badge: null, sizes: ['24','26','28','30','32'], oos: ['24'] }
+  ];
+
+  const bestProducts = [
+    { brand: 'Nordstrom', name: 'Everyday Cashmere Crewneck', price: '$199.00', origPrice: null, salePrice: null, reviews: 512, stars: 5, badge: 'popular', sizes: ['XS','S','M','L','XL'], oos: ['XS'] },
+    { brand: 'Veronica Beard', name: 'Dickey Jacket', price: '$595.00', origPrice: null, salePrice: null, reviews: 33, stars: 4, badge: null, sizes: ['0','2','4','6','8','10'], oos: ['0','10'], lowStock: false },
+    { brand: 'Topshop', name: 'Satin Slip Midi Dress', price: '$75.00', origPrice: '$75.00', salePrice: '$49.90', reviews: 189, stars: 4, badge: 'markdown', sizes: ['XS','S','M','L','XL'], oos: ['XS','S'], lowStock: true },
+    { brand: 'Caslon', name: 'Ribbed Turtleneck Sweater', price: '$79.00', origPrice: null, salePrice: null, reviews: 97, stars: 4, badge: null, sizes: ['XS','S','M','L','XL'], oos: [] },
+    { brand: 'Zella', name: 'Live In Hoodie', price: '$69.00', origPrice: '$69.00', salePrice: '$45.90', reviews: 401, stars: 5, badge: 'markdown', sizes: ['XS','S','M','L','XL'], oos: ['L','XL'] },
+    { brand: 'Treasure & Bond', name: 'Relaxed Linen Blazer', price: '$149.00', origPrice: null, salePrice: null, reviews: 61, stars: 4, badge: 'popular', sizes: ['XS','S','M','L','XL'], oos: ['XS','S','M'], lowStock: true }
+  ];
+
+  function starsHtml(count) {
+    let s = '';
+    for (let i = 0; i < 5; i++) s += i < count ? '&#9733;' : '&#9734;';
+    return s;
+  }
+
+  function buildTile(p) {
+    const badgeHtml = p.badge === 'popular'
+      ? '<div class="tile-badge badge-popular">Popular</div>'
+      : p.badge === 'markdown'
+      ? '<div class="tile-badge badge-markdown">New Markdown</div>'
+      : '';
+
+    const priceHtml = p.salePrice
+      ? `<span class="tile-price-orig">${p.origPrice}</span><span class="tile-price-sale">${p.salePrice}</span>`
+      : `<span class="tile-price">${p.price}</span>`;
+
+    const lowStockHtml = p.lowStock
+      ? '<div class="low-stock-badge">Low Stock</div>'
+      : '';
+
+    const swatchesHtml = p.sizes.map(sz => {
+      const isOos = p.oos && p.oos.includes(sz);
+      return `<div class="size-swatch${isOos ? ' oos' : ''}" title="${sz}${isOos ? ' – Out of Stock' : ' – Available'}">${sz}</div>`;
+    }).join('');
+
+    // Placeholder image using a colored rectangle
+    const imgHtml = `<div style="width:100%;height:100%;background:linear-gradient(160deg,#e0d8d0 0%,#c8bdb4 100%);"></div>`;
+
+    return `
+    <div class="product-tile">
+      <div class="tile-image-wrap">
+        ${imgHtml}
+        ${badgeHtml}
+      </div>
+      <div class="tile-brand">${p.brand}</div>
+      <div class="tile-name">${p.name}</div>
+      <div class="tile-price-row">${priceHtml}</div>
+      <div class="tile-reviews"><span class="tile-stars">${starsHtml(p.stars)}</span> (${p.reviews})</div>
+      <div class="size-row-wrap">
+        ${lowStockHtml}
+        <div class="size-row">${swatchesHtml}</div>
+      </div>
+    </div>`;
+  }
+
+  function renderCarousel(id, products) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.innerHTML = products.map(buildTile).join('');
+  }
+
+  renderCarousel('carousel-rustic', rusticProducts);
+  renderCarousel('carousel-best', bestProducts);
+})();
+</script>
+</body>
+</html>
