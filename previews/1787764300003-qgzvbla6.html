@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>J.Crew – Recently Viewed Carousel Mockup (CRO-812)</title>
+<style>
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #fff; color: #000; }
+
+/* ── Page Shell (simulates homepage context) ── */
+.jc-page-shell { width: 100%; }
+
+/* ── Simulated Hero Banner ── */
+.jc-hero-sim {
+  width: 100%;
+  background: #1d3461;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 24px;
+  text-align: center;
+  min-height: 320px;
+}
+.jc-hero-sim__eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 12px;
+}
+.jc-hero-sim__headline {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 400;
+  line-height: 1.05;
+  margin-bottom: 20px;
+  letter-spacing: -0.01em;
+}
+.jc-hero-sim__cta {
+  display: inline-block;
+  border: 1px solid #fff;
+  color: #fff;
+  text-decoration: none;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 12px 28px;
+  transition: background 0.2s, color 0.2s;
+}
+.jc-hero-sim__cta:hover { background: #fff; color: #1d3461; }
+
+/* ── Simulated New Arrivals Strip ── */
+.jc-arrivals-sim {
+  width: 100%;
+  background: #fff;
+  padding: 40px 24px;
+  text-align: center;
+  border-bottom: 1px solid #e8e8e8;
+}
+.jc-arrivals-sim__heading {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 400;
+  margin-bottom: 20px;
+  letter-spacing: -0.01em;
+}
+.jc-arrivals-sim__links {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.jc-arrivals-sim__link {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #000;
+  text-decoration: none;
+  border-bottom: 1px solid #000;
+  padding-bottom: 2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.jc-arrivals-sim__link:hover { color: #1d3461; border-color: #1d3461; }
+
+/* ══════════════════════════════════════════
+   CRO-812 RECENTLY VIEWED CAROUSEL MODULE
+══════════════════════════════════════════ */
+
+.jc-rv-section {
+  width: 100%;
+  background: #f5f5f5;
+  padding: 48px 0 56px;
+  position: relative;
+}
+
+.jc-rv-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* Section Header */
+.jc-rv-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  border-bottom: 1px solid #1d3461;
+  padding-bottom: 12px;
+}
+
+.jc-rv-heading {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 400;
+  color: #000;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.jc-rv-view-all {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #1d3461;
+  text-decoration: none;
+  border-bottom: 1px solid #1d3461;
+  padding-bottom: 1px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-left: 16px;
+  transition: opacity 0.2s;
+}
+.jc-rv-view-all:hover { opacity: 0.65; }
+
+/* Carousel Wrapper */
+.jc-rv-carousel-wrap {
+  position: relative;
+}
+
+.jc-rv-carousel {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 4px;
+}
+.jc-rv-carousel::-webkit-scrollbar { display: none; }
+
+/* Arrow Buttons */
+.jc-rv-arrow {
+  display: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  border: 1px solid #d0d0d0;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background 0.2s, border-color 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.jc-rv-arrow:hover { background: #1d3461; border-color: #1d3461; }
+.jc-rv-arrow:hover svg path { stroke: #fff; }
+.jc-rv-arrow--prev { left: -20px; }
+.jc-rv-arrow--next { right: -20px; }
+.jc-rv-arrow svg { width: 16px; height: 16px; display: block; }
+.jc-rv-arrow svg path { stroke: #000; stroke-width: 1.5; fill: none; transition: stroke 0.2s; }
+
+@media (min-width: 768px) {
+  .jc-rv-arrow { display: flex; }
+}
+
+/* Product Tile */
+.jc-rv-tile {
+  flex: 0 0 220px;
+  width: 220px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: #000;
+  transition: box-shadow 0.2s;
+  position: relative;
+}
+.jc-rv-tile:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.10); }
+
+.jc-rv-tile__img-wrap {
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+  background: #e8e8e8;
+  position: relative;
+}
+.jc-rv-tile__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+.jc-rv-tile:hover .jc-rv-tile__img { transform: scale(1.04); }
+
+/* Placeholder image (SVG inline for demo) */
+.jc-rv-tile__img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e0e0e0;
+}
+.jc-rv-tile__img-placeholder svg { width: 48px; height: 48px; opacity: 0.3; }
+
+.jc-rv-tile__badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #1d3461;
+  color: #fff;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.jc-rv-tile__body {
+  padding: 12px 12px 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.jc-rv-tile__name {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  margin-bottom: 6px;
+  color: #000;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.jc-rv-tile__color {
+  font-size: 11px;
+  color: #666;
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.jc-rv-tile__price-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.jc-rv-tile__price {
+  font-size: 13px;
+  font-weight: 600;
+  color: #000;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.jc-rv-tile__price--sale {
+  color: #c0392b;
+}
+
+.jc-rv-tile__price--orig {
+  font-size: 12px;
+  font-weight: 400;
+  color: #999;
+  text-decoration: line-through;
+}
+
+.jc-rv-tile__cta {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #1d3461;
+  text-decoration: none;
+  border-bottom: 1px solid #1d3461;
+  padding-bottom: 1px;
+  align-self: flex-start;
+  margin-top: auto;
+  transition: opacity 0.2s;
+}
+.jc-rv-tile__cta:hover { opacity: 0.65; }
+
+/* Empty State */
+.jc-rv-empty {
+  display: none;
+  text-align: center;
+  padding: 32px 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 18px;
+  color: #888;
+}
+
+/* Simulated Loyalty Strip below carousel */
+.jc-loyalty-sim {
+  width: 100%;
+  background: #1d3461;
+  color: #fff;
+  padding: 40px 24px;
+  text-align: center;
+}
+.jc-loyalty-sim__heading {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+.jc-loyalty-sim__sub {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 20px;
+}
+.jc-loyalty-sim__cta {
+  display: inline-block;
+  border: 1px solid #fff;
+  color: #fff;
+  text-decoration: none;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 10px 24px;
+  transition: background 0.2s, color 0.2s;
+}
+.jc-loyalty-sim__cta:hover { background: #fff; color: #1d3461; }
+
+/* ── Annotation Banner ── */
+.jc-annotation {
+  background: #fffbe6;
+  border: 1.5px dashed #f0c040;
+  border-radius: 4px;
+  padding: 14px 20px;
+  margin: 0 32px 28px;
+  font-size: 12px;
+  color: #7a5c00;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
+  max-width: 1216px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.jc-annotation strong { font-weight: 700; }
+
+/* ── Mobile ── */
+@media (max-width: 767px) {
+  .jc-rv-inner { padding: 0 16px; }
+  .jc-rv-section { padding: 36px 0 44px; }
+  .jc-rv-tile { flex: 0 0 160px; width: 160px; }
+  .jc-rv-tile__img-wrap { height: 200px; }
+  .jc-rv-tile__name { font-size: 11px; }
+  .jc-rv-tile__price { font-size: 12px; }
+  .jc-rv-header { margin-bottom: 20px; }
+  .jc-annotation { margin: 0 16px 20px; }
+}
+</style>
+</head>
+<body>
+<div class="jc-page-shell">
+
+  <!-- Simulated Hero -->
+  <section class="jc-hero-sim" aria-label="Hero banner simulation">
+    <p class="jc-hero-sim__eyebrow">New this season</p>
+    <h1 class="jc-hero-sim__headline">the tiny rollneck</h1>
+    <a href="https://www.jcrew.com" class="jc-hero-sim__cta">Shop the collection</a>
+  </section>
+
+  <!-- Simulated New Arrivals -->
+  <section class="jc-arrivals-sim" aria-label="Shop New Arrivals">
+    <h2 class="jc-arrivals-sim__heading">shop new arrivals</h2>
+    <div class="jc-arrivals-sim__links">
+      <a href="https://www.jcrew.com/womens-clothing" class="jc-arrivals-sim__link">Women</a>
+      <a href="https://www.jcrew.com/mens-clothing" class="jc-arrivals-sim__link">Men</a>
+      <a href="https://www.jcrew.com/girls-clothing" class="jc-arrivals-sim__link">Girls</a>
+      <a href="https://www.jcrew.com/boys-clothing" class="jc-arrivals-sim__link">Boys</a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       CRO-812 VARIANT: RECENTLY VIEWED CAROUSEL
+       ═══════════════════════════════════════ -->
+  <section class="jc-rv-section" aria-label="Recently Viewed Products" id="jc-rv-section">
+    <div class="jc-rv-inner">
+
+      <!-- Internal annotation -->
+      <div class="jc-annotation" role="note">
+        <strong>⚠ CRO-812 INTERNAL MOCKUP — NOT FOR CLIENT DISTRIBUTION</strong><br>
+        This section is injected by the CRO variant. In production, the carousel is populated from <code>localStorage</code> recently-viewed data set during prior PDP visits. Demo tiles below simulate that data. The annotation banner and simulated page sections above/below are for review context only and would not appear in the live variant.
+      </div>
+
+      <!-- Header -->
+      <div class="jc-rv-header">
+        <h2 class="jc-rv-heading">recently viewed</h2>
+        <a href="https://www.jcrew.com" class="jc-rv-view-all">View All</a>
+      </div>
+
+      <!-- Carousel -->
+      <div class="jc-rv-carousel-wrap">
+        <button class="jc-rv-arrow jc-rv-arrow--prev" aria-label="Scroll left">
+          <svg viewBox="0 0 16 16"><path d="M10 13L5 8l5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="jc-rv-carousel" id="jc-rv-carousel" role="list">
+          <!-- Tiles injected by JS -->
+        </div>
+        <button class="jc-rv-arrow jc-rv-arrow--next" aria-label="Scroll right">
+          <svg viewBox="0 0 16 16"><path d="M6 3l5 5-5 5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <!-- Empty state (shown if no recently viewed) -->
+      <p class="jc-rv-empty" id="jc-rv-empty">No recently viewed items yet — start browsing!</p>
+
+    </div>
+  </section>
+
+  <!-- Simulated Loyalty Strip -->
+  <section class="jc-loyalty-sim" aria-label="J.Crew Passport loyalty">
+    <h2 class="jc-loyalty-sim__heading">J.Crew Passport</h2>
+    <p class="jc-loyalty-sim__sub">Earn points. Unlock rewards. Navy &amp; Gold Access tiers.</p>
+    <a href="https://www.jcrew.com" class="jc-loyalty-sim__cta">Join Now</a>
+  </section>
+
+</div>
+<script>
+(function() {
+  'use strict';
+
+  /* ─────────────────────────────────────────
+     CRO-812 | Recently Viewed Carousel
+     Reads from localStorage key: 'jcrew_recently_viewed'
+     Falls back to DEMO data for mockup review.
+     ───────────────────────────────────────── */
+
+  var STORAGE_KEY = 'jcrew_recently_viewed';
+  var MAX_TILES   = 10;
+
+  /* Demo product data — simulates what would be
+     stored in localStorage after PDP visits.    */
+  var DEMO_PRODUCTS = [
+    {
+      id: 'CX627',
+      name: 'Tiny Rollneck Sweater',
+      color: 'Heather Ivory',
+      price: '$128',
+      salePriceRaw: null,
+      url: 'https://www.jcrew.com/p/CX627',
+      imgUrl: 'https://i.imgur.com/placeholder1.jpg',
+      badge: 'New'
+    },
+    {
+      id: 'CY782',
+      name: 'Tiny Rollneck Sweater',
+      color: 'Vintage Red Stripe',
+      price: '$128',
+      salePriceRaw: null,
+      url: 'https://www.jcrew.com/p/CY782',
+      imgUrl: 'https://i.imgur.com/placeholder2.jpg',
+      badge: null
+    },
+    {
+      id: 'CZ387',
+      name: 'Tiny Rollneck Sweater',
+      color: 'Navy',
+      price: '$128',
+      salePriceRaw: null,
+      url: 'https://www.jcrew.com/p/CZ387',
+      imgUrl: 'https://i.imgur.com/placeholder3.jpg',
+      badge: null
+    },
+    {
+      id: 'BK441',
+      name: 'Slim-Fit Chino Pant',
+      color: 'Khaki',
+      price: '$79.50',
+      salePriceRaw: '$59.99',
+      url: 'https://www.jcrew.com/p/BK441',
+      imgUrl: 'https://i.imgur.com/placeholder4.jpg',
+      badge: 'Sale'
+    },
+    {
+      id: 'AM219',
+      name: 'Ludlow Slim-Fit Suit Jacket',
+      color: 'Italian Wool – Navy',
+      price: '$398',
+      salePriceRaw: null,
+      url: 'https://www.jcrew.com/p/AM219',
+      imgUrl: 'https://i.imgur.com/placeholder5.jpg',
+      badge: null
+    },
+    {
+      id: 'FQ334',
+      name: 'Cashmere Crewneck Sweater',
+      color: 'Camel',
+      price: '$198',
+      salePriceRaw: '$148',
+      url: 'https://www.jcrew.com/p/FQ334',
+      imgUrl: 'https://i.imgur.com/placeholder6.jpg',
+      badge: 'Sale'
+    },
+    {
+      id: 'GH112',
+      name: 'Relaxed-Fit Oxford Shirt',
+      color: 'White',
+      price: '$89.50',
+      salePriceRaw: null,
+      url: 'https://www.jcrew.com/p/GH112',
+      imgUrl: 'https://i.imgur.com/placeholder7.jpg',
+      badge: null
+    }
+  ];
+
+  /* SVG placeholder rendered inline when img src is unavailable */
+  function placeholderSVG() {
+    return '<div class="jc-rv-tile__img-placeholder" aria-hidden="true">'
+      + '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">'
+      + '<rect width="48" height="48" rx="2" fill="#ccc"/>'
+      + '<path d="M12 36l8-10 6 7 4-5 6 8H12z" fill="#aaa"/>'
+      + '<circle cx="32" cy="18" r="4" fill="#aaa"/>'
+      + '</svg></div>';
+  }
+
+  /* Build a single tile element */
+  function buildTile(product) {
+    var article = document.createElement('article');
+    article.className = 'jc-rv-tile';
+    article.setAttribute('role', 'listitem');
+
+    var badgeHtml = product.badge
+      ? '<span class="jc-rv-tile__badge">' + product.badge + '</span>'
+      : '';
+
+    var priceHtml;
+    if (product.salePriceRaw) {
+      priceHtml = '<span class="jc-rv-tile__price jc-rv-tile__price--sale">' + product.salePriceRaw + '</span>'
+        + '<span class="jc-rv-tile__price jc-rv-tile__price--orig">' + product.price + '</span>';
+    } else {
+      priceHtml = '<span class="jc-rv-tile__price">' + product.price + '</span>';
+    }
+
+    article.innerHTML =
+      '<a href="' + product.url + '" class="jc-rv-tile__img-wrap" tabindex="-1" aria-hidden="true">'
+      + badgeHtml
+      + placeholderSVG()
+      + '</a>'
+      + '<div class="jc-rv-tile__body">'
+      + '<p class="jc-rv-tile__name">' + product.name + '</p>'
+      + '<p class="jc-rv-tile__color">' + product.color + '</p>'
+      + '<div class="jc-rv-tile__price-row">' + priceHtml + '</div>'
+      + '<a href="' + product.url + '" class="jc-rv-tile__cta">Shop Now</a>'
+      + '</div>';
+
+    return article;
+  }
+
+  /* Read products from localStorage or fall back to demo */
+  function getProducts() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed.slice(0, MAX_TILES);
+        }
+      }
+    } catch (e) { /* ignore parse errors */ }
+    /* Fallback: demo data for mockup review */
+    return DEMO_PRODUCTS.slice(0, MAX_TILES);
+  }
+
+  /* Render carousel */
+  function render() {
+    var carousel = document.getElementById('jc-rv-carousel');
+    var emptyEl  = document.getElementById('jc-rv-empty');
+    if (!carousel) return;
+
+    var products = getProducts();
+
+    if (!products || products.length === 0) {
+      carousel.style.display = 'none';
+      if (emptyEl) emptyEl.style.display = 'block';
+      return;
+    }
+
+    var frag = document.createDocumentFragment();
+    products.forEach(function(p) {
+      frag.appendChild(buildTile(p));
+    });
+    carousel.appendChild(frag);
+  }
+
+  /* Arrow scroll */
+  function initArrows() {
+    var carousel = document.getElementById('jc-rv-carousel');
+    var prevBtn  = document.querySelector('.jc-rv-arrow--prev');
+    var nextBtn  = document.querySelector('.jc-rv-arrow--next');
+    if (!carousel || !prevBtn || !nextBtn) return;
+
+    var SCROLL_AMOUNT = 460;
+
+    prevBtn.addEventListener('click', function() {
+      carousel.scrollBy({ left: -SCROLL_AMOUNT, behavior: 'smooth' });
+    });
+    nextBtn.addEventListener('click', function() {
+      carousel.scrollBy({ left: SCROLL_AMOUNT, behavior: 'smooth' });
+    });
+
+    /* Hide/show arrows based on scroll position */
+    function updateArrows() {
+      var atStart = carousel.scrollLeft <= 4;
+      var atEnd   = carousel.scrollLeft >= carousel.scrollWidth - carousel.clientWidth - 4;
+      prevBtn.style.opacity = atStart ? '0.3' : '1';
+      prevBtn.style.pointerEvents = atStart ? 'none' : 'auto';
+      nextBtn.style.opacity = atEnd ? '0.3' : '1';
+      nextBtn.style.pointerEvents = atEnd ? 'none' : 'auto';
+    }
+
+    carousel.addEventListener('scroll', updateArrows, { passive: true });
+    updateArrows();
+  }
+
+  /* Init */
+  function init() {
+    render();
+    initArrows();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+})();
+</script>
+</body>
+</html>
