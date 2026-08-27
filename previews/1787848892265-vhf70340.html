@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nordstrom CRO-2001 — Size Availability Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; background: #fff; color: #000; }
+
+/* ── VARIANT BANNER ── */
+.cro-variant-banner {
+  background: #000;
+  color: #fff;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* ── MOCK NAV ── */
+.mock-nav {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  background: #fff;
+}
+.mock-nav-logo {
+  font-size: 22px;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #000;
+}
+.mock-nav-links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+.mock-nav-links li a {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #000;
+  text-decoration: none;
+}
+.mock-nav-links li a:hover { text-decoration: underline; }
+
+/* ── PAGE HEADER ── */
+.plp-header {
+  padding: 24px 32px 8px;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.plp-header h1 {
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.plp-header .result-count {
+  font-size: 12px;
+  color: #757575;
+}
+
+/* ── FILTER BAR ── */
+.filter-bar {
+  padding: 12px 32px;
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid #e0e0e0;
+  overflow-x: auto;
+}
+.filter-chip {
+  border: 1px solid #000;
+  padding: 6px 14px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+  background: #fff;
+  transition: background 0.15s;
+}
+.filter-chip:hover { background: #f5f5f5; }
+.filter-chip.active { background: #000; color: #fff; }
+
+/* ── LAYOUT ── */
+.plp-layout {
+  display: flex;
+  padding: 0 32px;
+  gap: 32px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ── SIDEBAR ── */
+.plp-sidebar {
+  width: 200px;
+  flex-shrink: 0;
+  padding: 24px 0;
+}
+.sidebar-section { margin-bottom: 24px; }
+.sidebar-section h3 {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 8px;
+}
+.sidebar-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  color: #333;
+}
+.sidebar-option input[type=checkbox] { accent-color: #000; }
+
+/* ── PRODUCT GRID ── */
+.plp-grid-wrap { flex: 1; padding: 24px 0; }
+.plp-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px 16px;
+}
+@media (max-width: 1100px) { .plp-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 768px) {
+  .plp-layout { flex-direction: column; padding: 0 16px; }
+  .plp-sidebar { width: 100%; padding: 16px 0 0; }
+  .plp-grid { grid-template-columns: repeat(2, 1fr); gap: 16px 12px; }
+  .mock-nav-links { display: none; }
+  .plp-header { padding: 16px 16px 8px; }
+  .filter-bar { padding: 10px 16px; }
+}
+@media (max-width: 420px) { .plp-grid { grid-template-columns: repeat(2, 1fr); gap: 12px 8px; } }
+
+/* ── PRODUCT TILE ── */
+.product-tile {
+  position: relative;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+}
+.product-tile:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.10); }
+
+.tile-image-wrap {
+  position: relative;
+  width: 100%;
+  padding-bottom: 133%;
+  background: #f5f5f5;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.tile-image-wrap img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.tile-image-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+}
+.tile-image-placeholder svg { opacity: 0.18; }
+
+/* Out of stock overlay */
+.oos-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+.oos-overlay-text {
+  background: rgba(0,0,0,0.62);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+}
+
+/* Tile badge (Popular, New, etc.) */
+.tile-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: #000;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  z-index: 3;
+}
+.tile-badge.sale { background: #c0392b; }
+
+.tile-brand {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #757575;
+  margin-bottom: 3px;
+}
+.tile-name {
+  font-size: 13px;
+  font-weight: 400;
+  color: #000;
+  margin-bottom: 4px;
+  line-height: 1.35;
+}
+.tile-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+.tile-price {
+  font-size: 13px;
+  font-weight: 500;
+  color: #000;
+}
+.tile-price.sale-price { color: #c0392b; }
+.tile-price.original-price {
+  font-size: 12px;
+  color: #9e9e9e;
+  text-decoration: line-through;
+}
+.tile-reviews {
+  font-size: 11px;
+  color: #9e9e9e;
+  margin-bottom: 6px;
+}
+
+/* ── SIZE AVAILABILITY BADGE (CRO VARIANT INJECTION) ── */
+.size-avail-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 2px;
+  margin-top: 2px;
+}
+.size-avail-badge.limited {
+  background: #FFF3CD;
+  color: #856404;
+  border: 1px solid #FFDA6A;
+}
+.size-avail-badge.oos {
+  background: #e0e0e0;
+  color: #757575;
+  border: 1px solid #bdbdbd;
+}
+.size-avail-badge.good {
+  background: #f5f5f5;
+  color: #555;
+  border: 1px solid #e0e0e0;
+}
+.size-avail-badge .badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.size-avail-badge.limited .badge-dot { background: #C8860A; }
+.size-avail-badge.oos .badge-dot { background: #9e9e9e; }
+.size-avail-badge.good .badge-dot { background: #4caf50; }
+
+/* ── ANNOTATION CALLOUT ── */
+.annotation-box {
+  background: #fffbe6;
+  border: 1.5px dashed #C8860A;
+  border-radius: 4px;
+  padding: 12px 16px;
+  margin: 24px 0 8px;
+  font-size: 12px;
+  color: #5a4000;
+  line-height: 1.6;
+}
+.annotation-box strong { font-weight: 700; }
+
+/* ── SECTION LABEL ── */
+.section-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff;
+  background: #000;
+  display: inline-block;
+  padding: 3px 8px;
+  margin-bottom: 12px;
+}
+.section-label.control { background: #9e9e9e; }
+</style>
+</head>
+<body>
+
+<div class="cro-variant-banner">⚗️ CRO-2001 VARIANT — Size Availability Indicators Active — Internal Review Only</div>
+
+<nav class="mock-nav">
+  <div class="mock-nav-logo">Nordstrom</div>
+  <ul class="mock-nav-links">
+    <li><a href="#">Women</a></li>
+    <li><a href="#">Men</a></li>
+    <li><a href="#">Kids</a></li>
+    <li><a href="#">Designer</a></li>
+    <li><a href="#">Shoes</a></li>
+    <li><a href="#">Handbags</a></li>
+    <li><a href="#">Sale</a></li>
+  </ul>
+</nav>
+
+<div class="plp-header">
+  <h1>Women / Clothing</h1>
+  <span class="result-count">1,284 Items</span>
+</div>
+
+<div class="filter-bar">
+  <div class="filter-chip active">All</div>
+  <div class="filter-chip">Size</div>
+  <div class="filter-chip">Brand</div>
+  <div class="filter-chip">Price</div>
+  <div class="filter-chip">Color</div>
+  <div class="filter-chip">New Arrivals</div>
+  <div class="filter-chip">Sale</div>
+  <div class="filter-chip">Customer Rating</div>
+</div>
+
+<div class="plp-layout">
+  <aside class="plp-sidebar">
+    <div class="sidebar-section">
+      <h3>Size</h3>
+      <label class="sidebar-option"><input type="checkbox"> XS</label>
+      <label class="sidebar-option"><input type="checkbox"> S</label>
+      <label class="sidebar-option"><input type="checkbox" checked> M</label>
+      <label class="sidebar-option"><input type="checkbox" checked> L</label>
+      <label class="sidebar-option"><input type="checkbox"> XL</label>
+      <label class="sidebar-option"><input type="checkbox"> XXL</label>
+    </div>
+    <div class="sidebar-section">
+      <h3>Brand</h3>
+      <label class="sidebar-option"><input type="checkbox"> Zella</label>
+      <label class="sidebar-option"><input type="checkbox"> Madewell</label>
+      <label class="sidebar-option"><input type="checkbox"> Free People</label>
+      <label class="sidebar-option"><input type="checkbox"> Vince</label>
+      <label class="sidebar-option"><input type="checkbox"> Treasure & Bond</label>
+    </div>
+    <div class="sidebar-section">
+      <h3>Price</h3>
+      <label class="sidebar-option"><input type="checkbox"> Under $50</label>
+      <label class="sidebar-option"><input type="checkbox"> $50–$100</label>
+      <label class="sidebar-option"><input type="checkbox"> $100–$200</label>
+      <label class="sidebar-option"><input type="checkbox"> $200+</label>
+    </div>
+  </aside>
+
+  <div class="plp-grid-wrap">
+
+    <div class="annotation-box">
+      <strong>CRO-2001 Variant:</strong> Size-availability badges are injected below the price on each product tile via client-side JS. Amber badges signal limited stock; gray badges indicate out-of-stock. This treatment aims to reduce wasted clicks on unavailable products and surface urgency for low-stock items. <em>Note: In production, this requires size/availability data to be pre-rendered in tile data attributes or fetched via a lightweight API call.</em>
+    </div>
+
+    <div class="section-label">Variant — With Size Availability Indicators</div>
+    <div class="plp-grid" id="variant-grid"></div>
+
+    <div style="margin-top:40px;">
+      <div class="section-label control">Control — No Size Availability Indicators</div>
+      <div class="plp-grid" id="control-grid"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function() {
+  var products = [
+    { brand: 'Zella', name: 'Live In High Waist Leggings', price: '$69', originalPrice: null, reviews: '4.8 ★ (2,341)', badge: 'Popular', avail: { status: 'limited', label: 'Only S, M Left' }, color: '#d4c5b0' },
+    { brand: 'Madewell', name: 'Lightspun Midi Slip Dress', price: '$88', originalPrice: null, reviews: '4.6 ★ (892)', badge: 'New', avail: { status: 'good', label: 'All Sizes Available' }, color: '#b8c4bb' },
+    { brand: 'Free People', name: 'Movement Never Better Shorts', price: '$38', originalPrice: '$68', reviews: '4.7 ★ (1,104)', badge: 'Sale', avail: { status: 'limited', label: 'Limited Sizes' }, color: '#c9b8a8' },
+    { brand: 'Vince', name: 'Relaxed Linen Blazer', price: null, originalPrice: '$295', reviews: '4.4 ★ (318)', badge: null, avail: { status: 'oos', label: 'Out of Stock' }, color: '#e8e0d8' },
+    { brand: 'Treasure & Bond', name: 'Ruched Floral Midi Dress', price: '$79', originalPrice: null, reviews: '4.5 ★ (567)', badge: 'New Markdown', avail: { status: 'limited', label: 'Only L, XL Left' }, color: '#c4bdd4' },
+    { brand: 'BP.', name: 'Oversize Crewneck Sweatshirt', price: '$49', originalPrice: null, reviews: '4.9 ★ (3,210)', badge: 'Popular', avail: { status: 'good', label: 'All Sizes Available' }, color: '#b0bec5' },
+    { brand: 'Halogen', name: 'Ponte Straight Leg Pants', price: '$89', originalPrice: '$120', reviews: '4.3 ★ (441)', badge: 'Sale', avail: { status: 'oos', label: 'Out of Stock' }, color: '#cfd8dc' },
+    { brand: 'Caslon', name: 'Linen Blend Wide Leg Trousers', price: '$65', originalPrice: null, reviews: '4.6 ★ (729)', badge: null, avail: { status: 'limited', label: 'Only XS, S Left' }, color: '#ddd5c8' },
+  ];
+
+  function makeTileSVG() {
+    return '<svg width="48" height="64" viewBox="0 0 48 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="4" width="28" height="36" rx="2" fill="#bbb"/><ellipse cx="24" cy="14" rx="7" ry="7" fill="#ccc"/><rect x="6" y="44" width="36" height="16" rx="2" fill="#bbb"/></svg>';
+  }
+
+  function buildTile(p, showAvail) {
+    var isOos = p.avail.status === 'oos';
+    var isSale = p.badge === 'Sale' || p.badge === 'New Markdown';
+
+    var badgeHtml = p.badge ? '<div class="tile-badge' + (isSale ? ' sale' : '') + '">' + p.badge + '</div>' : '';
+    var oosOverlay = (showAvail && isOos) ? '<div class="oos-overlay"><span class="oos-overlay-text">Out of Stock</span></div>' : '';
+
+    var priceHtml = '';
+    if (isOos && showAvail) {
+      var displayPrice = p.price || p.originalPrice;
+      priceHtml = '<div class="tile-price-row"><span class="tile-price original-price">' + displayPrice + '</span></div>';
+    } else if (p.originalPrice && p.price) {
+      priceHtml = '<div class="tile-price-row"><span class="tile-price sale-price">' + p.price + '</span><span class="tile-price original-price">' + p.originalPrice + '</span></div>';
+    } else if (p.price) {
+      priceHtml = '<div class="tile-price-row"><span class="tile-price">' + p.price + '</span></div>';
+    } else {
+      priceHtml = '<div class="tile-price-row"><span class="tile-price original-price">' + p.originalPrice + '</span></div>';
+    }
+
+    var availHtml = '';
+    if (showAvail) {
+      var cls = p.avail.status;
+      availHtml = '<div class="size-avail-badge ' + cls + '"><span class="badge-dot"></span>' + p.avail.label + '</div>';
+    }
+
+    return '<div class="product-tile" data-avail="' + p.avail.status + '">'
+      + '<div class="tile-image-wrap" style="background:' + p.color + ';">'
+      + badgeHtml
+      + oosOverlay
+      + '<div class="tile-image-placeholder">' + makeTileSVG() + '</div>'
+      + '</div>'
+      + '<div class="tile-brand">' + p.brand + '</div>'
+      + '<div class="tile-name">' + p.name + '</div>'
+      + priceHtml
+      + '<div class="tile-reviews">' + p.reviews + '</div>'
+      + availHtml
+      + '</div>';
+  }
+
+  var variantGrid = document.getElementById('variant-grid');
+  var controlGrid = document.getElementById('control-grid');
+
+  products.forEach(function(p) {
+    variantGrid.innerHTML += buildTile(p, true);
+    controlGrid.innerHTML += buildTile(p, false);
+  });
+})();
+</script>
+</body>
+</html>
