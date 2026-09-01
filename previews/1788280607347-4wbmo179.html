@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boston Proper — CRO Mockup (Sticky Banner + Ends Tonight)</title>
+<style>
+/* ── Reset & base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; background: rgb(254,255,250); color: #1a1a1a; }
+
+/* ── Sticky wrapper ── */
+.bp-sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+
+/* ── Existing announcement bar (faithful reproduction) ── */
+.bp-announcement-bar {
+  width: 100%;
+  background: #1a1a1a;
+  color: #fff;
+  text-align: center;
+  padding: 10px 16px;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+.bp-announcement-bar a {
+  color: #fff;
+  text-decoration: underline;
+  margin-left: 6px;
+  font-size: 12px;
+}
+
+/* ── NEW: Ends Tonight banner (replaces countdown) ── */
+.bp-sale-banner {
+  width: 100%;
+  background: #1a1a1a;
+  border-bottom: 2px solid #d4735e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 9px 20px;
+  flex-wrap: wrap;
+}
+.bp-sale-banner__label {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 13px;
+  color: #fff;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.bp-sale-banner__badge {
+  display: inline-flex;
+  align-items: center;
+  background: #d4735e;
+  color: #fff;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 20px;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+/* ── Existing hero banner (faithful reproduction) ── */
+.bp-hero {
+  width: 100%;
+  background: #e8e4df;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 80px 20px;
+  text-align: center;
+  min-height: 420px;
+}
+.bp-hero__eyebrow {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #555;
+  margin-bottom: 14px;
+}
+.bp-hero__headline {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(28px, 4vw, 52px);
+  color: #1a1a1a;
+  line-height: 1.15;
+  margin-bottom: 28px;
+  max-width: 600px;
+}
+.bp-hero__cta {
+  display: inline-block;
+  background: #1a1a1a;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 14px 36px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+}
+.bp-hero__cta:hover { background: #333; }
+
+/* ── Shop By Category section ── */
+.bp-section { padding: 48px 20px; max-width: 1200px; margin: 0 auto; }
+.bp-section__title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(20px, 2.5vw, 32px);
+  color: #1a1a1a;
+  text-align: center;
+  margin-bottom: 8px;
+}
+.bp-section__promo {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  color: #d4735e;
+  text-align: center;
+  letter-spacing: 0.06em;
+  margin-bottom: 32px;
+}
+.bp-category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.bp-category-tile {
+  background: #e8e4df;
+  aspect-ratio: 3/4;
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+  position: relative;
+  overflow: hidden;
+}
+.bp-category-tile__label {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 15px;
+  color: #1a1a1a;
+  background: rgba(254,255,250,0.88);
+  padding: 6px 12px;
+  letter-spacing: 0.04em;
+}
+
+/* ── Loyalty banner ── */
+.bp-loyalty-banner {
+  width: 100%;
+  background: #7b2d42;
+  color: #fff;
+  text-align: center;
+  padding: 14px 20px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 15px;
+  letter-spacing: 0.06em;
+}
+
+/* ── Product carousel section ── */
+.bp-carousel-section { padding: 48px 20px; max-width: 1200px; margin: 0 auto; }
+.bp-carousel-section__title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(18px, 2.2vw, 28px);
+  color: #1a1a1a;
+  text-align: center;
+  margin-bottom: 32px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.bp-product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.bp-product-card { display: flex; flex-direction: column; gap: 10px; }
+.bp-product-card__img {
+  background: #e8e4df;
+  aspect-ratio: 3/4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #888;
+  letter-spacing: 0.06em;
+}
+.bp-product-card__name {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 14px;
+  color: #1a1a1a;
+  line-height: 1.35;
+}
+.bp-product-card__price {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #1a1a1a;
+}
+.bp-product-card__cta {
+  display: inline-block;
+  background: transparent;
+  color: #1a1a1a;
+  border: 1px solid #1a1a1a;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  cursor: pointer;
+  width: 100%;
+}
+.bp-product-card__cta:hover { background: #1a1a1a; color: #fff; }
+
+/* ── Mockup note ── */
+.bp-mockup-note {
+  width: 100%;
+  background: #fffbe6;
+  border-top: 2px dashed #d4735e;
+  color: #7b2d42;
+  text-align: center;
+  padding: 12px 20px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  margin-top: 40px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .bp-category-grid { grid-template-columns: repeat(2, 1fr); }
+  .bp-product-grid { grid-template-columns: repeat(2, 1fr); }
+  .bp-sale-banner { gap: 10px; padding: 8px 14px; }
+  .bp-sale-banner__label { font-size: 12px; }
+  .bp-sale-banner__badge { font-size: 11px; padding: 3px 12px; }
+}
+@media (max-width: 480px) {
+  .bp-category-grid { grid-template-columns: repeat(2, 1fr); }
+  .bp-product-grid { grid-template-columns: 1fr 1fr; }
+  .bp-hero { padding: 56px 16px; min-height: 300px; }
+  .bp-sale-banner { flex-direction: column; gap: 6px; padding: 8px 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Sticky top wrapper: announcement bar + ends-tonight banner -->
+<div class="bp-sticky-top">
+  <!-- Existing announcement bar (faithful reproduction) -->
+  <div class="bp-announcement-bar">
+    $50 Off $200+ Plus Free Shipping on All Orders &mdash; CODE: STYLE50
+    <a href="#">View Details</a>
+  </div>
+
+  <!-- NEW: Ends Tonight badge banner (replaces countdown timer) -->
+  <div class="bp-sale-banner" role="region" aria-label="Sale ends tonight">
+    <span class="bp-sale-banner__label">Limited-Time Sale &mdash; Don&rsquo;t Miss Out</span>
+    <span class="bp-sale-banner__badge">Ends Tonight</span>
+  </div>
+</div>
+
+<!-- Existing hero banner (faithful reproduction) -->
+<div class="bp-hero">
+  <p class="bp-hero__eyebrow">New Arrivals</p>
+  <h1 class="bp-hero__headline">Effortless Style,<br>Every Season</h1>
+  <a href="#" class="bp-hero__cta">Shop New Arrivals</a>
+</div>
+
+<!-- Shop By Category -->
+<div class="bp-section">
+  <h2 class="bp-section__title">Shop By Category</h2>
+  <p class="bp-section__promo">30% Off Chic Clearance &mdash; CODE: EXTRA30</p>
+  <div class="bp-category-grid">
+    <div class="bp-category-tile"><span class="bp-category-tile__label">Leather &amp; Suede</span></div>
+    <div class="bp-category-tile"><span class="bp-category-tile__label">Turtlenecks</span></div>
+    <div class="bp-category-tile"><span class="bp-category-tile__label">Color Crush: Wine</span></div>
+    <div class="bp-category-tile"><span class="bp-category-tile__label">Animal</span></div>
+  </div>
+</div>
+
+<!-- Loyalty banner -->
+<div class="bp-loyalty-banner">Spend $200+, Get a $25 Reward</div>
+
+<!-- Product carousel -->
+<div class="bp-carousel-section">
+  <h2 class="bp-carousel-section__title">Pieces That Make Your Closet Feel Current Again</h2>
+  <div class="bp-product-grid">
+    <div class="bp-product-card">
+      <div class="bp-product-card__img">Product Image</div>
+      <div class="bp-product-card__name">Faux-Leather Moto Jacket</div>
+      <div class="bp-product-card__price">$189.00</div>
+      <button class="bp-product-card__cta">Choose Options</button>
+    </div>
+    <div class="bp-product-card">
+      <div class="bp-product-card__img">Product Image</div>
+      <div class="bp-product-card__name">Ribbed Turtleneck Sweater</div>
+      <div class="bp-product-card__price">$98.00</div>
+      <button class="bp-product-card__cta">Add to Cart</button>
+    </div>
+    <div class="bp-product-card">
+      <div class="bp-product-card__img">Product Image</div>
+      <div class="bp-product-card__name">Wide-Leg Ponte Pant</div>
+      <div class="bp-product-card__price">$118.00</div>
+      <button class="bp-product-card__cta">Choose Options</button>
+    </div>
+    <div class="bp-product-card">
+      <div class="bp-product-card__img">Product Image</div>
+      <div class="bp-product-card__name">Animal-Print Wrap Dress</div>
+      <div class="bp-product-card__price">$148.00</div>
+      <button class="bp-product-card__cta">Choose Options</button>
+    </div>
+  </div>
+</div>
+
+<!-- Mockup note -->
+<div class="bp-mockup-note">CRO MOCKUP — INTERNAL REVIEW ONLY — Not for client distribution</div>
+
+<script>
+// Countdown timer JS removed — replaced by static 'Ends Tonight' badge.
+// No JS required for this variant.
+</script>
+</body>
+</html>
