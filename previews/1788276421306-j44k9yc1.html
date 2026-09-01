@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boston Proper – Countdown Timer Banner Mockup</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Georgia, 'Times New Roman', serif; background: #fafaf7; color: #1a1a1a; }
+
+/* ── COUNTDOWN BANNER ── */
+#bp-countdown-banner {
+  width: 100%;
+  background: #1a1a1a;
+  color: #fafaf7;
+  text-align: center;
+  padding: 10px 16px;
+  position: relative;
+  z-index: 9999;
+}
+#bp-countdown-banner .bp-cb-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+}
+#bp-countdown-banner .bp-cb-message {
+  font-family: Georgia, serif;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: #fafaf7;
+  white-space: nowrap;
+}
+#bp-countdown-banner .bp-cb-message span.bp-code {
+  color: #d4735e;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+}
+#bp-countdown-banner .bp-cb-timer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+#bp-countdown-banner .bp-cb-timer .bp-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 36px;
+}
+#bp-countdown-banner .bp-cb-timer .bp-num {
+  font-family: Georgia, serif;
+  font-size: 20px;
+  font-weight: bold;
+  color: #d4735e;
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+#bp-countdown-banner .bp-cb-timer .bp-label {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  color: #c8c8c0;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+#bp-countdown-banner .bp-cb-timer .bp-sep {
+  font-size: 18px;
+  color: #d4735e;
+  font-weight: bold;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+#bp-countdown-banner .bp-cb-fire {
+  font-size: 14px;
+  margin-right: 2px;
+}
+
+/* ── ANNOUNCEMENT BAR ── */
+#bp-announcement-bar {
+  width: 100%;
+  background: #fafaf7;
+  border-bottom: 1px solid #e0dfd8;
+  text-align: center;
+  padding: 9px 16px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: #1a1a1a;
+  text-transform: uppercase;
+}
+#bp-announcement-bar span.bp-ann-code {
+  font-weight: bold;
+  color: #d4735e;
+}
+
+/* ── NAV PLACEHOLDER ── */
+#bp-nav {
+  width: 100%;
+  background: #fafaf7;
+  border-bottom: 1px solid #d8d7d0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 32px;
+}
+#bp-nav .bp-logo {
+  font-family: Georgia, serif;
+  font-size: 22px;
+  letter-spacing: 0.18em;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  font-weight: normal;
+}
+#bp-nav .bp-nav-links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+#bp-nav .bp-nav-links li a {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  text-decoration: none;
+}
+#bp-nav .bp-nav-icons {
+  display: flex;
+  gap: 16px;
+  font-size: 13px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #1a1a1a;
+  letter-spacing: 0.06em;
+}
+
+/* ── HERO BANNERS ── */
+.bp-hero {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background: #2a2520;
+  min-height: 480px;
+  display: flex;
+  align-items: flex-end;
+}
+.bp-hero.bp-hero-2 { background: #3a3028; }
+.bp-hero-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #3d2e22 0%, #5c4033 40%, #2a1e18 100%);
+  opacity: 0.92;
+}
+.bp-hero-bg-2 {
+  background: linear-gradient(135deg, #2e3428 0%, #4a5038 40%, #1e2418 100%);
+}
+.bp-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.1) 60%, transparent 100%);
+}
+.bp-hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 48px 56px;
+  color: #fafaf7;
+}
+.bp-hero-eyebrow {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #d4c4b0;
+  margin-bottom: 10px;
+}
+.bp-hero-title {
+  font-family: Georgia, serif;
+  font-size: 48px;
+  font-weight: normal;
+  line-height: 1.12;
+  color: #fafaf7;
+  margin-bottom: 8px;
+}
+.bp-hero-subtitle {
+  font-family: Georgia, serif;
+  font-size: 16px;
+  font-style: italic;
+  color: #e0d8cc;
+  margin-bottom: 28px;
+}
+.bp-hero-cta {
+  display: inline-block;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fafaf7;
+  border: 1px solid #fafaf7;
+  padding: 12px 28px;
+  text-decoration: none;
+  margin-right: 12px;
+  transition: background 0.2s, color 0.2s;
+}
+.bp-hero-cta:hover { background: #fafaf7; color: #1a1a1a; }
+.bp-hero-cta.bp-cta-secondary {
+  background: transparent;
+}
+
+/* ── SHOP BY CATEGORY ── */
+#bp-category {
+  padding: 48px 32px;
+  background: #fafaf7;
+}
+#bp-category h2 {
+  font-family: Georgia, serif;
+  font-size: 28px;
+  font-weight: normal;
+  text-align: center;
+  letter-spacing: 0.06em;
+  color: #1a1a1a;
+  margin-bottom: 32px;
+}
+.bp-cat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.bp-cat-tile {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  cursor: pointer;
+}
+.bp-cat-tile-bg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.bp-cat-tile-bg.leather { background: linear-gradient(160deg, #4a3728 0%, #2e2018 100%); }
+.bp-cat-tile-bg.turtle { background: linear-gradient(160deg, #3a3a3a 0%, #1a1a1a 100%); }
+.bp-cat-tile-bg.wine { background: linear-gradient(160deg, #6b1e2e 0%, #3d0e1a 100%); }
+.bp-cat-tile-bg.animal { background: linear-gradient(160deg, #7a6040 0%, #4a3820 100%); }
+.bp-cat-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 16px 16px;
+  background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 100%);
+  color: #fafaf7;
+  font-family: Georgia, serif;
+  font-size: 16px;
+  font-weight: normal;
+  letter-spacing: 0.04em;
+}
+
+/* ── LOYALTY BANNER ── */
+#bp-loyalty {
+  background: #1a1a1a;
+  color: #fafaf7;
+  text-align: center;
+  padding: 22px 16px;
+  font-family: Georgia, serif;
+  font-size: 18px;
+  letter-spacing: 0.06em;
+  font-weight: normal;
+}
+#bp-loyalty span {
+  color: #d4735e;
+  font-style: italic;
+}
+
+/* ── EDITORIAL TILES ── */
+#bp-editorial {
+  padding: 48px 32px;
+  background: #fafaf7;
+}
+#bp-editorial h2 {
+  font-family: Georgia, serif;
+  font-size: 28px;
+  font-weight: normal;
+  text-align: center;
+  letter-spacing: 0.06em;
+  color: #1a1a1a;
+  margin-bottom: 32px;
+}
+.bp-ed-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.bp-ed-tile {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 2/3;
+  cursor: pointer;
+}
+.bp-ed-tile-bg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.bp-ed-tile-bg.jacket { background: linear-gradient(160deg, #5c4a30 0%, #2e2418 100%); }
+.bp-ed-tile-bg.layer { background: linear-gradient(160deg, #3a4a3a 0%, #1e2e1e 100%); }
+.bp-ed-tile-bg.dress { background: linear-gradient(160deg, #5a3040 0%, #2e1820 100%); }
+.bp-ed-tile-bg.athleisure { background: linear-gradient(160deg, #3a3a4a 0%, #1e1e2e 100%); }
+.bp-ed-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 16px 16px;
+  background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 100%);
+  color: #fafaf7;
+  font-family: Georgia, serif;
+  font-size: 15px;
+  font-weight: normal;
+  letter-spacing: 0.04em;
+}
+
+/* ── PRODUCT CAROUSEL ── */
+#bp-carousel {
+  padding: 48px 32px;
+  background: #f4f3ef;
+}
+#bp-carousel h2 {
+  font-family: Georgia, serif;
+  font-size: 26px;
+  font-weight: normal;
+  text-align: center;
+  letter-spacing: 0.04em;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+}
+#bp-carousel .bp-carousel-sub {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  text-align: center;
+  color: #6a6a62;
+  letter-spacing: 0.08em;
+  margin-bottom: 32px;
+}
+.bp-product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.bp-product-card {
+  background: #fafaf7;
+  cursor: pointer;
+}
+.bp-product-img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  display: block;
+}
+.bp-product-info {
+  padding: 12px 10px 16px;
+}
+.bp-product-name {
+  font-family: Georgia, serif;
+  font-size: 13px;
+  color: #1a1a1a;
+  margin-bottom: 4px;
+  line-height: 1.35;
+}
+.bp-product-price {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  color: #1a1a1a;
+  letter-spacing: 0.04em;
+}
+.bp-product-swatches {
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+}
+.bp-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  display: inline-block;
+}
+
+/* ── BRAND MISSION ── */
+#bp-mission {
+  background: #1a1a1a;
+  color: #fafaf7;
+  text-align: center;
+  padding: 64px 32px;
+}
+#bp-mission h2 {
+  font-family: Georgia, serif;
+  font-size: 36px;
+  font-weight: normal;
+  letter-spacing: 0.08em;
+  margin-bottom: 16px;
+  color: #fafaf7;
+}
+#bp-mission p {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  color: #c0bfb8;
+  max-width: 560px;
+  margin: 0 auto 28px;
+  line-height: 1.7;
+}
+#bp-mission a {
+  display: inline-block;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fafaf7;
+  border-bottom: 1px solid #d4735e;
+  padding-bottom: 2px;
+  text-decoration: none;
+}
+
+/* ── TRENDING / SWEATER GRID ── */
+#bp-trending {
+  padding: 48px 32px;
+  background: #fafaf7;
+}
+#bp-trending h2 {
+  font-family: Georgia, serif;
+  font-size: 26px;
+  font-weight: normal;
+  text-align: center;
+  letter-spacing: 0.06em;
+  color: #1a1a1a;
+  margin-bottom: 32px;
+}
+.bp-trend-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.bp-trend-tile {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  cursor: pointer;
+}
+.bp-trend-tile-bg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.bp-trend-tile-bg.trend1 { background: linear-gradient(135deg, #6b4a30 0%, #3a2818 100%); }
+.bp-trend-tile-bg.trend2 { background: linear-gradient(135deg, #4a3060 0%, #2a1838 100%); }
+.bp-trend-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 18px 16px 14px;
+  background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 100%);
+  color: #fafaf7;
+  font-family: Georgia, serif;
+  font-size: 16px;
+  font-weight: normal;
+  letter-spacing: 0.04em;
+}
+
+/* ── FOOTER STUB ── */
+#bp-footer {
+  background: #1a1a1a;
+  color: #8a8a82;
+  text-align: center;
+  padding: 32px 16px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 767px) {
+  #bp-countdown-banner .bp-cb-inner { flex-direction: column; gap: 6px; }
+  #bp-countdown-banner .bp-cb-message { font-size: 11px; white-space: normal; text-align: center; }
+  #bp-countdown-banner .bp-cb-timer .bp-num { font-size: 17px; }
+  #bp-nav { padding: 12px 16px; }
+  #bp-nav .bp-nav-links { display: none; }
+  .bp-hero { min-height: 320px; }
+  .bp-hero-content { padding: 28px 20px; }
+  .bp-hero-title { font-size: 30px; }
+  .bp-cat-grid { grid-template-columns: repeat(2, 1fr); }
+  .bp-ed-grid { grid-template-columns: repeat(2, 1fr); }
+  .bp-product-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  #bp-carousel { padding: 32px 16px; }
+  #bp-category, #bp-editorial, #bp-trending { padding: 32px 16px; }
+  .bp-trend-grid { grid-template-columns: 1fr; }
+  #bp-mission { padding: 40px 20px; }
+  #bp-mission h2 { font-size: 26px; }
+}
+</style>
+</head>
+<body>
+
+<!-- COUNTDOWN TIMER BANNER (NEW — HYPOTHESIS ELEMENT) -->
+<div id="bp-countdown-banner" role="banner" aria-label="Limited time sale countdown">
+  <div class="bp-cb-inner">
+    <div class="bp-cb-message">
+      <span class="bp-cb-fire">🔥</span>
+      LIMITED TIME &mdash; <strong>$50 Off $200+</strong> with code <span class="bp-code">STYLE50</span> &nbsp;|&nbsp; Sale Ends In:
+    </div>
+    <div class="bp-cb-timer" aria-live="polite" aria-atomic="true">
+      <div class="bp-unit">
+        <span class="bp-num" id="bp-days">00</span>
+        <span class="bp-label">Days</span>
+      </div>
+      <span class="bp-sep">:</span>
+      <div class="bp-unit">
+        <span class="bp-num" id="bp-hours">00</span>
+        <span class="bp-label">Hrs</span>
+      </div>
+      <span class="bp-sep">:</span>
+      <div class="bp-unit">
+        <span class="bp-num" id="bp-mins">00</span>
+        <span class="bp-label">Min</span>
+      </div>
+      <span class="bp-sep">:</span>
+      <div class="bp-unit">
+        <span class="bp-num" id="bp-secs">00</span>
+        <span class="bp-label">Sec</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ORIGINAL ANNOUNCEMENT BAR (PRESERVED) -->
+<div id="bp-announcement-bar">
+  $50 Off $200+ Plus Free Shipping &nbsp;|&nbsp; Code: <span class="bp-ann-code">STYLE50</span>
+</div>
+
+<!-- NAV -->
+<nav id="bp-nav">
+  <div class="bp-logo">Boston Proper</div>
+  <ul class="bp-nav-links">
+    <li><a href="#">New Arrivals</a></li>
+    <li><a href="#">Clothing</a></li>
+    <li><a href="#">Jackets</a></li>
+    <li><a href="#">Dresses</a></li>
+    <li><a href="#">Shoes</a></li>
+    <li><a href="#">Sale</a></li>
+  </ul>
+  <div class="bp-nav-icons">
+    <span>Search</span>
+    <span>Account</span>
+    <span>Bag (0)</span>
+  </div>
+</nav>
+
+<!-- HERO 1 -->
+<section class="bp-hero">
+  <div class="bp-hero-bg"></div>
+  <div class="bp-hero-overlay"></div>
+  <div class="bp-hero-content">
+    <div class="bp-hero-eyebrow">New Season. New Era.</div>
+    <h1 class="bp-hero-title">Fall Starts Here</h1>
+    <p class="bp-hero-subtitle">Discover the looks defining this season.</p>
+    <a href="#" class="bp-hero-cta">Shop New Arrivals</a>
+  </div>
+</section>
+
+<!-- HERO 2 -->
+<section class="bp-hero bp-hero-2">
+  <div class="bp-hero-bg bp-hero-bg-2"></div>
+  <div class="bp-hero-overlay"></div>
+  <div class="bp-hero-content">
+    <div class="bp-hero-eyebrow">Your Fall Signature</div>
+    <h1 class="bp-hero-title">Your Closet's Next Chapter</h1>
+    <p class="bp-hero-subtitle">Refined layers for every occasion.</p>
+    <a href="#" class="bp-hero-cta">Shop Jackets</a>
+  </div>
+</section>
+
+<!-- SHOP BY CATEGORY -->
+<section id="bp-category">
+  <h2>Shop By Category</h2>
+  <div class="bp-cat-grid">
+    <div class="bp-cat-tile">
+      <div class="bp-cat-tile-bg leather"></div>
+      <div class="bp-cat-label">Leather &amp; Suede</div>
+    </div>
+    <div class="bp-cat-tile">
+      <div class="bp-cat-tile-bg turtle"></div>
+      <div class="bp-cat-label">Turtlenecks</div>
+    </div>
+    <div class="bp-cat-tile">
+      <div class="bp-cat-tile-bg wine"></div>
+      <div class="bp-cat-label">Color Crush: Wine</div>
+    </div>
+    <div class="bp-cat-tile">
+      <div class="bp-cat-tile-bg animal"></div>
+      <div class="bp-cat-label">Animal</div>
+    </div>
+  </div>
+</section>
+
+<!-- LOYALTY BANNER -->
+<div id="bp-loyalty">
+  Spend $200+, Get a <span>$25 Reward</span>
+</div>
+
+<!-- EDITORIAL TILES -->
+<section id="bp-editorial">
+  <h2>Editor's Picks</h2>
+  <div class="bp-ed-grid">
+    <div class="bp-ed-tile">
+      <div class="bp-ed-tile-bg jacket"></div>
+      <div class="bp-ed-label">The Jacket Edit</div>
+    </div>
+    <div class="bp-ed-tile">
+      <div class="bp-ed-tile-bg layer"></div>
+      <div class="bp-ed-label">The Layering Lineup</div>
+    </div>
+    <div class="bp-ed-tile">
+      <div class="bp-ed-tile-bg dress"></div>
+      <div class="bp-ed-label">Dresses</div>
+    </div>
+    <div class="bp-ed-tile">
+      <div class="bp-ed-tile-bg athleisure"></div>
+      <div class="bp-ed-label">Athleisure</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT CAROUSEL -->
+<section id="bp-carousel">
+  <h2>Pieces That Make Your Closet Feel Current Again</h2>
+  <p class="bp-carousel-sub">Curated for the season</p>
+  <div class="bp-product-grid">
+
+    <div class="bp-product-card">
+      <div class="bp-product-img" style="background:linear-gradient(160deg,#5c4a38 0%,#2e2418 100%);"></div>
+      <div class="bp-product-info">
+        <div class="bp-product-name">Faux Leather Moto Jacket</div>
+        <div class="bp-product-price">$189.00</div>
+        <div class="bp-product-swatches">
+          <span class="bp-swatch" style="background:#1a1a1a;"></span>
+          <span class="bp-swatch" style="background:#6b4a30;"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bp-product-card">
+      <div class="bp-product-img" style="background:linear-gradient(160deg,#6b1e2e 0%,#3d0e1a 100%);"></div>
+      <div class="bp-product-info">
+        <div class="bp-product-name">Ribbed Turtleneck Sweater</div>
+        <div class="bp-product-price">$98.00</div>
+        <div class="bp-product-swatches">
+          <span class="bp-swatch" style="background:#6b1e2e;"></span>
+          <span class="bp-swatch" style="background:#1a1a1a;"></span>
+          <span class="bp-swatch" style="background:#c8b89a;"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bp-product-card">
+      <div class="bp-product-img" style="background:linear-gradient(160deg,#4a3060 0%,#2a1838 100%);"></div>
+      <div class="bp-product-info">
+        <div class="bp-product-name">Velvet Blazer</div>
+        <div class="bp-product-price">$148.00</div>
+        <div class="bp-product-swatches">
+          <span class="bp-swatch" style="background:#4a3060;"></span>
+          <span class="bp-swatch" style="background:#1a1a1a;"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bp-product-card">
+      <div class="bp-product-img" style="background:linear-gradient(160deg,#7a6040 0%,#4a3820 100%);"></div>
+      <div class="bp-product-info">
+        <div class="bp-product-name">Animal Print Wrap Dress</div>
+        <div class="bp-product-price">$128.00</div>
+        <div class="bp-product-swatches">
+          <span class="bp-swatch" style="background:#7a6040;"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bp-product-card">
+      <div class="bp-product-img" style="background:linear-gradient(160deg,#3a4a3a 0%,#1e2e1e 100%);"></div>
+      <div class="bp-product-info">
+        <div class="bp-product-name">Ponte Straight-Leg Pant</div>
+        <div class="bp-product-price">$88.00</div>
+        <div class="bp-product-swatches">
+          <span class="bp-swatch" style="background:#1a1a1a;"></span>
+          <span class="bp-swatch" style="background:#3a4a3a;"></span>
+          <span class="bp-swatch" style="background:#c8b89a;"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bp-product-card">
+      <div class="bp-product-img" style="background:linear-gradient(160deg,#5a3040 0%,#2e1820 100%);"></div>
+      <div class="bp-product-info">
+        <div class="bp-product-name">Ruched Midi Dress</div>
+        <div class="bp-product-price">$118.00</div>
+        <div class="bp-product-swatches">
+          <span class="bp-swatch" style="background:#5a3040;"></span>
+          <span class="bp-swatch" style="background:#1a1a1a;"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bp-product-card">
+      <div class="bp-product-img" style="background:linear-gradient(160deg,#3d2e22 0%,#5c4033 100%);"></div>
+      <div class="bp-product-info">
+        <div class="bp-product-name">Suede Moto Bootie</div>
+        <div class="bp-product-price">$158.00</div>
+        <div class="bp-product-swatches">
+          <span class="bp-swatch" style="background:#3d2e22;"></span>
+          <span class="bp-swatch" style="background:#1a1a1a;"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bp-product-card">
+      <div class="bp-product-img" style="background:linear-gradient(160deg,#3a3a3a 0%,#1a1a1a 100%);"></div>
+      <div class="bp-product-info">
+        <div class="bp-product-name">Cozy Turtleneck Pullover</div>
+        <div class="bp-product-price">$108.00</div>
+        <div class="bp-product-swatches">
+          <span class="bp-swatch" style="background:#1a1a1a;"></span>
+          <span class="bp-swatch" style="background:#6b1e2e;"></span>
+          <span class="bp-swatch" style="background:#c8b89a;"></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- BRAND MISSION -->
+<section id="bp-mission">
+  <h2>The Era Of Being Seen</h2>
+  <p>Boston Proper is for the woman who dresses for herself — bold, intentional, and always in style. This fall, own every room you walk into.</p>
+  <a href="#">Discover Our Story</a>
+</section>
+
+<!-- TRENDING / SWEATER FEATURE -->
+<section id="bp-trending">
+  <h2>Trending Now</h2>
+  <div class="bp-trend-grid">
+    <div class="bp-trend-tile">
+      <div class="bp-trend-tile-bg trend1"></div>
+      <div class="bp-trend-label">The Sweater Edit</div>
+    </div>
+    <div class="bp-trend-tile">
+      <div class="bp-trend-tile-bg trend2"></div>
+      <div class="bp-trend-label">Fall Color Stories</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER STUB -->
+<footer id="bp-footer">
+  &copy; 2024 Boston Proper. All rights reserved.
+</footer>
+
+<script>
+(function() {
+  // Set sale end date: 3 days from now at midnight, or override here
+  var endDate = new Date();
+  endDate.setDate(endDate.getDate() + 3);
+  endDate.setHours(23, 59, 59, 0);
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function tick() {
+    var now = new Date();
+    var diff = endDate - now;
+    if (diff <= 0) {
+      document.getElementById('bp-days').textContent = '00';
+      document.getElementById('bp-hours').textContent = '00';
+      document.getElementById('bp-mins').textContent = '00';
+      document.getElementById('bp-secs').textContent = '00';
+      clearInterval(timer);
+      return;
+    }
+    var days  = Math.floor(diff / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var mins  = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    var secs  = Math.floor((diff % (1000 * 60)) / 1000);
+    document.getElementById('bp-days').textContent  = pad(days);
+    document.getElementById('bp-hours').textContent = pad(hours);
+    document.getElementById('bp-mins').textContent  = pad(mins);
+    document.getElementById('bp-secs').textContent  = pad(secs);
+  }
+
+  tick();
+  var timer = setInterval(tick, 1000);
+})();
+</script>
+</body>
+</html>
