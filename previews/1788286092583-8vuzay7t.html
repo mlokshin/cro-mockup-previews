@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boston Proper – PDP Social Proof Badge Test (FAKE-999)</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #fefffa; color: #1a1a1a; font-family: system-ui, 'Helvetica Neue', Arial, sans-serif; font-size: 15px; line-height: 1.5; }
+a { color: inherit; text-decoration: none; }
+
+/* NAV */
+.bp-nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 32px; border-bottom: 1px solid #e0e0da; background: #fefffa; }
+.bp-nav__logo { font-family: Georgia, serif; font-size: 22px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: normal; color: #1a1a1a; }
+.bp-nav__links { display: flex; gap: 24px; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
+.bp-nav__links a { color: #1a1a1a; }
+.bp-nav__icons { display: flex; gap: 18px; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; }
+
+/* BREADCRUMB */
+.bp-breadcrumb { padding: 12px 32px; font-size: 12px; color: #888; letter-spacing: 0.04em; }
+.bp-breadcrumb span { margin: 0 6px; }
+
+/* PDP WRAPPER */
+.bp-pdp { display: flex; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; padding: 24px 32px 60px; gap: 40px; }
+
+/* IMAGE COLUMN */
+.bp-pdp__images { flex: 1 1 480px; min-width: 280px; }
+.bp-pdp__main-img { width: 100%; aspect-ratio: 3/4; background: #f0ede8; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 2px; }
+.bp-pdp__main-img img { width: 100%; height: 100%; object-fit: cover; }
+.bp-pdp__thumb-row { display: flex; gap: 8px; margin-top: 10px; }
+.bp-pdp__thumb { width: 72px; height: 90px; background: #e8e4de; border-radius: 2px; border: 1.5px solid transparent; cursor: pointer; overflow: hidden; }
+.bp-pdp__thumb.active { border-color: #1a1a1a; }
+.bp-pdp__thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+/* DETAIL COLUMN */
+.bp-pdp__details { flex: 1 1 380px; min-width: 280px; padding-top: 4px; }
+.bp-pdp__brand-tag { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #888; margin-bottom: 8px; }
+.bp-pdp__name { font-family: Georgia, serif; font-size: 28px; font-weight: normal; line-height: 1.25; margin-bottom: 10px; color: #1a1a1a; }
+.bp-pdp__price { font-size: 18px; color: #1a1a1a; margin-bottom: 18px; letter-spacing: 0.02em; }
+.bp-pdp__price .sale { color: #d4735e; margin-right: 8px; font-weight: 600; }
+.bp-pdp__price .original { text-decoration: line-through; color: #aaa; font-size: 15px; }
+
+/* COLOR */
+.bp-pdp__label { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #555; margin-bottom: 8px; }
+.bp-pdp__colors { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+.bp-pdp__swatch { width: 28px; height: 28px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; outline: 2px solid transparent; outline-offset: 2px; transition: outline-color 0.15s; }
+.bp-pdp__swatch.active { outline-color: #1a1a1a; }
+
+/* SIZE */
+.bp-pdp__sizes { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+.bp-pdp__size-btn { min-width: 48px; padding: 8px 10px; border: 1px solid #c8c8c0; background: #fefffa; font-size: 13px; letter-spacing: 0.04em; cursor: pointer; border-radius: 2px; transition: background 0.15s, border-color 0.15s; }
+.bp-pdp__size-btn:hover { border-color: #1a1a1a; }
+.bp-pdp__size-btn.active { background: #1a1a1a; color: #fefffa; border-color: #1a1a1a; }
+.bp-pdp__size-btn.oos { color: #ccc; border-color: #e8e8e0; cursor: default; text-decoration: line-through; }
+.bp-pdp__size-guide { font-size: 12px; color: #888; text-decoration: underline; cursor: pointer; margin-bottom: 28px; display: inline-block; }
+
+/* ===== SOCIAL PROOF BLOCK (TEST ELEMENT) ===== */
+.bp-social-proof { border: 1px solid #e0e0da; border-radius: 4px; padding: 14px 16px; margin-bottom: 16px; background: #faf9f5; }
+.bp-social-proof__rating { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.bp-social-proof__stars { color: #c9a84c; font-size: 16px; letter-spacing: 1px; }
+.bp-social-proof__rating-num { font-family: Georgia, serif; font-size: 15px; font-weight: bold; color: #1a1a1a; }
+.bp-social-proof__review-count { font-size: 12px; color: #888; text-decoration: underline; cursor: pointer; }
+.bp-social-proof__badges { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+.bp-social-proof__badge { display: inline-flex; align-items: center; gap: 5px; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+.bp-social-proof__badge--bestseller { background: #722F37; color: #fff; }
+.bp-social-proof__badge--trending { background: #d4735e; color: #fff; }
+.bp-social-proof__urgency { font-size: 12px; color: #555; display: flex; align-items: center; gap: 5px; }
+.bp-social-proof__urgency-dot { width: 8px; height: 8px; border-radius: 50%; background: #d4735e; display: inline-block; animation: pulse 1.4s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.5;transform:scale(1.3);} }
+/* ===== END SOCIAL PROOF BLOCK ===== */
+
+/* ATC */
+.bp-pdp__atc { width: 100%; padding: 16px; background: #1a1a1a; color: #fefffa; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; border: none; cursor: pointer; border-radius: 2px; margin-bottom: 12px; transition: background 0.2s; font-family: system-ui, 'Helvetica Neue', Arial, sans-serif; }
+.bp-pdp__atc:hover { background: #333; }
+.bp-pdp__wishlist { width: 100%; padding: 14px; background: transparent; color: #1a1a1a; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; border: 1px solid #1a1a1a; cursor: pointer; border-radius: 2px; margin-bottom: 24px; transition: background 0.2s; font-family: system-ui, 'Helvetica Neue', Arial, sans-serif; }
+.bp-pdp__wishlist:hover { background: #f0ede8; }
+
+/* ACCORDION */
+.bp-accordion { border-top: 1px solid #e0e0da; }
+.bp-accordion__item { border-bottom: 1px solid #e0e0da; }
+.bp-accordion__trigger { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 14px 0; background: none; border: none; cursor: pointer; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: #1a1a1a; font-family: system-ui, 'Helvetica Neue', Arial, sans-serif; }
+.bp-accordion__icon { font-size: 18px; color: #888; transition: transform 0.2s; }
+.bp-accordion__item.open .bp-accordion__icon { transform: rotate(45deg); }
+.bp-accordion__body { display: none; padding: 0 0 16px; font-size: 14px; color: #444; line-height: 1.7; }
+.bp-accordion__item.open .bp-accordion__body { display: block; }
+
+/* FOOTER */
+.bp-footer { background: #1a1a1a; color: #fefffa; padding: 40px 32px; margin-top: 60px; }
+.bp-footer__inner { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 32px; justify-content: space-between; }
+.bp-footer__col h4 { font-family: Georgia, serif; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; font-weight: normal; }
+.bp-footer__col ul { list-style: none; }
+.bp-footer__col ul li { margin-bottom: 8px; font-size: 13px; color: #ccc; }
+.bp-footer__bottom { text-align: center; font-size: 12px; color: #888; padding-top: 24px; margin-top: 24px; border-top: 1px solid #333; max-width: 1200px; margin-left: auto; margin-right: auto; }
+
+/* RESPONSIVE */
+@media (max-width: 767px) {
+  .bp-nav { padding: 12px 16px; }
+  .bp-nav__links { display: none; }
+  .bp-breadcrumb { padding: 10px 16px; }
+  .bp-pdp { padding: 16px 16px 48px; gap: 20px; flex-direction: column; }
+  .bp-pdp__images { flex: none; width: 100%; }
+  .bp-pdp__details { flex: none; width: 100%; padding-top: 0; }
+  .bp-pdp__name { font-size: 22px; }
+  .bp-footer { padding: 32px 16px; }
+  .bp-footer__inner { flex-direction: column; gap: 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="bp-nav">
+  <div class="bp-nav__logo">Boston Proper</div>
+  <div class="bp-nav__links">
+    <a href="#">New Arrivals</a>
+    <a href="#">Clothing</a>
+    <a href="#">Jackets</a>
+    <a href="#">Dresses</a>
+    <a href="#">Sale</a>
+  </div>
+  <div class="bp-nav__icons">
+    <a href="#">Search</a>
+    <a href="#">Account</a>
+    <a href="#">Bag (0)</a>
+  </div>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="bp-breadcrumb">
+  <a href="#">Home</a><span>/</span><a href="#">Jackets</a><span>/</span>Faux-Leather Moto Jacket
+</div>
+
+<!-- PDP -->
+<div class="bp-pdp">
+
+  <!-- IMAGE COLUMN -->
+  <div class="bp-pdp__images">
+    <div class="bp-pdp__main-img">
+      <img src="https://placehold.co/600x800/e8e4de/888888?text=Boston+Proper\nProduct+Image" alt="Faux-Leather Moto Jacket in Proper Black" />
+    </div>
+    <div class="bp-pdp__thumb-row">
+      <div class="bp-pdp__thumb active"><img src="https://placehold.co/72x90/e8e4de/888888?text=1" alt="View 1" /></div>
+      <div class="bp-pdp__thumb"><img src="https://placehold.co/72x90/ddd8d0/888888?text=2" alt="View 2" /></div>
+      <div class="bp-pdp__thumb"><img src="https://placehold.co/72x90/d0ccc4/888888?text=3" alt="View 3" /></div>
+      <div class="bp-pdp__thumb"><img src="https://placehold.co/72x90/c8c4bc/888888?text=4" alt="View 4" /></div>
+    </div>
+  </div>
+
+  <!-- DETAIL COLUMN -->
+  <div class="bp-pdp__details">
+    <div class="bp-pdp__brand-tag">Boston Proper</div>
+    <h1 class="bp-pdp__name">Faux-Leather Moto Jacket</h1>
+    <div class="bp-pdp__price">
+      <span class="sale">$119.00</span><span class="original">$160.00</span>
+    </div>
+
+    <!-- COLOR -->
+    <div class="bp-pdp__label">Color: <strong>Proper Black</strong></div>
+    <div class="bp-pdp__colors">
+      <div class="bp-pdp__swatch active" style="background:#1a1a1a;" title="Proper Black"></div>
+      <div class="bp-pdp__swatch" style="background:#722F37;" title="Wine"></div>
+      <div class="bp-pdp__swatch" style="background:#d4735e;" title="Sunset Coral"></div>
+      <div class="bp-pdp__swatch" style="background:#8b7355;" title="Camel"></div>
+    </div>
+
+    <!-- SIZE -->
+    <div class="bp-pdp__label">Size:</div>
+    <div class="bp-pdp__sizes">
+      <button class="bp-pdp__size-btn oos" disabled>XS</button>
+      <button class="bp-pdp__size-btn">S</button>
+      <button class="bp-pdp__size-btn active">M</button>
+      <button class="bp-pdp__size-btn">L</button>
+      <button class="bp-pdp__size-btn">XL</button>
+      <button class="bp-pdp__size-btn">1X</button>
+      <button class="bp-pdp__size-btn">2X</button>
+      <button class="bp-pdp__size-btn oos" disabled>3X</button>
+    </div>
+    <span class="bp-pdp__size-guide">Size Guide</span>
+
+    <!-- ===== SOCIAL PROOF BLOCK (TEST ELEMENT) ===== -->
+    <div class="bp-social-proof" role="region" aria-label="Social proof">
+      <div class="bp-social-proof__rating">
+        <span class="bp-social-proof__stars" aria-hidden="true">★★★★★</span>
+        <span class="bp-social-proof__rating-num">4.8</span>
+        <span class="bp-social-proof__review-count">(312 reviews)</span>
+      </div>
+      <div class="bp-social-proof__badges">
+        <span class="bp-social-proof__badge bp-social-proof__badge--bestseller">⭐ Best Seller</span>
+        <span class="bp-social-proof__badge bp-social-proof__badge--trending">🔥 Trending</span>
+      </div>
+      <div class="bp-social-proof__urgency">
+        <span class="bp-social-proof__urgency-dot" aria-hidden="true"></span>
+        47 people are viewing this right now
+      </div>
+    </div>
+    <!-- ===== END SOCIAL PROOF BLOCK ===== -->
+
+    <!-- ATC -->
+    <button class="bp-pdp__atc">Add to Cart</button>
+    <button class="bp-pdp__wishlist">♡ &nbsp;Save to Wishlist</button>
+
+    <!-- ACCORDION -->
+    <div class="bp-accordion">
+      <div class="bp-accordion__item">
+        <button class="bp-accordion__trigger">Product Details <span class="bp-accordion__icon">+</span></button>
+        <div class="bp-accordion__body">Sleek faux-leather moto jacket with zip-front closure, snap-tab collar, and side zip pockets. Fully lined. Machine washable. Body: 100% Polyurethane. Lining: 100% Polyester.</div>
+      </div>
+      <div class="bp-accordion__item">
+        <button class="bp-accordion__trigger">Fit &amp; Sizing <span class="bp-accordion__icon">+</span></button>
+        <div class="bp-accordion__body">Model is 5'9" wearing size Small. Fitted through shoulders and chest. Available in Regular and Plus sizes.</div>
+      </div>
+      <div class="bp-accordion__item">
+        <button class="bp-accordion__trigger">Shipping &amp; Returns <span class="bp-accordion__icon">+</span></button>
+        <div class="bp-accordion__body">Free standard shipping on orders $100+. Easy returns within 60 days. See full return policy for details.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="bp-footer">
+  <div class="bp-footer__inner">
+    <div class="bp-footer__col">
+      <h4>Shop</h4>
+      <ul>
+        <li>New Arrivals</li>
+        <li>Clothing</li>
+        <li>Jackets</li>
+        <li>Dresses</li>
+        <li>Sale</li>
+      </ul>
+    </div>
+    <div class="bp-footer__col">
+      <h4>Help</h4>
+      <ul>
+        <li>Contact Us</li>
+        <li>Size Guide</li>
+        <li>Shipping &amp; Returns</li>
+        <li>FAQs</li>
+      </ul>
+    </div>
+    <div class="bp-footer__col">
+      <h4>Account</h4>
+      <ul>
+        <li>Sign In</li>
+        <li>Rewards</li>
+        <li>Order Status</li>
+      </ul>
+    </div>
+    <div class="bp-footer__col">
+      <h4>Boston Proper</h4>
+      <ul>
+        <li>About Us</li>
+        <li>Careers</li>
+        <li>Sustainability</li>
+      </ul>
+    </div>
+  </div>
+  <div class="bp-footer__bottom">© 2024 Boston Proper. All rights reserved.</div>
+</footer>
+
+<script>
+// Swatch interaction
+document.querySelectorAll('.bp-pdp__swatch').forEach(function(sw) {
+  sw.addEventListener('click', function() {
+    document.querySelectorAll('.bp-pdp__swatch').forEach(function(s){ s.classList.remove('active'); });
+    sw.classList.add('active');
+    var colorName = sw.getAttribute('title') || 'Selected';
+    var label = document.querySelector('.bp-pdp__label strong');
+    if (label) label.textContent = colorName;
+  });
+});
+
+// Size button interaction
+document.querySelectorAll('.bp-pdp__size-btn:not(.oos)').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.bp-pdp__size-btn').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+  });
+});
+
+// Thumbnail interaction
+document.querySelectorAll('.bp-pdp__thumb').forEach(function(thumb) {
+  thumb.addEventListener('click', function() {
+    document.querySelectorAll('.bp-pdp__thumb').forEach(function(t){ t.classList.remove('active'); });
+    thumb.classList.add('active');
+  });
+});
+
+// Accordion
+document.querySelectorAll('.bp-accordion__trigger').forEach(function(trigger) {
+  trigger.addEventListener('click', function() {
+    var item = trigger.closest('.bp-accordion__item');
+    var isOpen = item.classList.contains('open');
+    document.querySelectorAll('.bp-accordion__item').forEach(function(i){ i.classList.remove('open'); });
+    if (!isOpen) item.classList.add('open');
+  });
+});
+
+// Urgency counter: randomly fluctuate between 44–52
+(function() {
+  var urgencyEl = document.querySelector('.bp-social-proof__urgency');
+  if (!urgencyEl) return;
+  var dot = urgencyEl.querySelector('.bp-social-proof__urgency-dot');
+  var base = 47;
+  function update() {
+    var delta = Math.floor(Math.random() * 3) - 1;
+    base = Math.min(52, Math.max(44, base + delta));
+    urgencyEl.innerHTML = '';
+    if (dot) urgencyEl.appendChild(dot);
+    urgencyEl.appendChild(document.createTextNode(' ' + base + ' people are viewing this right now'));
+    if (dot) urgencyEl.insertBefore(dot, urgencyEl.firstChild);
+  }
+  setInterval(update, 7000);
+})();
+
+// ATC button feedback
+document.querySelector('.bp-pdp__atc').addEventListener('click', function() {
+  var btn = this;
+  btn.textContent = 'Added!';
+  btn.style.background = '#722F37';
+  setTimeout(function() {
+    btn.textContent = 'Add to Cart';
+    btn.style.background = '';
+  }, 1800);
+});
+</script>
+</body>
+</html>
