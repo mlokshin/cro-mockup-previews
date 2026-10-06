@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casper Crypton Performance XL Sofa Chaise Sectional — Mor Furniture (CRO Variant)</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fff; color: #222; font-size: 15px; line-height: 1.5; }
+a { color: inherit; text-decoration: none; }
+.mor-pdp-wrapper { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
+/* Breadcrumb */
+.mor-breadcrumb { font-size: 12px; color: #888; padding: 12px 0 8px; }
+.mor-breadcrumb a { color: #888; }
+.mor-breadcrumb span { margin: 0 4px; }
+/* Main product grid */
+.mor-pdp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 20px 0 40px; }
+@media (max-width: 900px) { .mor-pdp-grid { grid-template-columns: 1fr; gap: 24px; } }
+/* Media column */
+.mor-media-col {}
+.mor-viewer-box { background: #f2f2f2; border: 1px solid #ddd; border-radius: 4px; width: 100%; aspect-ratio: 1/1; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #999; font-size: 14px; gap: 8px; }
+.mor-viewer-box svg { opacity: 0.4; }
+.mor-thumb-strip { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.mor-thumb { width: 64px; height: 64px; background: #e8e8e8; border: 1px solid #ccc; border-radius: 3px; cursor: pointer; }
+.mor-thumb.active { border-color: #c0392b; }
+/* Purchase column */
+.mor-purchase-col {}
+.mor-product-title { font-size: 22px; font-weight: 700; color: #1a1a1a; line-height: 1.3; margin-bottom: 8px; }
+/* Rating row — CRO CHANGE: moved up near title */
+.mor-rating-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+.mor-stars { display: flex; gap: 2px; }
+.mor-stars svg { width: 16px; height: 16px; fill: #f5a623; }
+.mor-rating-score { font-size: 13px; font-weight: 600; color: #444; }
+.mor-rating-link { font-size: 13px; color: #c0392b; text-decoration: underline; cursor: pointer; }
+/* Price block — CRO CHANGE: larger sale price, savings badge */
+.mor-price-block { display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px; margin-bottom: 6px; }
+.mor-price-sale { font-size: 28px; font-weight: 700; color: #c0392b; }
+.mor-price-compare { font-size: 16px; color: #999; text-decoration: line-through; }
+.mor-savings-badge { background: #e8f5e9; color: #2e7d32; font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: 20px; border: 1px solid #a5d6a7; white-space: nowrap; }
+.mor-sku { font-size: 12px; color: #888; margin-bottom: 16px; }
+/* Trust badges — CRO CHANGE: moved above ATC zone */
+.mor-trust-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 20px; padding: 12px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee; }
+@media (max-width: 600px) { .mor-trust-strip { grid-template-columns: repeat(2, 1fr); } }
+.mor-trust-tile { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 5px; padding: 8px 4px; border: 1px solid #e8e8e8; border-radius: 4px; background: #fafafa; }
+.mor-trust-tile svg { width: 24px; height: 24px; color: #c0392b; }
+.mor-trust-tile-label { font-size: 10px; font-weight: 600; color: #333; line-height: 1.3; }
+/* Swatch selector */
+.mor-section-label { font-size: 13px; font-weight: 600; color: #333; margin-bottom: 8px; }
+.mor-swatch-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.mor-swatch { width: 28px; height: 28px; border-radius: 50%; border: 2px solid #ddd; cursor: pointer; transition: border-color 0.15s; }
+.mor-swatch:hover, .mor-swatch.active { border-color: #c0392b; }
+/* Facing selector */
+.mor-facing-row { display: flex; gap: 10px; margin-bottom: 16px; }
+.mor-facing-btn { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px; background: #fff; font-size: 13px; color: #aaa; cursor: not-allowed; text-align: center; position: relative; }
+.mor-facing-btn .sold-out-tag { display: block; font-size: 10px; color: #c0392b; font-weight: 600; margin-top: 2px; }
+/* Quantity */
+.mor-qty-row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.mor-qty-label { font-size: 13px; font-weight: 600; color: #333; }
+.mor-qty-ctrl { display: flex; align-items: center; border: 1px solid #ccc; border-radius: 4px; overflow: hidden; }
+.mor-qty-ctrl button { width: 32px; height: 36px; border: none; background: #f5f5f5; font-size: 18px; cursor: pointer; color: #555; }
+.mor-qty-ctrl input { width: 44px; height: 36px; border: none; border-left: 1px solid #ccc; border-right: 1px solid #ccc; text-align: center; font-size: 14px; color: #222; }
+/* ATC button */
+.mor-atc-btn { width: 100%; padding: 14px; background: #ccc; color: #fff; border: none; border-radius: 4px; font-size: 16px; font-weight: 700; cursor: not-allowed; margin-bottom: 10px; letter-spacing: 0.5px; }
+/* Out of stock notice — CRO CHANGE: added notify me */
+.mor-oos-notice { background: #fff8f8; border: 1px solid #f5c6c6; border-radius: 4px; padding: 12px 14px; margin-bottom: 16px; }
+.mor-oos-notice p { font-size: 13px; color: #c0392b; font-weight: 600; margin-bottom: 4px; }
+.mor-oos-notice span { font-size: 12px; color: #666; }
+.mor-notify-btn { width: 100%; padding: 12px; background: #fff; color: #c0392b; border: 2px solid #c0392b; border-radius: 4px; font-size: 14px; font-weight: 700; cursor: pointer; margin-bottom: 16px; transition: background 0.15s, color 0.15s; }
+.mor-notify-btn:hover { background: #c0392b; color: #fff; }
+/* Delivery options */
+.mor-delivery-module { border: 1px solid #e0e0e0; border-radius: 4px; padding: 14px; margin-bottom: 20px; }
+.mor-delivery-module h4 { font-size: 13px; font-weight: 700; color: #222; margin-bottom: 10px; }
+.mor-delivery-opts { display: flex; flex-direction: column; gap: 8px; }
+.mor-delivery-opt { display: flex; align-items: flex-start; gap: 10px; }
+.mor-delivery-opt svg { width: 20px; height: 20px; flex-shrink: 0; color: #2e7d32; margin-top: 1px; }
+.mor-delivery-opt-text strong { font-size: 13px; color: #222; display: block; }
+.mor-delivery-opt-text span { font-size: 12px; color: #666; }
+/* Availability */
+.mor-avail { font-size: 13px; color: #555; margin-bottom: 14px; }
+.mor-avail strong { color: #222; }
+/* Description */
+.mor-desc-section { padding: 30px 0; border-top: 1px solid #eee; }
+.mor-desc-section h3 { font-size: 18px; font-weight: 700; color: #1a1a1a; margin-bottom: 12px; }
+.mor-desc-section ul { padding-left: 20px; }
+.mor-desc-section ul li { font-size: 14px; color: #444; margin-bottom: 6px; }
+/* Dimensions */
+.mor-dims-section { padding: 30px 0; border-top: 1px solid #eee; }
+.mor-dims-section h3 { font-size: 18px; font-weight: 700; color: #1a1a1a; margin-bottom: 12px; }
+.mor-dims-box { background: #f7f7f7; border: 1px solid #e0e0e0; border-radius: 4px; padding: 20px; display: flex; align-items: center; justify-content: center; min-height: 180px; color: #aaa; font-size: 13px; }
+/* Accordion */
+.mor-accordion { border-top: 1px solid #eee; }
+.mor-accordion-item { border-bottom: 1px solid #eee; }
+.mor-accordion-trigger { width: 100%; background: none; border: none; text-align: left; padding: 14px 0; font-size: 14px; font-weight: 600; color: #222; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+.mor-accordion-trigger::after { content: '+'; font-size: 20px; color: #888; }
+.mor-accordion-trigger.open::after { content: '−'; }
+.mor-accordion-body { display: none; padding: 0 0 14px; font-size: 13px; color: #555; line-height: 1.7; }
+.mor-accordion-body.open { display: block; }
+/* Carousel section */
+.mor-carousel-section { padding: 30px 0; border-top: 1px solid #eee; }
+.mor-carousel-section h3 { font-size: 18px; font-weight: 700; color: #1a1a1a; margin-bottom: 16px; }
+.mor-carousel-track { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: thin; }
+.mor-carousel-card { flex: 0 0 180px; border: 1px solid #e0e0e0; border-radius: 4px; overflow: hidden; }
+.mor-carousel-card-img { background: #f0f0f0; height: 140px; display: flex; align-items: center; justify-content: center; color: #bbb; font-size: 12px; }
+.mor-carousel-card-body { padding: 8px; }
+.mor-carousel-card-body p { font-size: 12px; color: #333; margin-bottom: 4px; line-height: 1.3; }
+.mor-carousel-card-body span { font-size: 13px; font-weight: 700; color: #c0392b; }
+/* Reviews */
+.mor-reviews-section { padding: 30px 0; border-top: 1px solid #eee; }
+.mor-reviews-section h3 { font-size: 18px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px; }
+.mor-reviews-summary { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.mor-reviews-avg { font-size: 40px; font-weight: 700; color: #1a1a1a; }
+.mor-reviews-meta { display: flex; flex-direction: column; gap: 4px; }
+.mor-reviews-meta .stars-row { display: flex; gap: 2px; }
+.mor-reviews-meta .stars-row svg { width: 18px; height: 18px; fill: #f5a623; }
+.mor-reviews-meta span { font-size: 13px; color: #666; }
+.mor-review-card { border: 1px solid #e8e8e8; border-radius: 4px; padding: 14px; margin-bottom: 12px; }
+.mor-review-card .rc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+.mor-review-card .rc-name { font-size: 13px; font-weight: 700; color: #222; }
+.mor-review-card .rc-date { font-size: 12px; color: #aaa; }
+.mor-review-card .rc-stars { display: flex; gap: 2px; margin-bottom: 6px; }
+.mor-review-card .rc-stars svg { width: 14px; height: 14px; fill: #f5a623; }
+.mor-review-card .rc-body { font-size: 13px; color: #555; line-height: 1.6; }
+/* Financing note */
+.mor-financing-note { font-size: 12px; color: #666; margin-bottom: 14px; }
+.mor-financing-note a { color: #c0392b; text-decoration: underline; cursor: pointer; }
+/* Shop with confidence */
+.mor-swc-section { background: #f9f9f9; border: 1px solid #eee; border-radius: 4px; padding: 20px; margin: 20px 0; }
+.mor-swc-section h4 { font-size: 15px; font-weight: 700; color: #1a1a1a; margin-bottom: 10px; }
+.mor-swc-section p { font-size: 13px; color: #555; line-height: 1.6; }
+/* Utility */
+.mor-divider { border: none; border-top: 1px solid #eee; margin: 0; }
+.mor-tag-oos { display: inline-block; background: #fff0f0; color: #c0392b; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 20px; border: 1px solid #f5c6c6; margin-bottom: 12px; }
+</style>
+</head>
+<body>
+<div class="mor-pdp-wrapper">
+  <!-- Breadcrumb -->
+  <nav class="mor-breadcrumb">
+    <a href="#">Home</a><span>/</span>
+    <a href="#">Sofas &amp; Sectionals</a><span>/</span>
+    <a href="#">Casper Collection</a><span>/</span>
+    <span>Casper Crypton Performance XL Sofa Chaise Sectional</span>
+  </nav>
+
+  <!-- Main PDP Grid -->
+  <div class="mor-pdp-grid">
+    <!-- LEFT: Media -->
+    <div class="mor-media-col">
+      <div class="mor-viewer-box">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+        <span>Interactive 360° Viewer — 32 Frames</span>
+        <span style="font-size:11px;color:#bbb;">Cylindo Viewer Placeholder</span>
+      </div>
+      <div class="mor-thumb-strip">
+        <div class="mor-thumb active"></div>
+        <div class="mor-thumb"></div>
+        <div class="mor-thumb"></div>
+        <div class="mor-thumb"></div>
+        <div class="mor-thumb"></div>
+        <div class="mor-thumb"></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Purchase Zone -->
+    <div class="mor-purchase-col">
+      <!-- Title -->
+      <h1 class="mor-product-title">Casper Crypton Performance XL Sofa Chaise Sectional</h1>
+
+      <!-- ★ CRO CHANGE 1: Rating surfaced near title -->
+      <div class="mor-rating-row">
+        <div class="mor-stars">
+          <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+          <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+          <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+          <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+          <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+        </div>
+        <span class="mor-rating-score">4.93</span>
+        <a class="mor-rating-link" href="#mor-reviews">(15 Reviews)</a>
+      </div>
+
+      <!-- ★ CRO CHANGE 2: Prominent price with savings badge -->
+      <div class="mor-price-block">
+        <span class="mor-price-sale">$2,199.00</span>
+        <span class="mor-price-compare">$2,599.99</span>
+        <span class="mor-savings-badge">You Save $400.99</span>
+      </div>
+      <p class="mor-sku">SKU: CASPER052</p>
+
+      <p class="mor-financing-note">As low as <strong>$37/mo</strong> with <a href="#">Afterpay</a> or <a href="#">Synchrony Financing</a> — <a href="#">See options</a></p>
+
+      <!-- ★ CRO CHANGE 3: Trust badges moved ABOVE ATC zone -->
+      <div class="mor-trust-strip">
+        <div class="mor-trust-tile">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span class="mor-trust-tile-label">7-Day Returns</span>
+        </div>
+        <div class="mor-trust-tile">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span class="mor-trust-tile-label">1-Year Warranty</span>
+        </div>
+        <div class="mor-trust-tile">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span class="mor-trust-tile-label">Price Match Guarantee</span>
+        </div>
+        <div class="mor-trust-tile">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          <span class="mor-trust-tile-label">Up to 61 Months Financing</span>
+        </div>
+      </div>
+
+      <!-- Fabric Swatch Selector -->
+      <div style="margin-bottom:16px;">
+        <p class="mor-section-label">Fabric: <span style="font-weight:400;color:#555;">Select a color</span></p>
+        <div class="mor-swatch-grid" id="morSwatchGrid">
+          <!-- Swatches generated by JS -->
+        </div>
+      </div>
+
+      <!-- Facing Selector -->
+      <div style="margin-bottom:16px;">
+        <p class="mor-section-label">Facing</p>
+        <div class="mor-facing-row">
+          <div class="mor-facing-btn">Left Facing<span class="sold-out-tag">Sold Out</span></div>
+          <div class="mor-facing-btn">Right Facing<span class="sold-out-tag">Sold Out</span></div>
+        </div>
+      </div>
+
+      <!-- Availability -->
+      <p class="mor-avail">Estimated Availability: <strong>~8 weeks</strong></p>
+
+      <!-- Quantity -->
+      <div class="mor-qty-row">
+        <span class="mor-qty-label">Quantity</span>
+        <div class="mor-qty-ctrl">
+          <button onclick="morQtyChange(-1)">−</button>
+          <input type="number" id="morQtyInput" value="1" min="1" readonly>
+          <button onclick="morQtyChange(1)">+</button>
+        </div>
+      </div>
+
+      <!-- ATC Button (disabled — out of stock) -->
+      <button class="mor-atc-btn" disabled>Out of Stock</button>
+
+      <!-- ★ CRO CHANGE 4: OOS notice + Notify Me CTA -->
+      <div class="mor-oos-notice">
+        <p>Currently Out of Stock</p>
+        <span>Both Left and Right Facing are currently unavailable. Est. restock: ~8 weeks.</span>
+      </div>
+      <button class="mor-notify-btn" onclick="morNotifyMe()">✉ Notify Me When Available</button>
+
+      <!-- Delivery Options -->
+      <div class="mor-delivery-module">
+        <h4>Delivery &amp; Pickup Options</h4>
+        <div class="mor-delivery-opts">
+          <div class="mor-delivery-opt">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            <div class="mor-delivery-opt-text"><strong>Free Drop Off</strong><span>Curbside delivery at no charge</span></div>
+          </div>
+          <div class="mor-delivery-opt">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+            <div class="mor-delivery-opt-text"><strong>White Glove Delivery</strong><span>In-home setup &amp; debris removal</span></div>
+          </div>
+          <div class="mor-delivery-opt">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div class="mor-delivery-opt-text"><strong>Free Store Pickup</strong><span>Ready at your local Mor Furniture store</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shop with Confidence -->
+      <div class="mor-swc-section">
+        <h4>Shop with Confidence</h4>
+        <p>At Mor Furniture, we stand behind every piece we sell. Our team is here to help you find the perfect fit for your home — with flexible financing, easy returns, and dedicated customer support.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full-width sections below grid -->
+
+  <!-- Product Description -->
+  <div class="mor-desc-section">
+    <h3>About the Casper Crypton Performance XL Sofa Chaise Sectional</h3>
+    <ul>
+      <li>Upholstered in Crypton performance fabric — stain, moisture, and odor resistant</li>
+      <li>36+ fabric color options to customize your look</li>
+      <li>Available in Left or Right Facing configuration</li>
+      <li>Kiln-dried hardwood frame for lasting durability</li>
+      <li>High-density foam seat cushions with fiber wrap for comfort and shape retention</li>
+      <li>Removable and reversible cushion covers for easy care</li>
+      <li>Includes sofa, chaise, and connecting hardware</li>
+      <li>Assembly required</li>
+    </ul>
+  </div>
+
+  <!-- Dimensions -->
+  <div class="mor-dims-section">
+    <h3>Dimensions</h3>
+    <div class="mor-dims-box">[Dimension Diagram Image Placeholder]</div>
+    <p style="font-size:13px;color:#666;margin-top:10px;">Overall: W 138" × D 68" × H 36" | Seat Height: 19" | Chaise Depth: 40"</p>
+  </div>
+
+  <!-- Product Details Accordion -->
+  <div style="padding: 20px 0 30px;">
+    <h3 style="font-size:18px;font-weight:700;color:#1a1a1a;margin-bottom:12px;">Product Details</h3>
+    <div class="mor-accordion">
+      <div class="mor-accordion-item">
+        <button class="mor-accordion-trigger" onclick="morToggleAccordion(this)">Materials</button>
+        <div class="mor-accordion-body">Frame: Kiln-dried hardwood. Cushions: High-density foam with fiber wrap. Cover: Crypton performance fabric (polyester blend).</div>
+      </div>
+      <div class="mor-accordion-item">
+        <button class="mor-accordion-trigger" onclick="morToggleAccordion(this)">Color &amp; Fabric</button>
+        <div class="mor-accordion-body">Available in 36+ Crypton performance fabric colors. Fabric is stain, moisture, and odor resistant. See swatch selector above.</div>
+      </div>
+      <div class="mor-accordion-item">
+        <button class="mor-accordion-trigger" onclick="morToggleAccordion(this)">Facing &amp; Configuration</button>
+        <div class="mor-accordion-body">Available in Left Facing and Right Facing. Both configurations are currently out of stock. Estimated restock: ~8 weeks.</div>
+      </div>
+      <div class="mor-accordion-item">
+        <button class="mor-accordion-trigger" onclick="morToggleAccordion(this)">Seat Composition</button>
+        <div class="mor-accordion-body">High-density foam core wrapped in fiber fill for a plush, supportive sit. Cushions are reversible for extended wear.</div>
+      </div>
+      <div class="mor-accordion-item">
+        <button class="mor-accordion-trigger" onclick="morToggleAccordion(this)">Shape &amp; Style</button>
+        <div class="mor-accordion-body">L-shaped sectional with chaise. Clean-lined, contemporary silhouette suitable for modern and transitional interiors.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Related Products Carousel -->
+  <div class="mor-carousel-section">
+    <h3>More in Casper Crypton Performance Collection</h3>
+    <div class="mor-carousel-track" id="morRelatedCarousel"></div>
+  </div>
+
+  <!-- You May Also Need -->
+  <div class="mor-carousel-section">
+    <h3>You May Also Need</h3>
+    <div class="mor-carousel-track" id="morAlsoNeedCarousel"></div>
+  </div>
+
+  <!-- You May Also Like -->
+  <div class="mor-carousel-section">
+    <h3>You May Also Like</h3>
+    <div class="mor-carousel-track" id="morAlsoLikeCarousel"></div>
+  </div>
+
+  <!-- Reviews -->
+  <div class="mor-reviews-section" id="mor-reviews">
+    <h3>Customer Reviews</h3>
+    <div class="mor-reviews-summary">
+      <span class="mor-reviews-avg">4.93</span>
+      <div class="mor-reviews-meta">
+        <div class="stars-row">
+          <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+          <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+          <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+          <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+          <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+        </div>
+        <span>Based on 15 reviews</span>
+      </div>
+    </div>
+    <div id="morReviewsList"></div>
+  </div>
+
+</div>
+
+<script>
+// Swatch colors (representative sample of 36+ Crypton fabric options)
+var morSwatchColors = [
+  '#f5f5dc','#e8d5b7','#d4a96a','#b8860b','#8b6914',
+  '#c0a080','#a0856a','#7a5c3e','#5c3d1e','#3b2010',
+  '#e8e8e8','#c8c8c8','#a0a0a0','#707070','#404040',
+  '#1a1a1a','#2c3e50','#34495e','#4a6fa5','#6b8cba',
+  '#a8c5da','#c5dde8','#d4e8d4','#a8c8a8','#6b9e6b',
+  '#4a7c4a','#8b4513','#c0392b','#e74c3c','#e8a0a0',
+  '#f0c0c0','#d4a0c0','#a06080','#704060','#f5e6d0',
+  '#ede0c8'
+];
+var morSwatchGrid = document.getElementById('morSwatchGrid');
+var morActiveSwatchIdx = -1;
+morSwatchColors.forEach(function(color, idx) {
+  var sw = document.createElement('div');
+  sw.className = 'mor-swatch';
+  sw.style.background = color;
+  sw.title = 'Fabric option ' + (idx + 1);
+  sw.addEventListener('click', function() {
+    document.querySelectorAll('.mor-swatch').forEach(function(s){ s.classList.remove('active'); });
+    sw.classList.add('active');
+    morActiveSwatchIdx = idx;
+  });
+  morSwatchGrid.appendChild(sw);
+});
+
+// Quantity control
+function morQtyChange(delta) {
+  var input = document.getElementById('morQtyInput');
+  var val = parseInt(input.value) + delta;
+  if (val < 1) val = 1;
+  input.value = val;
+}
+
+// Notify Me
+function morNotifyMe() {
+  var email = prompt('Enter your email address to be notified when this item is back in stock:');
+  if (email && email.indexOf('@') > -1) {
+    alert('Thank you! We will notify you at ' + email + ' when the Casper Crypton Performance XL Sofa Chaise Sectional is back in stock.');
+  } else if (email !== null) {
+    alert('Please enter a valid email address.');
+  }
+}
+
+// Accordion
+function morToggleAccordion(trigger) {
+  var body = trigger.nextElementSibling;
+  var isOpen = body.classList.contains('open');
+  document.querySelectorAll('.mor-accordion-body').forEach(function(b){ b.classList.remove('open'); });
+  document.querySelectorAll('.mor-accordion-trigger').forEach(function(t){ t.classList.remove('open'); });
+  if (!isOpen) {
+    body.classList.add('open');
+    trigger.classList.add('open');
+  }
+}
+
+// Related carousel items
+var morRelatedItems = [
+  { name: 'Casper Crypton Sofa', price: '$1,499.00' },
+  { name: 'Casper Crypton Loveseat', price: '$1,099.00' },
+  { name: 'Casper Crypton Chair', price: '$799.00' },
+  { name: 'Casper Crypton Ottoman', price: '$399.00' },
+  { name: 'Casper Crypton 3-Pc Sectional', price: '$2,899.00' },
+  { name: 'Casper Crypton Sleeper Sofa', price: '$1,799.00' },
+  { name: 'Casper Crypton Recliner', price: '$699.00' },
+  { name: 'Casper Crypton Chaise', price: '$899.00' }
+];
+function morBuildCarousel(containerId, items) {
+  var container = document.getElementById(containerId);
+  if (!container) return;
+  items.forEach(function(item) {
+    var card = document.createElement('div');
+    card.className = 'mor-carousel-card';
+    card.innerHTML = '<div class="mor-carousel-card-img">Product Image</div><div class="mor-carousel-card-body"><p>' + item.name + '</p><span>' + item.price + '</span></div>';
+    container.appendChild(card);
+  });
+}
+morBuildCarousel('morRelatedCarousel', morRelatedItems);
+morBuildCarousel('morAlsoNeedCarousel', [
+  { name: 'Furniture Protection Plan', price: '$199.00' },
+  { name: 'Sectional Connector Kit', price: '$29.00' },
+  { name: 'Throw Pillow Set (2pk)', price: '$49.00' },
+  { name: 'Area Rug 8x10', price: '$299.00' },
+  { name: 'Coffee Table', price: '$449.00' },
+  { name: 'Floor Lamp', price: '$129.00' },
+  { name: 'Slipcover Set', price: '$89.00' }
+]);
+morBuildCarousel('morAlsoLikeCarousel', [
+  { name: 'Dawson Sectional', price: '$1,999.00' },
+  { name: 'Parker Sofa Chaise', price: '$1,799.00' },
+  { name: 'Hudson L-Shape Sectional', price: '$2,099.00' },
+  { name: 'Monroe Sofa', price: '$1,299.00' },
+  { name: 'Avery Sectional', price: '$2,299.00' },
+  { name: 'Blake Chaise Sofa', price: '$1,599.00' }
+]);
+
+// Sample reviews
+var morReviews = [
+  { name: 'Sarah M.', date: 'March 2024', rating: 5, body: 'Absolutely love this sectional! The Crypton fabric is incredibly durable and easy to clean — perfect for our family with two young kids. Delivery was smooth and the quality exceeded our expectations.' },
+  { name: 'James T.', date: 'February 2024', rating: 5, body: 'Great quality for the price. The chaise is super comfortable and the fabric feels premium. Took about 7 weeks to arrive but it was worth the wait.' },
+  { name: 'Linda R.', date: 'January 2024', rating: 5, body: 'We had a spill within the first week and the Crypton fabric cleaned up perfectly with just a damp cloth. Highly recommend this sectional.' },
+  { name: 'Carlos V.', date: 'December 2023', rating: 4, body: 'Beautiful sectional, very comfortable. Assembly was straightforward. Took off one star because the wait time was longer than expected, but the product itself is excellent.' },
+  { name: 'Priya K.', date: 'November 2023', rating: 5, body: 'Stunning piece of furniture. The color options are amazing and the fabric is so soft yet durable. Our living room looks completely transformed.' }
+];
+var morReviewsList = document.getElementById('morReviewsList');
+morReviews.forEach(function(review) {
+  var stars = '';
+  for (var i = 0; i < review.rating; i++) {
+    stars += '<svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>';
+  }
+  var card = document.createElement('div');
+  card.className = 'mor-review-card';
+  card.innerHTML = '<div class="rc-header"><span class="rc-name">' + review.name + '</span><span class="rc-date">' + review.date + '</span></div><div class="rc-stars">' + stars + '</div><p class="rc-body">' + review.body + '</p>';
+  morReviewsList.appendChild(card);
+});
+</script>
+</body>
+</html>
