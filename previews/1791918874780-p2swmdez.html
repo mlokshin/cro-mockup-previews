@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boston Proper – Cart Page Mockup (Free Shipping Progress Bar)</title>
+<style>
+/* ── Reset & base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #fafaf7;
+  color: #1a1a1a;
+  font-size: 15px;
+  line-height: 1.5;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ── Site header (faithful reproduction) ── */
+.bp-header {
+  background: #1a1a1a;
+  color: #fafaf7;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  height: 56px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.bp-header__logo {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 20px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fafaf7;
+}
+.bp-header__nav {
+  display: flex;
+  gap: 24px;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.bp-header__icons {
+  display: flex;
+  gap: 18px;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+}
+
+/* ── Promo banner ── */
+.bp-promo-banner {
+  background: #d4735e;
+  color: #fff;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+}
+
+/* ── Page wrapper ── */
+.bp-cart-page {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 24px;
+}
+.bp-cart-page__title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 28px;
+  font-weight: normal;
+  letter-spacing: 0.04em;
+  margin-bottom: 32px;
+  text-transform: uppercase;
+}
+
+/* ── Two-column cart layout ── */
+.bp-cart-layout {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+.bp-cart-items {
+  flex: 1 1 60%;
+}
+.bp-cart-summary-col {
+  flex: 0 0 340px;
+  width: 340px;
+}
+
+/* ── Cart item rows ── */
+.bp-cart-item {
+  display: flex;
+  gap: 16px;
+  padding: 20px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+.bp-cart-item__img {
+  width: 100px;
+  height: 130px;
+  background: #e8e4df;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: #888;
+  letter-spacing: 0.05em;
+}
+.bp-cart-item__details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.bp-cart-item__name {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+.bp-cart-item__meta {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 8px;
+}
+.bp-cart-item__price {
+  font-size: 14px;
+  font-weight: 600;
+}
+.bp-cart-item__qty {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+.bp-cart-item__qty button {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+}
+.bp-cart-item__qty span {
+  font-size: 14px;
+  min-width: 20px;
+  text-align: center;
+}
+.bp-cart-item__remove {
+  font-size: 11px;
+  color: #888;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-top: 4px;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+/* ── Continue shopping ── */
+.bp-cart-continue {
+  margin-top: 20px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  cursor: pointer;
+  color: #1a1a1a;
+}
+
+/* ────────────────────────────────────────────
+   FREE-SHIPPING PROGRESS BAR  ← NEW ELEMENT
+──────────────────────────────────────────── */
+.bp-shipping-bar {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.bp-shipping-bar__msg {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 13px;
+  color: #1a1a1a;
+  margin-bottom: 10px;
+  text-align: center;
+  line-height: 1.4;
+}
+.bp-shipping-bar__msg strong {
+  color: #d4735e;
+}
+.bp-shipping-bar__track {
+  width: 100%;
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 100px;
+  overflow: hidden;
+}
+.bp-shipping-bar__fill {
+  height: 100%;
+  width: 0%;
+  background: #d4735e;
+  border-radius: 100px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.bp-shipping-bar__labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  font-size: 10px;
+  color: #999;
+  letter-spacing: 0.04em;
+}
+
+/* ── Order summary card ── */
+.bp-summary {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 24px 20px;
+}
+.bp-summary__title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 20px;
+  font-weight: normal;
+}
+.bp-summary__row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 10px;
+  color: #444;
+}
+.bp-summary__row--total {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1a1a;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 12px;
+  margin-top: 8px;
+}
+.bp-summary__promo {
+  display: flex;
+  gap: 8px;
+  margin: 14px 0;
+}
+.bp-summary__promo input {
+  flex: 1;
+  border: 1px solid #ccc;
+  padding: 9px 12px;
+  font-size: 13px;
+  border-radius: 3px;
+  outline: none;
+  font-family: inherit;
+}
+.bp-summary__promo button {
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  padding: 9px 16px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 3px;
+}
+.bp-checkout-btn {
+  display: block;
+  width: 100%;
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  padding: 15px;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 3px;
+  margin-top: 16px;
+  font-family: inherit;
+}
+.bp-checkout-btn:hover { background: #333; }
+.bp-summary__secure {
+  text-align: center;
+  font-size: 11px;
+  color: #999;
+  margin-top: 10px;
+  letter-spacing: 0.04em;
+}
+.bp-summary__payicons {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.bp-summary__payicon {
+  background: #f0f0f0;
+  border-radius: 3px;
+  padding: 3px 8px;
+  font-size: 10px;
+  color: #555;
+  letter-spacing: 0.04em;
+}
+
+/* ── Footer ── */
+.bp-footer {
+  background: #1a1a1a;
+  color: #fafaf7;
+  text-align: center;
+  padding: 32px 24px;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  margin-top: 80px;
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .bp-header { padding: 0 16px; }
+  .bp-header__nav { display: none; }
+  .bp-cart-layout { flex-direction: column; }
+  .bp-cart-summary-col { width: 100%; flex: none; }
+  .bp-cart-page { padding: 0 16px; margin: 24px auto; }
+  .bp-cart-page__title { font-size: 22px; margin-bottom: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Promo banner -->
+<div class="bp-promo-banner">Friends &amp; Family Is On: 30% OFF + Free Shipping — Use Code FRIENDS30</div>
+
+<!-- Header -->
+<header class="bp-header">
+  <div class="bp-header__logo">Boston Proper</div>
+  <nav class="bp-header__nav">
+    <a href="#">New Arrivals</a>
+    <a href="#">Clothing</a>
+    <a href="#">Swimwear</a>
+    <a href="#">Sale</a>
+  </nav>
+  <div class="bp-header__icons">
+    <span>Search</span>
+    <span>Account</span>
+    <span>Cart (2)</span>
+  </div>
+</header>
+
+<!-- Cart page -->
+<main class="bp-cart-page">
+  <h1 class="bp-cart-page__title">Shopping Cart</h1>
+
+  <div class="bp-cart-layout">
+
+    <!-- Left: cart items -->
+    <section class="bp-cart-items" aria-label="Cart items">
+
+      <div class="bp-cart-item">
+        <div class="bp-cart-item__img">Product Image</div>
+        <div class="bp-cart-item__details">
+          <div>
+            <div class="bp-cart-item__name">Ponte Flare Pant</div>
+            <div class="bp-cart-item__meta">Color: Black &nbsp;|&nbsp; Size: 8</div>
+            <div class="bp-cart-item__price">$89.00</div>
+          </div>
+          <div>
+            <div class="bp-cart-item__qty">
+              <button aria-label="Decrease quantity">−</button>
+              <span>1</span>
+              <button aria-label="Increase quantity">+</button>
+            </div>
+            <button class="bp-cart-item__remove">Remove</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="bp-cart-item">
+        <div class="bp-cart-item__img">Product Image</div>
+        <div class="bp-cart-item__details">
+          <div>
+            <div class="bp-cart-item__name">Ruched Wrap Dress</div>
+            <div class="bp-cart-item__meta">Color: Coral &nbsp;|&nbsp; Size: S</div>
+            <div class="bp-cart-item__price">$119.00</div>
+          </div>
+          <div>
+            <div class="bp-cart-item__qty">
+              <button aria-label="Decrease quantity">−</button>
+              <span>1</span>
+              <button aria-label="Increase quantity">+</button>
+            </div>
+            <button class="bp-cart-item__remove">Remove</button>
+          </div>
+        </div>
+      </div>
+
+      <a class="bp-cart-continue" href="#">← Continue Shopping</a>
+    </section>
+
+    <!-- Right: summary column -->
+    <aside class="bp-cart-summary-col" aria-label="Order summary">
+
+      <!-- ★ FREE-SHIPPING PROGRESS BAR (new element) ★ -->
+      <div class="bp-shipping-bar" id="bpShippingBar" role="status" aria-live="polite">
+        <p class="bp-shipping-bar__msg" id="bpShippingMsg">Loading…</p>
+        <div class="bp-shipping-bar__track" aria-hidden="true">
+          <div class="bp-shipping-bar__fill" id="bpShippingFill"></div>
+        </div>
+        <div class="bp-shipping-bar__labels" aria-hidden="true">
+          <span>$0</span>
+          <span>$100 for FREE shipping</span>
+        </div>
+      </div>
+
+      <!-- Order summary card (unchanged) -->
+      <div class="bp-summary">
+        <h2 class="bp-summary__title">Order Summary</h2>
+
+        <div class="bp-summary__row">
+          <span>Subtotal (2 items)</span>
+          <span>$208.00</span>
+        </div>
+        <div class="bp-summary__row">
+          <span>Discount (FRIENDS30 – 30%)</span>
+          <span>−$62.40</span>
+        </div>
+        <div class="bp-summary__row">
+          <span>Shipping</span>
+          <span>Free</span>
+        </div>
+        <div class="bp-summary__row bp-summary__row--total">
+          <span>Estimated Total</span>
+          <span>$145.60</span>
+        </div>
+
+        <div class="bp-summary__promo">
+          <input type="text" placeholder="Promo / Gift Card Code" aria-label="Promo code">
+          <button type="button">Apply</button>
+        </div>
+
+        <button class="bp-checkout-btn" type="button">Proceed to Checkout</button>
+        <p class="bp-summary__secure">🔒 Secure Checkout</p>
+        <div class="bp-summary__payicons">
+          <span class="bp-summary__payicon">VISA</span>
+          <span class="bp-summary__payicon">MC</span>
+          <span class="bp-summary__payicon">AMEX</span>
+          <span class="bp-summary__payicon">Shop Pay</span>
+          <span class="bp-summary__payicon">PayPal</span>
+        </div>
+      </div>
+
+    </aside>
+  </div>
+</main>
+
+<footer class="bp-footer">
+  &copy; 2024 Boston Proper. All rights reserved.
+</footer>
+
+<script>
+(function () {
+  var FREE_SHIPPING_THRESHOLD = 100;
+  // Simulated cart subtotal (after discounts) — in a real Shopify integration
+  // this would come from window.Shopify.cart.total_price / 100
+  var cartSubtotal = 145.60;
+
+  var fill = document.getElementById('bpShippingFill');
+  var msg  = document.getElementById('bpShippingMsg');
+
+  function updateBar(subtotal) {
+    var remaining = FREE_SHIPPING_THRESHOLD - subtotal;
+    var pct = Math.min((subtotal / FREE_SHIPPING_THRESHOLD) * 100, 100);
+
+    if (remaining <= 0) {
+      msg.innerHTML = "You've unlocked <strong>FREE SHIPPING</strong>! 🎉";
+    } else {
+      msg.innerHTML = "You're <strong>$" + remaining.toFixed(2) + " away</strong> from FREE SHIPPING!";
+    }
+
+    // Animate after a short paint delay
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        fill.style.width = pct + '%';
+      });
+    });
+  }
+
+  updateBar(cartSubtotal);
+})();
+</script>
+</body>
+</html>
